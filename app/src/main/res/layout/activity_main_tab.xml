@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.tabs.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_tl"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/tabHeight"
+    android:layout_alignParentBottom="true"
+    style="@style/CustomTabLayout">
+    <com.google.android.material.tabs.TabItem
+        android:id="@+id/main_ti_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_users" />
+
+    <com.google.android.material.tabs.TabItem
+        android:id="@+id/main_ti_country"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_flag" />
+
+    <com.google.android.material.tabs.TabItem
+        android:id="@+id/main_ti_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_tag" />
+
+    <com.google.android.material.tabs.TabItem
+        android:id="@+id/main_ti_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:icon="@drawable/ic_setting" />
+</com.google.android.material.tabs.TabLayout>

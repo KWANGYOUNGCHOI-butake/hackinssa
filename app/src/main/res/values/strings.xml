@@ -1,8 +1,4 @@
 <resources>
     <string name="app_name">hackinssa</string>
 
-    <string name="bnv_address">연락처</string>
-    <string name="bnv_country">국가검색</string>
-    <string name="bnv_tag">태그</string>
-    <string name="bnv_setting">설정</string>
 </resources>

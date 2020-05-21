@@ -8,9 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CustomBNV" parent="Widget.Design.BottomNavigationView">
-        <item name="itemIconTint">@drawable/bnv_selector</item>
-        <item name="itemHorizontalTranslationEnabled">false</item>
+    <style name="CustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabGravity">fill</item>
+        <item name="tabMode">fixed</item>
+        <item name="tabBackground">@drawable/tab_bg_selector</item>
+        <item name="tabIconTint">@drawable/tab_item_selector</item>
+        <item name="tabIndicatorHeight">0dp</item>
     </style>
-
 </resources>

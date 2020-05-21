@@ -5,11 +5,11 @@
     <color name="colorAccent">#03DAC5</color>
 
     <color name="colorMaxDarkGray">#060606</color>
-    <color name="colorSuperDarkGray">#222222</color>
-    <color name="colorDarkGray">#555555</color>
+    <color name="colorDarkGray">#222222</color>
+    <color name="colorMinDarkGray">#555555</color>
     <color name="colorGray">#888888</color>
-    <color name="colorLightGray">#aaaaaa</color>
-    <color name="colorSuperLightGray">#dddddd</color>
+    <color name="colorMinLightGray">#aaaaaa</color>
+    <color name="colorLightGray">#dddddd</color>
     <color name="colorMaxLightGray">#fafafa</color>
     <color name="colorWhite">#FFFFFF</color>
 </resources>
