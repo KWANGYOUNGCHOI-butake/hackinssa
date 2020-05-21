@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="CustomBNV" parent="Widget.Design.BottomNavigationView">
+        <item name="itemIconTint">@drawable/bnv_selector</item>
+        <item name="itemHorizontalTranslationEnabled">false</item>
+    </style>
+
 </resources>

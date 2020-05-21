@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textSuperMaxBig">36sp</dimen>
+    <dimen name="textMaxBig">28sp</dimen>
+    <dimen name="textSuperBig">24sp</dimen>
+    <dimen name="textBig">20sp</dimen>
+    <dimen name="textCenter">18sp</dimen>
+    <dimen name="textSmall">16sp</dimen>
+    <dimen name="textSuperSmall">14sp</dimen>
+    <dimen name="textMaxSmall">12sp</dimen>
+    <dimen name="textSuperMaxSmall">10sp</dimen>
+
+
+
+    <dimen name="bigPadding">16dp</dimen>
+    <dimen name="padding">8dp</dimen>
+    <dimen name="smallPadding">4dp</dimen>
+    <dimen name="bigMargin">16dp</dimen>
+    <dimen name="margin">8dp</dimen>
+    <dimen name="smallMargin">4dp</dimen>
+</resources>
