@@ -1,5 +1,6 @@
 package com.kwang0.hackinssa.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -24,6 +25,8 @@ class AddressFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_addr_add_friend) {
+            val intent = Intent(context, FriendAddActivity::class.java)
+            startActivity(intent)
             true
         } else super.onOptionsItemSelected(item)
     }

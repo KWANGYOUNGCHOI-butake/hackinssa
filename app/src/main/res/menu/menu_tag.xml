@@ -12,4 +12,9 @@
     <item android:id="@+id/mene_tag_create_q"
         app:showAsAction="never"
         android:title="등록된 순"/>
+    <item android:id="@+id/menu_tag_delete"
+        android:icon="@drawable/ic_trash_can"
+        android:visible="false"
+        app:showAsAction="ifRoom"
+        android:title="삭제" />
 </menu>
