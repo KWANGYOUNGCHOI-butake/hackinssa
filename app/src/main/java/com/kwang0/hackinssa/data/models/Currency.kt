@@ -4,9 +4,7 @@ import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
 class Currency: Serializable {
-
     @SerializedName("code")
     @Expose
     private var code: String? = null
@@ -42,5 +40,4 @@ class Currency: Serializable {
     fun setSymbol(symbol: String?) {
         this.symbol = symbol
     }
-
 }

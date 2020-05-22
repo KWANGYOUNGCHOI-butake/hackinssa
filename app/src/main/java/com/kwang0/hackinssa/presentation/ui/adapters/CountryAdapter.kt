@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.kwang0.hackinssa.CountryModel
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.data.models.Country
 
-class CountryAdapter(var mContext: Context?, var mData: List<CountryModel>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
+class CountryAdapter(var mContext: Context?, var mData: List<Country>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rootView: View

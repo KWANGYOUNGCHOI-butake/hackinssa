@@ -10,4 +10,6 @@
     <string name="tab_setting">설정</string>
 
     <string name="search_hint">검색어를 입력해 주세요</string>
+    <string name="setting_ko">한국어</string>
+    <string name="setting_en">영어</string>
 </resources>

@@ -6,14 +6,14 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
-import com.kwang0.hackinssa.CountryModel
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.data.models.Country
 import java.util.*
 
 class CountryView(private var mContext: Context?) {
     private var rv: RecyclerView? = null
 
-    private var mList: List<CountryModel>? = null
+    private var mList: List<Country>? = null
     private var mAdapter: CountryAdapter? = null
 
     fun bindView(a: Activity) {
@@ -25,7 +25,7 @@ class CountryView(private var mContext: Context?) {
     }
 
     fun recyclerInit() {
-        mList = ArrayList<CountryModel>()
+        mList = ArrayList<Country>()
         mAdapter = CountryAdapter(mContext, mList)
         rv!!.setHasFixedSize(true)
         rv!!.isNestedScrollingEnabled = false
@@ -33,11 +33,11 @@ class CountryView(private var mContext: Context?) {
         rv!!.adapter = mAdapter
     }
 
-    fun getmList(): List<CountryModel>? {
+    fun getmList(): List<Country>? {
         return mList
     }
 
-    fun setmList(mList: List<CountryModel>?) {
+    fun setmList(mList: List<Country>?) {
         this.mList = mList
     }
 

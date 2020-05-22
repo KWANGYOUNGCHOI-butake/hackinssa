@@ -14,16 +14,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layoutDirection="rtl"
-            android:text="한국어"
+            android:text="@string/setting_ko"
             android:layout_margin="@dimen/bigMargin"
+            android:checked="true"
+            android:buttonTint="@color/colorPrimary"
             tools:ignore="UnusedAttribute" />
         <RadioButton
             android:id="@+id/setting_radioBtn_en"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layoutDirection="rtl"
-            android:text="영어"
+            android:text="@string/setting_en"
             android:layout_margin="@dimen/bigMargin"
+            android:buttonTint="@color/colorPrimary"
             tools:ignore="UnusedAttribute" />
     </RadioGroup>
 
