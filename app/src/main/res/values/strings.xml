@@ -8,4 +8,6 @@
     <string name="tab_country">국가검색</string>
     <string name="tab_tag">태그</string>
     <string name="tab_setting">설정</string>
+
+    <string name="search_hint">검색어를 입력해 주세요</string>
 </resources>

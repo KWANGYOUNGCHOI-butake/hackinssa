@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".main.TagInfoActivity"></activity>
+        <activity android:name=".main.CountrySelectActivity" />
+        <activity android:name=".main.FriendEditActivity" />
+        <activity android:name=".main.CountryInfoActivity" />
+        <activity android:name=".main.FriendInfoActivity" />
         <activity android:name=".main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
