@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_fi_edit"
-        android:icon="@drawable/ic_users"
+        android:icon="@drawable/ic_check"
         app:showAsAction="ifRoom"
-        android:title="수정하기" />
+        android:title="확인" />
 </menu>

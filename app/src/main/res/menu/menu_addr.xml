@@ -2,15 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/menu_addr_add_friend"
-        android:icon="@drawable/ic_users"
-        app:showAsAction="always"
+        android:icon="@drawable/ic_user_add"
+        app:showAsAction="ifRoom"
         android:title="친구추가"/>
     <item android:id="@+id/menu_addr_name_q"
-        android:icon="@drawable/ic_users"
         app:showAsAction="never"
         android:title="이름 순"/>
     <item android:id="@+id/mene_addr_create_q"
-        android:icon="@drawable/ic_users"
         app:showAsAction="never"
         android:title="등록된 순"/>
 </menu>
