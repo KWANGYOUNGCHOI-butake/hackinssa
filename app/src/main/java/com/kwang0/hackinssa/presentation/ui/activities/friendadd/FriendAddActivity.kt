@@ -6,8 +6,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 
-class FriendAddActivity : AppCompatActivity() {
+class FriendAddActivity : BaseActivity() {
 
     lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {

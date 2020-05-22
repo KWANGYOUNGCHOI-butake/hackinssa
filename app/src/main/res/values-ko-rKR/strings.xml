@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">핵인싸</string>
+
+    <string name="tab_address">연락처</string>
+    <string name="tab_country">국가검색</string>
+    <string name="tab_tag">태그</string>
+    <string name="tab_setting">설정</string>
+
+    <string name="search_hint">검색어를 입력해 주세요</string>
+    <string name="setting_ko">한국어</string>
+    <string name="setting_en">영어</string>
+
+    <string name="country">국가</string>
+    <string name="tag">태그</string>
+</resources>

@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">hackinssa</string>
 
+    <string name="tab_address">address</string>
+    <string name="tab_country">search country</string>
+    <string name="tab_tag">tag</string>
+    <string name="tab_setting">setting</string>
+
+    <string name="search_hint">please fill this space</string>
+    <string name="setting_ko">Korean</string>
+    <string name="setting_en">English</string>
+
+    <string name="country">Country</string>
+    <string name="tag">Tag</string>
 </resources>

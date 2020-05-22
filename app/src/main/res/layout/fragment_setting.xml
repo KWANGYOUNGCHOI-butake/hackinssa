@@ -16,7 +16,6 @@
             android:layoutDirection="rtl"
             android:text="@string/setting_ko"
             android:layout_margin="@dimen/bigMargin"
-            android:checked="true"
             android:buttonTint="@color/colorPrimary"
             tools:ignore="UnusedAttribute" />
         <RadioButton

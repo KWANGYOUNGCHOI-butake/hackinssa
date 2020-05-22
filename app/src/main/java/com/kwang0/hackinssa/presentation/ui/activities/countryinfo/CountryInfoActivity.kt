@@ -6,8 +6,9 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 
-class CountryInfoActivity : AppCompatActivity() {
+class CountryInfoActivity : BaseActivity() {
 
     lateinit var toolbar: Toolbar
     override fun onCreate(savedInstanceState: Bundle?) {

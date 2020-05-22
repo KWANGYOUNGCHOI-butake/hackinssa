@@ -6,10 +6,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.MainPagerAdapter
 
 
-class MainActivity: AppCompatActivity() {
+class MainActivity: BaseActivity() {
 
     lateinit var container: ViewPager
     lateinit var tl: TabLayout

@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">hackinssa</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tab_address">address</string>
+    <string name="tab_country">search country</string>
+    <string name="tab_tag">tag</string>
+    <string name="tab_setting">setting</string>
 
-    <string name="tab_address">연락처</string>
-    <string name="tab_country">국가검색</string>
-    <string name="tab_tag">태그</string>
-    <string name="tab_setting">설정</string>
+    <string name="search_hint">please fill this space</string>
+    <string name="setting_ko">Korean</string>
+    <string name="setting_en">English</string>
 
-    <string name="search_hint">검색어를 입력해 주세요</string>
-    <string name="setting_ko">한국어</string>
-    <string name="setting_en">영어</string>
+    <string name="country">Country</string>
+    <string name="tag">Tag</string>
 </resources>
