@@ -5,6 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".main.CountryFragment">
 
-    <include layout="@layout/reuse_search_bar"/>
+    <include layout="@layout/reuse_searchbar"/>
 
 </RelativeLayout>

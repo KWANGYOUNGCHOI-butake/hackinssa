@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menu_tag_edit"
+        android:icon="@drawable/ic_users"
+        app:showAsAction="ifRoom"
+        android:title="친구추가" />
+    <item android:id="@+id/menu_tag_name_q"
+        android:icon="@drawable/ic_users"
+        app:showAsAction="never"
+        android:title="이름 순"/>
+    <item android:id="@+id/mene_tag_create_q"
+        android:icon="@drawable/ic_users"
+        app:showAsAction="never"
+        android:title="등록된 순"/>
+</menu>

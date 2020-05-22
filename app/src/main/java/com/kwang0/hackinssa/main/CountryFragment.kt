@@ -15,7 +15,7 @@ class CountryFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_country, container, false)
 
-        val search_et = v.findViewById<EditText>(R.id.search_bar_et)
+        val search_et = v.findViewById<EditText>(R.id.searchbar_et)
         search_et.setHint(R.string.search_hint)
 
         return v

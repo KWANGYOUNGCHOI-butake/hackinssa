@@ -19,6 +19,7 @@ class MainPagerAdapter(fm:FragmentManager): FragmentPagerAdapter(fm, FragmentPag
             3 -> SettingFragment()
             else -> AddressFragment()
         }
+        fragment.setHasOptionsMenu(true)
         return fragment
     }
 }
