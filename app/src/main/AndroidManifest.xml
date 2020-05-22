@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kwang0.hackinssa">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,12 +11,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.TagInfoActivity"/>
-        <activity android:name=".main.CountrySelectActivity" />
-        <activity android:name=".main.FriendAddActivity" />
-        <activity android:name=".main.CountryInfoActivity" />
-        <activity android:name=".main.FriendInfoActivity" />
-        <activity android:name=".main.MainActivity">
+        <activity android:name=".presentation.ui.activities.taginfo.TagInfoActivity"/>
+        <activity android:name=".presentation.ui.activities.countryselect.CountrySelectActivity" />
+        <activity android:name=".presentation.ui.activities.friendadd.FriendAddActivity" />
+        <activity android:name=".presentation.ui.activities.countryinfo.CountryInfoActivity" />
+        <activity android:name=".presentation.ui.activities.friendinfo.FriendInfoActivity" />
+        <activity android:name=".presentation.ui.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.kwang0.hackinssa.main
+package com.kwang0.hackinssa.presentation.ui.activities.countryinfo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

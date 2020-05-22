@@ -1,4 +1,4 @@
-package com.kwang0.hackinssa.main
+package com.kwang0.hackinssa.presentation.ui.activities.main
 
 import android.os.Bundle
 import android.view.*

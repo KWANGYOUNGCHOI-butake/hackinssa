@@ -1,16 +1,14 @@
-package com.kwang0.hackinssa.main
+package com.kwang0.hackinssa.presentation.ui.activities.main
 
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.kwang0.hackinssa.CountryAdapter
+import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.CountryModel
-import com.kwang0.hackinssa.CountryView
+import com.kwang0.hackinssa.presentation.ui.views.CountryView
 import com.kwang0.hackinssa.R
 
 class CountryFragment : Fragment() {

@@ -1,12 +1,12 @@
-package com.kwang0.hackinssa.main;
+package com.kwang0.hackinssa.presentation.ui.activities.main;
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.presentation.ui.adapters.MainPagerAdapter
 
 
 class MainActivity: AppCompatActivity() {

@@ -1,8 +1,12 @@
-package com.kwang0.hackinssa.main
+package com.kwang0.hackinssa.presentation.ui.adapters
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import com.kwang0.hackinssa.presentation.ui.activities.main.AddressFragment
+import com.kwang0.hackinssa.presentation.ui.activities.main.CountryFragment
+import com.kwang0.hackinssa.presentation.ui.activities.main.SettingFragment
+import com.kwang0.hackinssa.presentation.ui.activities.main.TagFragment
 
 class MainPagerAdapter(fm:FragmentManager): FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     val PAGE_MAX_CNT = 4

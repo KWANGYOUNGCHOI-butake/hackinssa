@@ -1,13 +1,13 @@
-package com.kwang0.hackinssa;
+package com.kwang0.hackinssa.presentation.ui.views;
 
 import android.app.Activity
 import android.content.Context
-import android.os.Build
 import android.view.View
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SimpleItemAnimator
+import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
+import com.kwang0.hackinssa.CountryModel
+import com.kwang0.hackinssa.R
 import java.util.*
 
 class CountryView(private var mContext: Context?) {

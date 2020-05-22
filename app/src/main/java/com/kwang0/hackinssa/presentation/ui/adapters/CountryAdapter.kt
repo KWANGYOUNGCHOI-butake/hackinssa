@@ -1,4 +1,4 @@
-package com.kwang0.hackinssa
+package com.kwang0.hackinssa.presentation.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.kwang0.hackinssa.CountryModel
+import com.kwang0.hackinssa.R
 
 class CountryAdapter(var mContext: Context?, var mData: List<CountryModel>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CountryAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rootView: View
         rootView = LayoutInflater.from(mContext).inflate(R.layout.reuse_country_rv_con, parent, false)
         return ViewHolder(rootView)
@@ -20,7 +22,7 @@ class CountryAdapter(var mContext: Context?, var mData: List<CountryModel>?) : R
         return mData!!.size
     }
 
-    override fun onBindViewHolder(holder: CountryAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         TODO("Not yet implemented")
     }
 
