@@ -14,7 +14,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
+import com.kwang0.hackinssa.presentation.ui.activities.countryinfo.CountryInfoActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
+import com.kwang0.hackinssa.presentation.ui.activities.main.CountryFragment
+import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
 import com.squareup.picasso.Picasso
 import java.util.*
 
@@ -50,9 +53,13 @@ class CountryAdapter(var mContext: Context?, var mData: MutableList<Country?>?) 
 
         holder.tv.text = item.getNativeName()
         holder.layout.setOnClickListener {v ->
-            val intent = Intent(mContext, CountrySelectActivity::class.java)
-            intent.putExtra("country", mData?.get(position))
-            mContext?.startActivity(intent)
+            if(mContext is MainActivity) {
+                val intent = Intent(mContext, CountryInfoActivity::class.java)
+                intent.putExtra("country", mData?.get(position))
+                mContext?.startActivity(intent)
+            } else if(mContext is CountrySelectActivity) {
+
+            }
         }
 
     }

@@ -8,34 +8,5 @@
 
     <include layout="@layout/reuse_toolbar"/>
 
-    <ImageView
-        android:id="@+id/cs_iv"
-        android:layout_width="108dp"
-        android:layout_height="108dp"
-        android:src="@drawable/ic_place_holder"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/toolbar"/>
-    <TextView
-        android:id="@+id/cs_name_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cs_iv"
-        android:textSize="@dimen/textSuperBig"
-        android:gravity="center"/>
-    <TextView
-        android:id="@+id/cs_time_des_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="현지시간"
-        android:layout_below="@+id/cs_name_tv"
-        android:textSize="@dimen/textSmall"
-        android:gravity="center"/>
-    <TextView
-        android:id="@+id/cs_time_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/cs_time_des_tv"
-        android:textSize="@dimen/textSmall"
-        android:gravity="center"/>
 
 </RelativeLayout>

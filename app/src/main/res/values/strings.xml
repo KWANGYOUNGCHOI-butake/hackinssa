@@ -10,6 +10,10 @@
     <string name="setting_ko">Korean</string>
     <string name="setting_en">English</string>
 
+    <string name="name">Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="email">Email</string>
     <string name="country">Country</string>
     <string name="tag">Tag</string>
+    x
 </resources>
