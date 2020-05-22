@@ -1,11 +1,9 @@
 package com.kwang0.hackinssa.presentation.ui.activities.friendinfo
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,12 +11,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
-import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 
 class FriendInfoActivity : BaseActivity() {
 
@@ -49,7 +44,7 @@ class FriendInfoActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        phone_iv.setOnClickListener { v -> onClickPhone("tel:" + "1122334455") }
+        phone_iv.setOnClickListener { v -> onClickPhone("tel:0123456789") }
         email_iv.setOnClickListener { v -> onClickEmail("admin@gmail.com") }
 
     }
@@ -81,41 +76,8 @@ class FriendInfoActivity : BaseActivity() {
     }
 
     fun onClickPhone(phoneNumber: String) {
-        if (ContextCompat.checkSelfPermission(this,
-                        Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                            Manifest.permission.CALL_PHONE)) {
-            } else {
-                ActivityCompat.requestPermissions(this,
-                        arrayOf(Manifest.permission.CALL_PHONE),
-                        42)
-            }
-        } else {
-            // Permission has already been granted
-            callPhone(phoneNumber)
-        }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>, grantResults: IntArray) {
-        if (requestCode == 42) {
-            // If request is cancelled, the result arrays are empty.
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                // permission was granted, yay!
-                callPhone("tel:" + "1122334455")
-            } else {
-                // permission denied, boo! Disable the
-                // functionality
-            }
-            return
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    fun callPhone(phoneNumber: String){
-        val intent = Intent(Intent.ACTION_CALL, Uri.parse(phoneNumber))
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse(phoneNumber)
         startActivity(intent)
     }
 }
