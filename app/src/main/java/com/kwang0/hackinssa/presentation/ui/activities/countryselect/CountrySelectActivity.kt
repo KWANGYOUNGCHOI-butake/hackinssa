@@ -34,13 +34,13 @@ class CountrySelectActivity : BaseActivity() {
         name_tv.text = country.getName()
 
 
-        val timeClient = NTPUDPClient()
-        val inetAddress: InetAddress = InetAddress.getByName(TIME_SERVER)
-        val timeInfo = timeClient.getTime(inetAddress)
-        val returnTime = timeInfo.returnTime
-        Log.d(TAG, "time : " + returnTime)
-        val time = Date(returnTime)
-        time_tv.text = time.time.toString()
+//        val timeClient = NTPUDPClient()
+//        val inetAddress: InetAddress = InetAddress.getByName(TIME_SERVER)
+//        val timeInfo = timeClient.getTime(inetAddress)
+//        val returnTime = timeInfo.returnTime
+//        Log.d(TAG, "time : " + returnTime)
+//        val time = Date(returnTime)
+//        time_tv.text = time.time.toString()
     }
 
     companion object {
