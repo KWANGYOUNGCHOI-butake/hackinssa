@@ -1,13 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".main.SettingFragment">
 
-    <TextView
+    <RadioGroup
+        android:id="@+id/setting_radioGrp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="setting" />
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/setting_radioBtn_ko"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="한국어"
+            android:layout_margin="@dimen/bigMargin"
+            tools:ignore="UnusedAttribute" />
+        <RadioButton
+            android:id="@+id/setting_radioBtn_en"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layoutDirection="rtl"
+            android:text="영어"
+            android:layout_margin="@dimen/bigMargin"
+            tools:ignore="UnusedAttribute" />
+    </RadioGroup>
 
-</FrameLayout>
+</RelativeLayout>
