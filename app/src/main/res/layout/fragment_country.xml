@@ -7,4 +7,9 @@
 
     <include layout="@layout/reuse_searchbar"/>
 
+    <include layout="@layout/reuse_country_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchbar"/>
+
 </RelativeLayout>
