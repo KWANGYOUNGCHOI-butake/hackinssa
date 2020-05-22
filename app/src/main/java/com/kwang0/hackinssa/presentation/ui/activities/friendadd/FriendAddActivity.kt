@@ -1,5 +1,6 @@
 package com.kwang0.hackinssa.presentation.ui.activities.friendadd
 
+import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,9 @@ import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
+import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
+import com.squareup.picasso.Picasso
+import java.util.*
 
 class FriendAddActivity : BaseActivity() {
 
@@ -38,10 +42,24 @@ class FriendAddActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+
+        iv.setOnClickListener({ v ->
+            val intent = Intent(Intent.ACTION_PICK,
+                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            startActivityForResult(Intent.createChooser(intent, "Select Image"), IMG_REQUEST_CODE)
+        })
         country_iv.setOnClickListener({ v ->
             val intent = Intent(this, CountrySelectActivity::class.java)
             startActivity(intent)
         })
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        data?.let {
+            if(requestCode == IMG_REQUEST_CODE && resultCode == Activity.RESULT_OK) Picasso.get().load(it.data).into(iv)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -54,5 +72,9 @@ class FriendAddActivity : BaseActivity() {
         return if (id == R.id.menu_fa_ok) {
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        const val IMG_REQUEST_CODE = 1000
     }
 }
