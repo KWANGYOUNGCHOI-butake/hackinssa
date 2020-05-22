@@ -9,16 +9,16 @@ import retrofit2.http.Path
 interface CountryRepositoryRemote {
 
     @GET("all")
-    fun getAll(): Observable<List<Country?>?>?
+    fun getAll(): Observable<MutableList<Country?>?>?
 
     @GET("name/{name}?fullText=true")
-    fun getByName( @Path("name") name: String? ): Observable<List<Country?>?>?
+    fun getByName( @Path("name") name: String? ): Observable<MutableList<Country?>?>?
 
     @GET("name/{name}")
-    fun search( @Path("name") name: String? ): Observable<List<Country?>?>?
+    fun search( @Path("name") name: String? ): Observable<MutableList<Country?>?>?
 
     @GET("region/{region}")
-    fun getByRegion( @Path("region") region: String? ): Observable<List<Country?>?>?
+    fun getByRegion( @Path("region") region: String? ): Observable<MutableList<Country?>?>?
 
     companion object { const val BASE_URL = "https://restcountries.eu/rest/v2/" }
 }

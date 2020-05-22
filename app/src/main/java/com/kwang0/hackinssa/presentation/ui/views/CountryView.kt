@@ -13,7 +13,7 @@ import java.util.*
 class CountryView(private var mContext: Context?) {
     private var rv: RecyclerView? = null
 
-    private var mList: List<Country>? = null
+    private var mList: MutableList<Country?>? = null
     private var mAdapter: CountryAdapter? = null
 
     fun bindView(a: Activity) {
@@ -25,7 +25,7 @@ class CountryView(private var mContext: Context?) {
     }
 
     fun recyclerInit() {
-        mList = ArrayList<Country>()
+        mList = ArrayList<Country?>()
         mAdapter = CountryAdapter(mContext, mList)
         rv!!.setHasFixedSize(true)
         rv!!.isNestedScrollingEnabled = false
@@ -33,11 +33,11 @@ class CountryView(private var mContext: Context?) {
         rv!!.adapter = mAdapter
     }
 
-    fun getmList(): List<Country>? {
+    fun getmList(): MutableList<Country?>? {
         return mList
     }
 
-    fun setmList(mList: List<Country>?) {
+    fun setmList(mList: MutableList<Country?>?) {
         this.mList = mList
     }
 

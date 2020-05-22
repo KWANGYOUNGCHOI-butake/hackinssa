@@ -8,30 +8,30 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class CountryRepositoryRemoteImpl: CountryRepositoryRemote{
+class CountryRepositoryRemoteImpl() : CountryRepositoryRemote{
 
     private var retrofit: Retrofit? = null
     private var countryService: CountryRepositoryRemote? = null
 
-    fun CountryRepositoryRemoteImpl() {
+    init {
         setUpRetrofit()
         createServices()
     }
 
-    override fun getAll(): Observable<List<Country?>?>? {
-        return countryService!!.getAll()
+    override fun getAll(): Observable<MutableList<Country?>?>? {
+        return countryService?.getAll()
     }
 
-    override fun getByName(name: String?): Observable<List<Country?>?>? {
-        return countryService!!.getByName(name)
+    override fun getByName(name: String?): Observable<MutableList<Country?>?>? {
+        return countryService?.getByName(name)
     }
 
-    override fun search(name: String?): Observable<List<Country?>?>? {
-        return countryService!!.search(name)
+    override fun search(name: String?): Observable<MutableList<Country?>?>? {
+        return countryService?.search(name)
     }
 
-    override fun getByRegion(region: String?): Observable<List<Country?>?>? {
-        return countryService!!.getByRegion(region)
+    override fun getByRegion(region: String?): Observable<MutableList<Country?>?>? {
+        return countryService?.getByRegion(region)
     }
 
     private fun setUpRetrofit() {
@@ -43,6 +43,6 @@ class CountryRepositoryRemoteImpl: CountryRepositoryRemote{
     }
 
     private fun createServices() {
-        countryService = retrofit!!.create(CountryRepositoryRemote::class.java)
+        countryService = retrofit?.create(CountryRepositoryRemote::class.java)
     }
 }

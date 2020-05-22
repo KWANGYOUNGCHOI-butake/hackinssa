@@ -10,6 +10,10 @@ import com.kwang0.hackinssa.presentation.ui.activities.main.TagFragment
 
 class MainPagerAdapter(fm:FragmentManager): FragmentPagerAdapter(fm, FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     val PAGE_MAX_CNT = 4
+    val countryFragment = CountryFragment()
+    val tagFragment = TagFragment()
+    val settingFragment = SettingFragment()
+    val addressFragment = AddressFragment()
 
     override fun getCount(): Int {
         return PAGE_MAX_CNT
@@ -18,10 +22,10 @@ class MainPagerAdapter(fm:FragmentManager): FragmentPagerAdapter(fm, FragmentPag
     override fun getItem(position: Int): Fragment {
         val fragment = when(position)
         {
-            1 -> CountryFragment()
-            2 -> TagFragment()
-            3 -> SettingFragment()
-            else -> AddressFragment()
+            1 -> countryFragment
+            2 -> tagFragment
+            3 -> settingFragment
+            else -> addressFragment
         }
         fragment.setHasOptionsMenu(true)
         return fragment

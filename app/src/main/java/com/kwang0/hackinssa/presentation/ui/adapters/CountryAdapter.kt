@@ -9,8 +9,22 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
+import com.squareup.picasso.Picasso
 
-class CountryAdapter(var mContext: Context?, var mData: List<Country>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
+
+class CountryAdapter(var mContext: Context?, var mData: MutableList<Country?>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
+
+    private val BASE_IMG_URL_250_PX = "https://github.com/hjnilsson/country-flags/blob/master/png250px/"
+
+    fun addManyToList(countries: MutableList<Country?>?) {
+        this.mData = countries
+    }
+
+    fun clearList() {
+        with(this.mData) {
+            this?.clear()
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val rootView: View
@@ -23,7 +37,13 @@ class CountryAdapter(var mContext: Context?, var mData: List<Country>?) : Recycl
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val item: Country? = mData!!.get(position)
+
+        Picasso.get()
+                .load(BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
+                .into(holder.iv)
+
+        holder.tv.setText(item.getName())
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
