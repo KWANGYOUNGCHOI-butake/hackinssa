@@ -31,7 +31,7 @@ class CountrySelectActivity : BaseActivity() {
                 .load(BASE_IMG_URL_250_PX.toString() + country.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
                 .into(iv)
 
-        name_tv.text = country.getName()
+        name_tv.text = country.getNativeName()
 
 
 //        val timeClient = NTPUDPClient()

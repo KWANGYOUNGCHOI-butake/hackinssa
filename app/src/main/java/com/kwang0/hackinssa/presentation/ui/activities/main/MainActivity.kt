@@ -1,7 +1,7 @@
 package com.kwang0.hackinssa.presentation.ui.activities.main;
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -34,8 +34,10 @@ class MainActivity: BaseActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val pagerAdapter = MainPagerAdapter(supportFragmentManager)
-        container.adapter = pagerAdapter
+        val limit = if (pagerAdapter.getCount() > 1) pagerAdapter.getCount() - 1 else 1
 
+        container.adapter = pagerAdapter
+        container.offscreenPageLimit = limit
 
         container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tl))
         tl.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))

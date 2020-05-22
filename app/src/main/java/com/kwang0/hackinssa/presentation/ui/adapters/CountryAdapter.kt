@@ -48,7 +48,7 @@ class CountryAdapter(var mContext: Context?, var mData: MutableList<Country?>?) 
                 .load(BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
                 .into(holder.iv)
 
-        holder.tv.text = item.getName()
+        holder.tv.text = item.getNativeName()
         holder.layout.setOnClickListener {v ->
             val intent = Intent(mContext, CountrySelectActivity::class.java)
             intent.putExtra("country", mData?.get(position))
