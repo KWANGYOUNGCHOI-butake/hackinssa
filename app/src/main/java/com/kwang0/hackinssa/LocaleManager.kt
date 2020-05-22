@@ -31,7 +31,7 @@ class LocaleManager(context: Context?) {
 
     fun getLanguage(): String? {
         val defaultLang: String
-        if(Locale.getDefault().getDisplayCountry().equals(LANGUAGE_KOREAN)) defaultLang = LANGUAGE_KOREAN
+        if(Locale.getDefault().language.equals(LANGUAGE_KOREAN)) defaultLang = LANGUAGE_KOREAN
         else defaultLang = LANGUAGE_ENGLISH
         return prefs.getString(LANGUAGE_KEY, defaultLang)
     }

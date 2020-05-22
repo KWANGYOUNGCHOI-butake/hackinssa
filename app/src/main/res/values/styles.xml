@@ -20,5 +20,15 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
         <item name="iconTint">@color/colorWhite</item>
         <item name="colorControlNormal">@color/colorWhite</item>
+        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        <item name="popupTheme">@style/OverflowPopupStyle</item>
+    </style>
+    <style name="OverflowPopupStyle" parent="Widget.AppCompat.Light.PopupMenu">
+        <item name="android:colorBackground">@color/colorWhiteTrans</item>
+        <item name="android:textColor">@color/colorBlack</item>
+    </style>
+    <style name="OverflowMenuStyle" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:dropDownHorizontalOffset">@dimen/overflowHorOffset</item>
+        <item name="android:dropDownVerticalOffset">@dimen/overflowVerOffset</item>
     </style>
 </resources>

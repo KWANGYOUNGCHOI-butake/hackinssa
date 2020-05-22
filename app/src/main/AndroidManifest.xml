@@ -17,14 +17,13 @@
         <activity android:name=".presentation.ui.activities.countryselect.CountrySelectActivity" />
         <activity android:name=".presentation.ui.activities.friendadd.FriendAddActivity" />
         <activity android:name=".presentation.ui.activities.countryinfo.CountryInfoActivity" />
-        <activity android:name=".presentation.ui.activities.friendinfo.FriendInfoActivity" >
+        <activity android:name=".presentation.ui.activities.friendinfo.FriendInfoActivity" />
+        <activity android:name=".presentation.ui.activities.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".presentation.ui.activities.main.MainActivity">
         </activity>
     </application>
 

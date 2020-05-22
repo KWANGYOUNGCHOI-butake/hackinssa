@@ -11,6 +11,8 @@
     <dimen name="textSuperMaxSmall">10sp</dimen>
 
     <dimen name="tabHeight">48dp</dimen>
+    <dimen name="overflowHorOffset">-6dp</dimen>
+    <dimen name="overflowVerOffset">-12dp</dimen>
 
     <dimen name="bigPadding">16dp</dimen>
     <dimen name="padding">8dp</dimen>
