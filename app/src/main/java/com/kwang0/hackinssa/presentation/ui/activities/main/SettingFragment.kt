@@ -39,7 +39,7 @@ class SettingFragment : Fragment() {
 
 
     private fun setNewLocale(language: String, restartProcess: Boolean): Boolean {
-        App.localeManager?.setNewLocale(context!!, language)
+        App.localeManager?.setNewLocale(context, language)
         val i = Intent(context, MainActivity::class.java)
         startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
         if (restartProcess) {

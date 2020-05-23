@@ -75,6 +75,7 @@ class LocaleManager(context: Context?) {
         const val LANGUAGE_ENGLISH = "en"
         const val LANGUAGE_KOREAN = "ko"
         private const val LANGUAGE_KEY = "language_key"
+
         fun getLocale(res: Resources): Locale {
             val config: Configuration = res.getConfiguration()
             return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) config.getLocales().get(0) else config.locale
