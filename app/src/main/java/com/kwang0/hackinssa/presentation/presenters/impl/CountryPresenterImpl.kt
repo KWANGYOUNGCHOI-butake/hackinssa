@@ -17,9 +17,7 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
     private var countryRepository: CountryRepository? = null
     private var countrySubscription: Disposable? = null
 
-    private val OPERATION_ALL = 0
-    private val OPERATION_QUERY = 1
-    private val OPERATION_REGION = 2
+    private val OPERATION_QUERY = 0
 
     private var currentOperation = 0
     private var query: String? = null
@@ -33,17 +31,7 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
         countryRepository = CountryRepositoryImpl(CountryRepositoryRemoteImpl())
     }
 
-    override fun getAll() {
-        currentOperation = OPERATION_ALL
-        countrySubscription = countryRepository?.getAll()
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.doOnComplete({ view!!.adapterNotifyChanges() })
-                ?.subscribe({ countries -> view!!.addResultsToList(countries) }, { throwable -> view!!.handleError(throwable) })
-    }
-
     override fun search(query: String?) {
-        Log.d(TAG, "worked???" + query)
         currentOperation = OPERATION_QUERY
         this.query = query
         countrySubscription = countryRepository?.search(query)
@@ -53,22 +41,10 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
                 ?.subscribe({ countries -> view!!.addResultsToList(countries) }, { throwable -> view!!.handleError(throwable) })
     }
 
-    override fun getByRegion(region: String?) {
-        currentOperation = OPERATION_REGION
-        this.region = region
-        countrySubscription = countryRepository?.getByRegion(region)
-                ?.subscribeOn(Schedulers.io())
-                ?.observeOn(AndroidSchedulers.mainThread())
-                ?.doOnComplete({ view!!.adapterNotifyChanges() })
-                ?.subscribe({ countries -> view!!.addResultsToList(countries) }, { throwable -> view!!.handleError(throwable) })
-    }
-
     override fun restoreData() {
         when (currentOperation) {
-            OPERATION_ALL -> getAll()
             OPERATION_QUERY -> search(query)
-            OPERATION_REGION -> getByRegion(region)
-            else -> getAll()
+            else -> search(query)
         }
     }
 }
