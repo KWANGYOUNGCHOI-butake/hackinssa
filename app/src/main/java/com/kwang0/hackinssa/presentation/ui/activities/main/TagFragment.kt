@@ -2,17 +2,44 @@ package com.kwang0.hackinssa.presentation.ui.activities.main
 
 import android.os.Bundle
 import android.view.*
+import android.view.View.GONE
+import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.data.models.Tag
+import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
+import com.kwang0.hackinssa.presentation.ui.views.TagView
 
-class TagFragment : Fragment() {
+class TagFragment : Fragment(), TagMenuListener {
 
     var menu: Menu? = null
+
+    lateinit var search_et: EditText
+    lateinit var empty_tv: TextView
+
+    private var tagView: TagView? = null
+    private var tagList: MutableList<Tag?>? = null
+    private var tagAdapter: TagAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_tag, container, false)
+
+        empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
+        empty_tv.visibility = GONE
+
+        tagView = TagView(context, this)
+        tagView?.bindView(v)
+        tagView?.recyclerInit()
+
+        tagList = tagView?.getmList()
+        tagAdapter = tagView?.getmAdapter()
+
+        tagList?.add(Tag("tag1"))
+        tagAdapter?.notifyDataSetChanged()
+
         return v
     }
 
@@ -26,17 +53,31 @@ class TagFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_tag_edit) {
-            menu?.getItem(0)?.setVisible(false)
-            menu?.getItem(1)?.setVisible(false)
-            menu?.getItem(2)?.setVisible(false)
-            menu?.getItem(3)?.setVisible(true)
+            showTrashMenu()
             true
         } else if (id == R.id.menu_tag_delete) {
-            menu?.getItem(0)?.setVisible(true)
-            menu?.getItem(1)?.setVisible(true)
-            menu?.getItem(2)?.setVisible(true)
-            menu?.getItem(3)?.setVisible(false)
+            hideTrashMenu()
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    fun showTrashMenu() {
+        menu?.getItem(0)?.setVisible(false)
+        menu?.getItem(1)?.setVisible(false)
+        menu?.getItem(2)?.setVisible(false)
+        menu?.getItem(3)?.setVisible(true)
+    }
+    fun hideTrashMenu() {
+        menu?.getItem(0)?.setVisible(true)
+        menu?.getItem(1)?.setVisible(true)
+        menu?.getItem(2)?.setVisible(true)
+        menu?.getItem(3)?.setVisible(false)
+    }
+
+
+    override fun menuChanged() {
+        menu?.getItem(3)?.let {
+            if(!it.isVisible) showTrashMenu()
+        }
     }
 }

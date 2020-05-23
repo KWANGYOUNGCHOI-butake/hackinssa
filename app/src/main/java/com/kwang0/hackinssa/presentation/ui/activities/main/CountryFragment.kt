@@ -1,19 +1,14 @@
 package com.kwang0.hackinssa.presentation.ui.activities.main
 
-import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.TextView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.kwang0.hackinssa.R
@@ -22,10 +17,9 @@ import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
 import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
-import com.kwang0.hackinssa.presentation.ui.extensions.Keyboard
+import com.kwang0.hackinssa.utils.Keyboard
 import com.kwang0.hackinssa.presentation.ui.views.CountryView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import java.security.Key
 import java.util.concurrent.TimeUnit
 
 

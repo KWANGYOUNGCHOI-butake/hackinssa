@@ -8,12 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Tag
+import com.kwang0.hackinssa.presentation.ui.activities.main.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.presentation.ui.adapters.FriendAdapter
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import java.util.ArrayList
 
-class TagView(private var mContext: Context?) {
+class TagView(var mContext: Context?, var menuListener: TagMenuListener) {
     var rv: RecyclerView? = null
 
     private var mList: MutableList<Tag?>? = null
@@ -29,7 +30,7 @@ class TagView(private var mContext: Context?) {
 
     fun recyclerInit() {
         mList = ArrayList<Tag?>()
-        mAdapter = TagAdapter(mContext, mList)
+        mAdapter = TagAdapter(mContext, mList, menuListener)
         rv?.setHasFixedSize(true)
         rv?.isNestedScrollingEnabled = false
         rv?.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)

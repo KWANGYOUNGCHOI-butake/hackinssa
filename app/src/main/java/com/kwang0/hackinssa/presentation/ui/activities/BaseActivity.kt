@@ -12,7 +12,7 @@ abstract class BaseActivity: AppCompatActivity() {
     private val TAG = BaseActivity::class.simpleName
 
     override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(App.localeManager?.setLocale(newBase))
+        super.attachBaseContext(App.localeHelper?.setLocale(newBase))
     }
 
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {

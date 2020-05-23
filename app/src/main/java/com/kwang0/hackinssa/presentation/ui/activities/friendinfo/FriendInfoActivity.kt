@@ -14,6 +14,7 @@ import androidx.appcompat.widget.Toolbar
 import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
+import com.kwang0.hackinssa.utils.IntentHelper
 
 class FriendInfoActivity : BaseActivity() {
 
@@ -44,8 +45,8 @@ class FriendInfoActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        phone_iv.setOnClickListener { v -> onClickPhone("tel:0123456789") }
-        email_iv.setOnClickListener { v -> onClickEmail("admin@gmail.com") }
+        phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(this, "010-1234-5678") }
+        email_iv.setOnClickListener { v -> IntentHelper.emailIntent(this, "admin@gmail.com") }
 
     }
 
@@ -59,25 +60,5 @@ class FriendInfoActivity : BaseActivity() {
         return if (id == R.id.menu_fi_edit) {
             true
         } else super.onOptionsItemSelected(item)
-    }
-
-    fun onClickEmail(recipient: String) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.data = Uri.parse("mailto:")
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
-
-        try {
-            startActivity(Intent.createChooser(intent, "Choose Email Client..."))
-        }
-        catch (e: Exception){
-            Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
-        }
-    }
-
-    fun onClickPhone(phoneNumber: String) {
-        val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse(phoneNumber)
-        startActivity(intent)
     }
 }

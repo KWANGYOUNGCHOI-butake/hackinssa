@@ -3,14 +3,14 @@ package com.kwang0.hackinssa
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
-import android.util.Log
+import com.kwang0.hackinssa.utils.LocaleHelper
 
 
 class App : Application() {
     val TAG = App::class.simpleName
 
     companion object {
-        var localeManager: LocaleManager? = null
+        var localeHelper: LocaleHelper? = null
     }
 
     override fun onCreate() {
@@ -18,12 +18,12 @@ class App : Application() {
     }
 
     override fun attachBaseContext(base: Context?) {
-        localeManager = LocaleManager(base)
-        super.attachBaseContext(localeManager?.setLocale(base))
+        localeHelper = LocaleHelper(base)
+        super.attachBaseContext(localeHelper?.setLocale(base))
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        localeManager?.setLocale(this)
+        localeHelper?.setLocale(this)
     }
 }

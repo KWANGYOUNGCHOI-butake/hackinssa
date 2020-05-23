@@ -1,4 +1,4 @@
-package com.kwang0.hackinssa
+package com.kwang0.hackinssa.utils
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -7,17 +7,11 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
-import android.os.Build.VERSION_CODES.JELLY_BEAN_MR1
-import android.os.Build.VERSION_CODES.N
-import android.os.LocaleList
 import android.preference.PreferenceManager
-import android.util.Log
-import androidx.annotation.RequiresApi
 import java.util.*
-import kotlin.collections.LinkedHashSet
 
 
-class LocaleManager(context: Context?) {
+class LocaleHelper(context: Context?) {
     private val prefs: SharedPreferences
 
     fun setLocale(c: Context?): Context? {

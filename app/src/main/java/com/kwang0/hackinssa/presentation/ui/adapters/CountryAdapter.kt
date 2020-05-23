@@ -41,11 +41,11 @@ class CountryAdapter(var mContext: Context?, var mData: MutableList<Country?>?) 
     }
 
     override fun getItemCount(): Int {
-        return mData!!.size
+        return mData?.size!!
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item: Country? = mData!!.get(position)
+        val item: Country? = mData?.get(position)
 
         Picasso.get()
                 .load(BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
