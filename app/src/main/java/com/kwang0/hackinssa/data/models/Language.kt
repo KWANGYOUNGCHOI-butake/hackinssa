@@ -8,19 +8,15 @@ import java.io.Serializable
 class Language: Serializable {
 
     @SerializedName("iso639_1")
-    @Expose
     private var iso6391: String? = null
 
     @SerializedName("iso639_2")
-    @Expose
     private var iso6392: String? = null
 
     @SerializedName("name")
-    @Expose
     private var name: String? = null
 
     @SerializedName("nativeName")
-    @Expose
     private var nativeName: String? = null
 
     fun getIso6391(): String? {

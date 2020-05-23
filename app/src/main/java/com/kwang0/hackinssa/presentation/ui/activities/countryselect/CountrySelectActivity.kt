@@ -13,7 +13,7 @@ import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
-import com.kwang0.hackinssa.utils.Keyboard
+import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.views.CountryView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
@@ -55,7 +55,7 @@ class CountrySelectActivity : BaseActivity(), CountryPresenterView {
                 .subscribe({ chars ->
                     val searchTerm: String = chars.trim().toString()
                     if (chars.trim().length == 0) {
-                        Keyboard.hideSoftKeyBoard(this, search_et)
+                        hideKeyboard()
                         countryPresenter?.clear()
                     } else {
                         countryPresenter?.search(searchTerm)

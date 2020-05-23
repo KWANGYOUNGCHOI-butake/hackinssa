@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.RadioGroup
 import androidx.fragment.app.Fragment
 import com.kwang0.hackinssa.App
-import com.kwang0.hackinssa.utils.LocaleHelper.Companion.LANGUAGE_ENGLISH
-import com.kwang0.hackinssa.utils.LocaleHelper.Companion.LANGUAGE_KOREAN
+import com.kwang0.hackinssa.helper.LocaleHelper.Companion.LANGUAGE_ENGLISH
+import com.kwang0.hackinssa.helper.LocaleHelper.Companion.LANGUAGE_KOREAN
 import com.kwang0.hackinssa.R
 
 

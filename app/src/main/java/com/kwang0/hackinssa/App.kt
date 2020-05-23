@@ -3,7 +3,7 @@ package com.kwang0.hackinssa
 import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
-import com.kwang0.hackinssa.utils.LocaleHelper
+import com.kwang0.hackinssa.helper.LocaleHelper
 
 
 class App : Application() {

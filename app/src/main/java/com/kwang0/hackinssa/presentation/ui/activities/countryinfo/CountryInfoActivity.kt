@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
+import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
@@ -37,23 +38,29 @@ class CountryInfoActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_info)
 
-        val country = intent.getSerializableExtra("country") as Country
-
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         iv = findViewById<ImageView>(R.id.ci_iv)
         name_tv = findViewById<TextView>(R.id.ci_name_tv)
         time_tv = findViewById<TextView>(R.id.ci_time_tv)
 
+
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        Picasso.get()
-                .load(CountryAdapter.BASE_IMG_URL_250_PX.toString() + country.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
-                .into(iv)
-
-        name_tv.text = country.getNativeName()
-
+        getIntentExtra()
         getNetworkTime()
+    }
+
+    fun getIntentExtra() {
+
+        val country = intent?.extras?.getSerializable("country") as? Country
+
+        country?.let {
+            Picasso.get()
+                    .load(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
+                    .into(iv)
+            name_tv.text = it.getNativeName()
+        }
     }
 
     @SuppressLint("CheckResult")

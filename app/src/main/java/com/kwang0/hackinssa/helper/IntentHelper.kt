@@ -1,13 +1,15 @@
-package com.kwang0.hackinssa.utils
+package com.kwang0.hackinssa.helper
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 
 object IntentHelper {
+
+    const val IMG_REQUEST_CODE = 1000
+
     fun emailIntent(context: Context?, recipient: String?) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.data = Uri.parse("mailto:")
@@ -33,4 +35,11 @@ object IntentHelper {
             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
         }
     }
+
+    fun galleryIntent(activity: Activity?) {
+        val intent = Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        activity?.startActivityForResult(Intent.createChooser(intent, "Select Image"), IMG_REQUEST_CODE)
+    }
+
 }

@@ -6,15 +6,12 @@ import java.io.Serializable
 
 class Currency: Serializable {
     @SerializedName("code")
-    @Expose
     private var code: String? = null
 
     @SerializedName("name")
-    @Expose
     private var name: String? = null
 
     @SerializedName("symbol")
-    @Expose
     private var symbol: String? = null
 
     fun getCode(): String? {

@@ -1,4 +1,4 @@
-package com.kwang0.hackinssa.utils
+package com.kwang0.hackinssa.helper
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi

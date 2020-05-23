@@ -2,6 +2,7 @@ package com.kwang0.hackinssa.presentation.ui.adapters
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
-import com.kwang0.hackinssa.utils.IntentHelper
+import com.kwang0.hackinssa.presentation.ui.activities.friendinfo.FriendInfoActivity
+import com.kwang0.hackinssa.helper.IntentHelper
 
 class FriendAdapter(var mContext: Context?, var mData: MutableList<Friend?>?) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
@@ -31,6 +33,11 @@ class FriendAdapter(var mContext: Context?, var mData: MutableList<Friend?>?) : 
         holder.name_tv.text = mData?.get(position)?.name
         holder.contact_tv.text = mData?.get(position)?.phone + "   " + mData?.get(position)?.email
 
+        holder.layout.setOnClickListener({ v ->
+            val intent = Intent(mContext, FriendInfoActivity::class.java)
+            intent.putExtra("friend", mData?.get(position))
+            mContext?.startActivity(intent)
+        })
         holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, mData?.get(position)?.phone) }
         holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, mData?.get(position)?.email) }
     }

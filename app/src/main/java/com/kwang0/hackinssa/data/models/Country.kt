@@ -8,51 +8,39 @@ import java.io.Serializable
 class Country: Serializable {
 
     @SerializedName("name")
-    @Expose
     private var name: String? = null
 
     @SerializedName("alpha2Code")
-    @Expose
     private var alpha2Code: String? = null
 
     @SerializedName("alpha3Code")
-    @Expose
     private var alpha3Code: String? = null
 
     @SerializedName("callingCodes")
-    @Expose
     private var callingCodes: List<String?>? = null
 
     @SerializedName("capital")
-    @Expose
     private var capital: String? = null
 
     @SerializedName("region")
-    @Expose
     private var region: String? = null
 
     @SerializedName("population")
-    @Expose
     private var population: String? = null
 
     @SerializedName("demonym")
-    @Expose
     private var demonym: String? = null
 
     @SerializedName("timezones")
-    @Expose
     private var timezones: List<String?>? = null
 
     @SerializedName("nativeName")
-    @Expose
     private var nativeName: String? = null
 
     @SerializedName("currencies")
-    @Expose
     private var currencies: List<Currency?>? = null
 
     @SerializedName("languages")
-    @Expose
     private var languages: List<Language?>? = null
 
     fun getName(): String? {

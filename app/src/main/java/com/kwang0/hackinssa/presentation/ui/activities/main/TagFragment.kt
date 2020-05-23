@@ -15,6 +15,7 @@ import com.kwang0.hackinssa.presentation.ui.views.TagView
 class TagFragment : Fragment(), TagMenuListener {
 
     var menu: Menu? = null
+    var trashChk = false
 
     lateinit var search_et: EditText
     lateinit var empty_tv: TextView
@@ -47,6 +48,10 @@ class TagFragment : Fragment(), TagMenuListener {
         this.menu = menu
         menu.clear()
         inflater.inflate(R.menu.menu_tag, menu)
+
+        if(trashChk) showTrashMenu()
+        else hideTrashMenu()
+
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -62,12 +67,14 @@ class TagFragment : Fragment(), TagMenuListener {
     }
 
     fun showTrashMenu() {
+        trashChk = true
         menu?.getItem(0)?.setVisible(false)
         menu?.getItem(1)?.setVisible(false)
         menu?.getItem(2)?.setVisible(false)
         menu?.getItem(3)?.setVisible(true)
     }
     fun hideTrashMenu() {
+        trashChk = false
         menu?.getItem(0)?.setVisible(true)
         menu?.getItem(1)?.setVisible(true)
         menu?.getItem(2)?.setVisible(true)
