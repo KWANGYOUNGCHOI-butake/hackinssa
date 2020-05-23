@@ -36,6 +36,7 @@ class AddressFragment : Fragment() {
 
         friendList?.add(Friend("mina - avatar", "mina", "010-1234-5678", "sample@gmail.com"))
         friendAdapter?.notifyDataSetChanged()
+
         
         return v
     }
