@@ -6,9 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.ui.activities.main.AddressFragment">
 
-    <TextView
+    <include layout="@layout/reuse_searchbar"/>
+
+    <include layout="@layout/reuse_friend_rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="address" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/searchbar"/>
 
 </RelativeLayout>
