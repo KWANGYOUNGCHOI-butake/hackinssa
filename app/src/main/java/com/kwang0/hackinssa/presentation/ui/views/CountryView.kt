@@ -11,7 +11,7 @@ import com.kwang0.hackinssa.data.models.Country
 import java.util.*
 
 class CountryView(private var mContext: Context?) {
-    private var rv: RecyclerView? = null
+    var rv: RecyclerView? = null
 
     private var mList: MutableList<Country?>? = null
     private var mAdapter: CountryAdapter? = null
@@ -27,10 +27,10 @@ class CountryView(private var mContext: Context?) {
     fun recyclerInit() {
         mList = ArrayList<Country?>()
         mAdapter = CountryAdapter(mContext, mList)
-        rv!!.setHasFixedSize(true)
-        rv!!.isNestedScrollingEnabled = false
-        rv!!.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
-        rv!!.adapter = mAdapter
+        rv?.setHasFixedSize(true)
+        rv?.isNestedScrollingEnabled = false
+        rv?.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
+        rv?.adapter = mAdapter
     }
 
     fun getmList(): MutableList<Country?>? {

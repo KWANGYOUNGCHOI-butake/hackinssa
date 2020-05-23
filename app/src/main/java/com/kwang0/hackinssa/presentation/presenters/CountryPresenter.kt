@@ -4,5 +4,6 @@ interface CountryPresenter {
     fun setUp()
 
     fun search(query: String?)
+    fun clear()
     fun restoreData()
 }

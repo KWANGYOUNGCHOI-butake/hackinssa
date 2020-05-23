@@ -32,7 +32,7 @@ class FriendAddActivity : BaseActivity() {
         setContentView(R.layout.activity_friend_add)
 
         toolbar = findViewById<Toolbar>(R.id.toolbar)
-        iv = findViewById<ImageView>(R.id.fa_iv)
+        iv = findViewById<ImageView>(R.id.fa_avatar_iv)
         name_et = findViewById<EditText>(R.id.fa_name_et)
         phone_et = findViewById<EditText>(R.id.fa_phone_et)
         email_et = findViewById<EditText>(R.id.fa_email_et)

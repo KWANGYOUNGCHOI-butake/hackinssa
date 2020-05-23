@@ -7,9 +7,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 
 object Keyboard {
-    fun hideSoftKeyBoard(context: Context, view: View) {
+    fun hideSoftKeyBoard(context: Context?, view: View) {
         try {
-            val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
         } catch (e: Exception) {
             e.printStackTrace()

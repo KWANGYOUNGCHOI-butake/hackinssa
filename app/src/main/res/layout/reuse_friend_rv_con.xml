@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/country_rv_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/friend_rv_avatar_iv"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:src="@drawable/ic_place_holder"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/friend_rv_avatar_iv"
+        android:layout_toStartOf="@+id/friend_rv_phone_iv"
+        tools:ignore="RtlCompat" >
+        <TextView
+            android:id="@+id/friend_rv_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSmall"/>
+        <TextView
+            android:id="@+id/friend_rv_contact_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSmall"
+            android:layout_below="@+id/friend_rv_name_tv"/>
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/friend_rv_phone_iv"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_phone"
+        android:layout_toStartOf="@+id/friend_rv_email_iv"
+        android:layout_centerVertical="true"
+        tools:ignore="RtlCompat"/>
+    <ImageView
+        android:id="@+id/friend_rv_email_iv"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_email"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        tools:ignore="RtlCompat"/>
 
 </RelativeLayout>

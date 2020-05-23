@@ -7,9 +7,12 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding4.widget.textChanges
@@ -29,7 +32,11 @@ import java.util.concurrent.TimeUnit
 class CountryFragment : Fragment(), CountryPresenterView {
     val TAG = CountryFragment::class.java.simpleName
 
-    private var countryList: MutableList<Country>? = null
+    lateinit var search_et: EditText
+    lateinit var empty_tv: TextView
+
+    private var countryView: CountryView? = null
+    private var countryList: MutableList<Country?>? = null
     private var countryAdapter: CountryAdapter? = null
     private var countryPresenter: CountryPresenter? = null
 
@@ -37,40 +44,46 @@ class CountryFragment : Fragment(), CountryPresenterView {
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_country, container, false)
 
-        val search_et = v.findViewById<EditText>(R.id.searchbar_et)
-        search_et.setHint(R.string.search_hint)
+        search_et = v.findViewById<EditText>(R.id.searchbar_et)
+        empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
 
-        val countryView = CountryView(context)
-        countryView.bindView(v)
-        countryView.recyclerInit()
+        countryViewSetUp(v)
 
-        countryList = countryView.getmList() as MutableList<Country>
-        countryAdapter = countryView.getmAdapter()
-
-        countryPresenter = CountryPresenterImpl(this).createPresenter(this)
+        countryPresenter = CountryPresenterImpl(this)
 
         countryPresenter?.setUp()
 
         search_et.textChanges()
-                .skip(1)
                 .throttleLast(100, TimeUnit.MILLISECONDS)
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .filter({ chars ->
-                    val empty = TextUtils.isEmpty(chars.trim())
-                    !empty
-                })
+//                .filter({ chars ->
+//                    val empty = TextUtils.isEmpty(chars.trim())
+//                    !empty
+//                })
                 .subscribe({ chars ->
                     val searchTerm: String = chars.trim().toString()
                     if (chars.trim().length == 0) {
-                        Keyboard.hideSoftKeyBoard(context!!, v)
+                        Keyboard.hideSoftKeyBoard(context, search_et)
+                        countryPresenter?.clear()
                     } else {
                         countryPresenter?.search(searchTerm)
                     }
                 })
 
         return v
+    }
+
+    fun countryViewSetUp(v: View) {
+        countryView = CountryView(context)
+        countryView?.bindView(v)
+        countryView?.recyclerInit()
+
+        countryList = countryView?.getmList()
+        countryAdapter = countryView?.getmAdapter()
+
+        showEmptyLayout()
     }
 
     override fun adapterNotifyChanges() {
@@ -80,7 +93,12 @@ class CountryFragment : Fragment(), CountryPresenterView {
     override fun addResultsToList(countries: MutableList<Country?>?) {
         Log.d(TAG, "countries : " + countries?.size)
         countryAdapter?.addManyToList(countries)
-//        showContentLayout()
+        showExistLayout()
+    }
+
+    override fun handleEmpty() {
+        countryAdapter?.clearList()
+        showEmptyLayout()
     }
 
     override fun handleError(throwable: Throwable?) {
@@ -91,6 +109,15 @@ class CountryFragment : Fragment(), CountryPresenterView {
         }
     }
 
+    fun showEmptyLayout() {
+        empty_tv.visibility = VISIBLE
+        countryView?.rv?.visibility = GONE
+    }
+
+    fun showExistLayout() {
+        empty_tv.visibility = GONE
+        countryView?.rv?.visibility = VISIBLE
+    }
 
 
 }

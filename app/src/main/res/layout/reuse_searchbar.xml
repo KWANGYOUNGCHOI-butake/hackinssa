@@ -11,15 +11,17 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/searchbar_et"
+        android:layout_alignBottom="@+id/searchbar_et"
         android:src="@drawable/ic_search"
         android:tint="@color/colorGray"
-        android:layout_centerVertical="true"
         tools:ignore="RtlCompat"/>
     <EditText
         android:id="@+id/searchbar_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/searchbar_iv"
+        android:hint="@string/search_hint"
         tools:ignore="RtlCompat" />
 
 </RelativeLayout>

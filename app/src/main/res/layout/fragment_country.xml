@@ -12,4 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/searchbar"/>
 
+    <include layout="@layout/reuse_empty_tv"/>
+
 </RelativeLayout>

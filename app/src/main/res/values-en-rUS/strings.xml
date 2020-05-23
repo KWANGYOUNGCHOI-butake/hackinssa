@@ -7,7 +7,8 @@
     <string name="tab_tag">tag</string>
     <string name="tab_setting">setting</string>
 
-    <string name="search_hint">please fill this space</string>
+    <string name="search_hint">Search</string>
+    <string name="search_empty">please fill this space</string>
     <string name="setting_ko">Korean</string>
     <string name="setting_en">English</string>
 

@@ -21,11 +21,6 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
 
     private var currentOperation = 0
     private var query: String? = null
-    private var region: String? = null
-
-    fun createPresenter(view: CountryPresenterView): CountryPresenterImpl? {
-        return CountryPresenterImpl(view)
-    }
 
     override fun setUp() {
         countryRepository = CountryRepositoryImpl(CountryRepositoryRemoteImpl())
@@ -37,8 +32,12 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
         countrySubscription = countryRepository?.search(query)
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
-                ?.doOnComplete({ view!!.adapterNotifyChanges() })
-                ?.subscribe({ countries -> view!!.addResultsToList(countries) }, { throwable -> view!!.handleError(throwable) })
+                ?.doOnComplete({ view?.adapterNotifyChanges() })
+                ?.subscribe({ countries -> view?.addResultsToList(countries) }, { throwable -> view?.handleError(throwable) })
+    }
+
+    override fun clear() {
+        view?.handleEmpty()
     }
 
     override fun restoreData() {

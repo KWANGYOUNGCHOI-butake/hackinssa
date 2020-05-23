@@ -9,7 +9,7 @@
     <include layout="@layout/reuse_toolbar"/>
 
     <ImageView
-        android:id="@+id/fa_iv"
+        android:id="@+id/fa_avatar_iv"
         android:layout_width="108dp"
         android:layout_height="108dp"
         android:layout_below="@+id/toolbar"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/name"
-        android:layout_below="@id/fa_iv"/>
+        android:layout_below="@id/fa_avatar_iv"/>
 
     <EditText
         android:id="@+id/fa_phone_et"
