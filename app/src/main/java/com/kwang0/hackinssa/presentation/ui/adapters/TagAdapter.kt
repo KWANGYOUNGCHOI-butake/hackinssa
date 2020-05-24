@@ -37,6 +37,7 @@ class TagAdapter(var mContext: Context?, var mData: MutableList<Tag?>?, var menu
 
         holder.layout.setOnClickListener({ v ->
             val intent = Intent(mContext, TagInfoActivity::class.java)
+            intent.putExtra("tag", mData?.get(position))
             mContext?.startActivity(intent)
         })
         holder.layout.setOnLongClickListener{
