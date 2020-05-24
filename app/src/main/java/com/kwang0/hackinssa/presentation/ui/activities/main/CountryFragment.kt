@@ -23,29 +23,20 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
 
-class CountryFragment : Fragment(), CountryPresenterView {
+class CountryFragment : Fragment() {
     val TAG = CountryFragment::class.java.simpleName
 
     lateinit var search_et: EditText
-    lateinit var empty_tv: TextView
 
     private var countryView: CountryView? = null
-    private var countryList: MutableList<Country?>? = null
-    private var countryAdapter: CountryAdapter? = null
-    private var countryPresenter: CountryPresenter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_country, container, false)
 
         search_et = v.findViewById<EditText>(R.id.searchbar_et)
-        empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
 
         countryViewSetUp(v)
-
-        countryPresenter = CountryPresenterImpl(this)
-
-        countryPresenter?.setUp()
 
         search_et.textChanges()
                 .throttleLast(100, TimeUnit.MILLISECONDS)
@@ -60,9 +51,9 @@ class CountryFragment : Fragment(), CountryPresenterView {
                     val searchTerm: String = chars.trim().toString()
                     if (chars.trim().length == 0) {
                         hideKeyboard()
-                        countryPresenter?.clear()
+                        countryView?.countryPresenter?.clear()
                     } else {
-                        countryPresenter?.search(searchTerm)
+                        countryView?.countryPresenter?.search(searchTerm)
                     }
                 })
 
@@ -73,45 +64,6 @@ class CountryFragment : Fragment(), CountryPresenterView {
         countryView = CountryView(context)
         countryView?.bindView(v)
         countryView?.recyclerInit()
-
-        countryList = countryView?.getmList()
-        countryAdapter = countryView?.getmAdapter()
-
-        showEmptyLayout()
     }
-
-    override fun adapterNotifyChanges() {
-        countryAdapter?.notifyDataSetChanged()
-    }
-
-    override fun addResultsToList(countries: MutableList<Country?>?) {
-        Log.d(TAG, "countries : " + countries?.size)
-        countryAdapter?.addManyToList(countries)
-        showExistLayout()
-    }
-
-    override fun handleEmpty() {
-        countryAdapter?.clearList()
-        showEmptyLayout()
-    }
-
-    override fun handleError(throwable: Throwable?) {
-        if (throwable?.message == "HTTP 404 Not Found") {
-//            showPlaceholderNoResultsLayout()
-        } else {
-//            showPlaceholderLayout()
-        }
-    }
-
-    fun showEmptyLayout() {
-        empty_tv.visibility = VISIBLE
-        countryView?.rv?.visibility = GONE
-    }
-
-    fun showExistLayout() {
-        empty_tv.visibility = GONE
-        countryView?.rv?.visibility = VISIBLE
-    }
-
 
 }
