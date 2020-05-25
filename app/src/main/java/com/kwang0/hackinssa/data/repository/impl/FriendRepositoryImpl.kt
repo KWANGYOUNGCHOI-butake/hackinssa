@@ -1,14 +1,12 @@
-package com.kwang0.hackinssa.data
+package com.kwang0.hackinssa.data.repository.impl
 
-import com.kwang0.hackinssa.FriendDataSource
+import com.kwang0.hackinssa.data.repository.FriendRepository
+import com.kwang0.hackinssa.data.FriendDao
 import com.kwang0.hackinssa.data.models.Friend
 import io.reactivex.Completable
 import io.reactivex.Flowable
 
-class LocalFriendDataSource(friendDao: FriendDao) : FriendDataSource {
-
-    private val friendDao: FriendDao
-
+class FriendRepositoryImpl(private val friendDao: FriendDao) : FriendRepository {
     override fun getFriend(): Flowable<Friend> {
         return friendDao.getFriend()
     }
@@ -19,9 +17,5 @@ class LocalFriendDataSource(friendDao: FriendDao) : FriendDataSource {
 
     override fun deleteAllFriends() {
         friendDao.deleteAllFriends()
-    }
-
-    init {
-        this.friendDao = friendDao
     }
 }
