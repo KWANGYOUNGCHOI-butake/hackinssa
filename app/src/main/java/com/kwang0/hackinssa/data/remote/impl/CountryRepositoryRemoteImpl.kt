@@ -2,6 +2,7 @@ package com.kwang0.hackinssa.data.remote.impl
 
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.remote.CountryRepositoryRemote
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -18,19 +19,19 @@ class CountryRepositoryRemoteImpl() : CountryRepositoryRemote{
         createServices()
     }
 
-    override fun getAll(): Observable<MutableList<Country?>?>? {
+    override fun getAll(): Flowable<MutableList<Country?>?>? {
         return countryService?.getAll()
     }
 
-    override fun getByName(name: String?): Observable<MutableList<Country?>?>? {
+    override fun getByName(name: String?): Flowable<MutableList<Country?>?>? {
         return countryService?.getByName(name)
     }
 
-    override fun search(name: String?): Observable<MutableList<Country?>?>? {
+    override fun search(name: String?): Flowable<MutableList<Country?>?>? {
         return countryService?.search(name)
     }
 
-    override fun getByRegion(region: String?): Observable<MutableList<Country?>?>? {
+    override fun getByRegion(region: String?): Flowable<MutableList<Country?>?>? {
         return countryService?.getByRegion(region)
     }
 
