@@ -2,13 +2,8 @@ package com.kwang0.hackinssa.presentation.ui.activities.taginfo
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Friend
-import com.kwang0.hackinssa.data.models.Tag
-import com.kwang0.hackinssa.helper.toEditable
-import com.squareup.picasso.Picasso
 
 class TagInfoActivity : AppCompatActivity() {
     var TAG = TagInfoActivity::class.simpleName
@@ -25,10 +20,10 @@ class TagInfoActivity : AppCompatActivity() {
     }
 
     fun getIntentExtra() {
-        val tag = intent?.extras?.getSerializable("tag") as? Tag
+        val tag = intent?.extras?.getString("tag")
 
         tag?.let {
-            supportActionBar?.title = it.name
+            supportActionBar?.title = it
         }
 
     }

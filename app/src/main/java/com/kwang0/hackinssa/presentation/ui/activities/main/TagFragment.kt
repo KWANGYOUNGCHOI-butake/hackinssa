@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.views.TagView
@@ -22,7 +21,7 @@ class TagFragment : Fragment(), TagMenuListener {
     lateinit var empty_tv: TextView
 
     private var tagView: TagView? = null
-    private var tagList: MutableList<Tag?>? = null
+    private var tagList: MutableList<String?>? = null
     private var tagAdapter: TagAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +38,7 @@ class TagFragment : Fragment(), TagMenuListener {
         tagList = tagView?.getmList()
         tagAdapter = tagView?.getmAdapter()
 
-        tagList?.add(Tag("tag1"))
+        tagList?.add("tag1")
         tagAdapter?.notifyDataSetChanged()
 
         return v

@@ -10,12 +10,11 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
 
 
-class TagAdapter(var mContext: Context?, var mData: MutableList<Tag?>?, var menuListener: TagMenuListener?)
+class TagAdapter(var mContext: Context?, var mData: MutableList<String?>?, var menuListener: TagMenuListener?)
     : RecyclerView.Adapter<TagAdapter.ViewHolder>() {
 
 
@@ -30,7 +29,7 @@ class TagAdapter(var mContext: Context?, var mData: MutableList<Tag?>?, var menu
     }
 
     override fun onBindViewHolder(holder: TagAdapter.ViewHolder, position: Int) {
-        holder.tv.text = mData?.get(position)?.name
+        holder.tv.text = mData?.get(position)
 
         holder.layout.setOnClickListener({ v ->
             val intent = Intent(mContext, TagInfoActivity::class.java)
