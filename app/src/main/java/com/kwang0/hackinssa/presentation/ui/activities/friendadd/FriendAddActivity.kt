@@ -57,7 +57,7 @@ class FriendAddActivity : BaseActivity() {
         val friend = intent?.extras?.getSerializable("friend") as? Friend
 
         friend?.let {
-            Picasso.get().load(it.avatar).into(avatar_iv)
+            Picasso.get().load(it.avatar).placeholder(R.drawable.ic_place_holder).into(avatar_iv)
             name_et.text = it.name?.toEditable()
             phone_et.text = it.phone?.toEditable()
             email_et.text = it.email?.toEditable()

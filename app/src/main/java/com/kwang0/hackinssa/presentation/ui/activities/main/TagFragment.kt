@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
+import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.views.TagView
 
 class TagFragment : Fragment(), TagMenuListener {

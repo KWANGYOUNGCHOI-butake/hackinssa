@@ -58,6 +58,7 @@ class CountryInfoActivity : BaseActivity() {
         country?.let {
             Picasso.get()
                     .load(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
+                    .placeholder(R.drawable.ic_place_holder)
                     .into(iv)
             name_tv.text = it.getNativeName()
         }

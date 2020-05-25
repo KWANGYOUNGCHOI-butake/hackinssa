@@ -49,6 +49,7 @@ class CountryAdapter(var mContext: Context?, var mData: MutableList<Country?>?) 
 
         Picasso.get()
                 .load(BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
+                .placeholder(R.drawable.ic_place_holder)
                 .into(holder.iv)
 
         holder.tv.text = item.getNativeName()

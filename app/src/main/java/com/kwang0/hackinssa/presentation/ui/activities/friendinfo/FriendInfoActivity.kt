@@ -58,7 +58,7 @@ class FriendInfoActivity : BaseActivity() {
         friend = intent?.extras?.getSerializable("friend") as? Friend
 
         friend?.let {
-            Picasso.get().load(it.avatar).into(avatar_iv)
+            Picasso.get().load(it.avatar).placeholder(R.drawable.ic_place_holder).into(avatar_iv)
             name_tv.text = it.name
             phone_tv.text = it.phone
             email_tv.text = it.email

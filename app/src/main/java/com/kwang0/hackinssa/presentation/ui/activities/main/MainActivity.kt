@@ -28,8 +28,6 @@ class MainActivity: BaseActivity() {
 
         mainActContentsInit()
 
-
-
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
