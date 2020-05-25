@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
+import com.kwang0.hackinssa.helper.PicassoHelper
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
@@ -31,6 +32,8 @@ import kotlin.concurrent.fixedRateTimer
 
 class CountryInfoActivity : BaseActivity() {
     val TAG = CountryInfoActivity::class.simpleName
+
+    var country: Country? = null
 
     lateinit var toolbar: Toolbar
     lateinit var iv: ImageView
@@ -57,20 +60,11 @@ class CountryInfoActivity : BaseActivity() {
 
     fun getIntentExtra() {
 
-        val country = intent?.extras?.getSerializable("country") as? Country
+        country = intent?.extras?.getSerializable("country") as? Country
 
         country?.let {
-            Picasso.get()
-                    .load(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
-                    .placeholder(R.drawable.ic_place_holder)
-                    .into(iv)
+            PicassoHelper.loadImg(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", iv)
             name_tv.text = it.getNativeName()
-            Log.d(TAG, "alphacode2 : " + it.getAlpha2Code())
-            Log.d(TAG, "alphacode3 : " + it.getAlpha3Code())
-            Log.d(TAG, "region : " + it.getRegion())
-            Log.d(TAG, "languages : " + it.getLanguages())
-
-            Log.d(TAG, "timezones : " + it.getTimezones()?.get(0))
             getLocaleTime(it.getTimezones()?.get(0))
         }
     }
@@ -146,6 +140,7 @@ class CountryInfoActivity : BaseActivity() {
             true
         } else if(id == R.id.menu_ci_add_friend) {
             val intent = Intent(this, FriendAddActivity::class.java)
+            intent.putExtra("country", country)
             startActivity(intent)
             true
         } else super.onOptionsItemSelected(item)

@@ -9,6 +9,7 @@ import android.widget.Toast
 object IntentHelper {
 
     const val IMG_REQUEST_CODE = 1000
+    const val COUNTRY_REQUEST_CODE = 2000
 
     fun emailIntent(context: Context?, recipient: String?) {
         val intent = Intent(Intent.ACTION_SEND)

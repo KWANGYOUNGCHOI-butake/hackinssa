@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
+import com.kwang0.hackinssa.helper.PicassoHelper
 import com.kwang0.hackinssa.presentation.ui.activities.countryinfo.CountryInfoActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.presentation.ui.activities.main.CountryFragment
@@ -46,11 +47,7 @@ class CountryAdapter(var mContext: Context?, var mData: MutableList<Country?>?) 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: Country? = mData?.get(position)
-
-        Picasso.get()
-                .load(BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true")
-                .placeholder(R.drawable.ic_place_holder)
-                .into(holder.iv)
+        PicassoHelper.loadImg(BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", holder.iv)
 
         holder.tv.text = item.getNativeName()
         holder.layout.setOnClickListener {v ->

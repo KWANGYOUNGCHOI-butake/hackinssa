@@ -10,11 +10,15 @@ import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
+import com.kwang0.hackinssa.helper.IntentHelper.COUNTRY_REQUEST_CODE
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.helper.toEditable
 import com.kwang0.hackinssa.helper.IntentHelper.IMG_REQUEST_CODE
+import com.kwang0.hackinssa.helper.PicassoHelper
+import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.squareup.picasso.Picasso
 
 class FriendAddActivity : BaseActivity() {
@@ -55,21 +59,26 @@ class FriendAddActivity : BaseActivity() {
 
     fun getIntentExtra() {
         val friend = intent?.extras?.getSerializable("friend") as? Friend
+        val country = intent.extras?.getSerializable("country") as? Country
 
         friend?.let {
-            Picasso.get().load(it.avatar).placeholder(R.drawable.ic_place_holder).into(avatar_iv)
+            PicassoHelper.loadImg(it.avatar, avatar_iv)
             name_et.text = it.name?.toEditable()
             phone_et.text = it.phone?.toEditable()
             email_et.text = it.email?.toEditable()
         }
 
+        country?.let {
+            PicassoHelper.loadImg(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", country_iv)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         data?.let {
-            if(requestCode == IMG_REQUEST_CODE && resultCode == Activity.RESULT_OK) Picasso.get().load(it.data).into(avatar_iv)
+            if(requestCode == IMG_REQUEST_CODE && resultCode == Activity.RESULT_OK) PicassoHelper.loadImg(it.data, avatar_iv)
+            if(requestCode == COUNTRY_REQUEST_CODE && resultCode == Activity.RESULT_OK) PicassoHelper.loadImg(it.data, country_iv)
         }
     }
 
