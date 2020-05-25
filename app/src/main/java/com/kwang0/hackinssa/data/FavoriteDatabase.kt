@@ -4,23 +4,24 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.kwang0.hackinssa.data.models.Favorite
 import com.kwang0.hackinssa.data.models.Friend
 
-@Database(entities = [Friend::class], version = 1)
-abstract class FriendsDatabase : RoomDatabase() {
-    abstract fun friendDao(): FriendDao
+@Database(entities = [Favorite::class], version = 1)
+abstract class FavoriteDatabase : RoomDatabase() {
+    abstract fun favoriteDao(): FavoriteDao
 
     companion object {
         // 멀티 쓰레드 환경에서 발생하는 문제를 해결하기 위해
         // volatile 을 사용해서 변수의 read와 write를 Main Memory에서 진행
         @Volatile
-        private var INSTANCE: FriendsDatabase? = null
-        fun getInstance(context: Context): FriendsDatabase? {
+        private var INSTANCE: FavoriteDatabase? = null
+        fun getInstance(context: Context): FavoriteDatabase? {
             if (INSTANCE == null) {
-                synchronized(FriendsDatabase::class.java) {
+                synchronized(FavoriteDatabase::class.java) {
                     if (INSTANCE == null) {
                         INSTANCE = Room.databaseBuilder(context.applicationContext,
-                                FriendsDatabase::class.java, "friends.db")
+                                FavoriteDatabase::class.java, "favorite.db")
                                 .build()
                     }
                 }

@@ -14,27 +14,27 @@ class Friend: Serializable {
     @SerializedName("id")
     @NonNull
     @PrimaryKey
-    @ColumnInfo(name = "friendid")
+    @ColumnInfo(name = "friendId")
     var id: String? = null
 
     @SerializedName("avatar")
-    @ColumnInfo(name = "friendavatar")
+    @ColumnInfo(name = "friendAvatar")
     var avatar: String? = null
 
     @SerializedName("name")
-    @ColumnInfo(name = "friendname")
+    @ColumnInfo(name = "friendName")
     var name: String? = null
 
     @SerializedName("phone")
-    @ColumnInfo(name = "friendphone")
+    @ColumnInfo(name = "friendPhone")
     var phone: String? = null
 
     @SerializedName("email")
-    @ColumnInfo(name = "friendemail")
+    @ColumnInfo(name = "friendEmail")
     var email: String? = null
 
     @SerializedName("tags")
-    @ColumnInfo(name = "friendtags")
+    @ColumnInfo(name = "friendTags")
     var tag: List<String?>? = null
 
     constructor(avatar: String?, name: String?, phone: String?, email: String?, tag: List<String?>?) {
