@@ -8,13 +8,14 @@
 
     <include layout="@layout/reuse_toolbar"/>
 
-    <include layout="@layout/reuse_searchbar"/>
+    <include layout="@layout/reuse_searchbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"/>
 
     <include layout="@layout/reuse_country_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/searchbar"/>
-
-    <include layout="@layout/reuse_empty_tv"/>
 
 </RelativeLayout>
