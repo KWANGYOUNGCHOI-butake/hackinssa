@@ -17,11 +17,14 @@ class Friend: Serializable {
     @SerializedName("email")
     var email: String? = null
 
-    constructor(avatar: String?, name: String?, phone: String?, email: String?) {
+    var tag: List<Tag?>? = null
+
+    constructor(avatar: String?, name: String?, phone: String?, email: String?, tag: List<Tag?>?) {
         this.avatar = avatar
         this.name = name
         this.phone = phone
         this.email = email
+        this.tag = tag
     }
 
 }

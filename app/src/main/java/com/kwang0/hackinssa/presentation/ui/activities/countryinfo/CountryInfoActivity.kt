@@ -2,8 +2,8 @@ package com.kwang0.hackinssa.presentation.ui.activities.countryinfo
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -12,19 +12,22 @@ import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
-import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
-import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.squareup.picasso.Picasso
+import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import org.apache.commons.net.ntp.NTPUDPClient
 import java.io.IOException
 import java.net.InetAddress
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.concurrent.fixedRateTimer
 
 class CountryInfoActivity : BaseActivity() {
     val TAG = CountryInfoActivity::class.simpleName
@@ -33,6 +36,8 @@ class CountryInfoActivity : BaseActivity() {
     lateinit var iv: ImageView
     lateinit var name_tv: TextView
     lateinit var time_tv: TextView
+
+    var compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +53,6 @@ class CountryInfoActivity : BaseActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         getIntentExtra()
-        getNetworkTime()
     }
 
     fun getIntentExtra() {
@@ -61,9 +65,38 @@ class CountryInfoActivity : BaseActivity() {
                     .placeholder(R.drawable.ic_place_holder)
                     .into(iv)
             name_tv.text = it.getNativeName()
+            Log.d(TAG, "alphacode2 : " + it.getAlpha2Code())
+            Log.d(TAG, "alphacode3 : " + it.getAlpha3Code())
+            Log.d(TAG, "region : " + it.getRegion())
+            Log.d(TAG, "languages : " + it.getLanguages())
+
+            Log.d(TAG, "timezones : " + it.getTimezones()?.get(0))
+            getLocaleTime(it.getTimezones()?.get(0))
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+//        getNetworkTime()
+    }
+
+    override fun onPause() {
+        super.onPause()
+//        compositeDisposable.dispose()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getLocaleTime(timeZone: String?) {
+        fixedRateTimer("timer", false, 0L, 1000) {
+            this@CountryInfoActivity.runOnUiThread {
+                val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:ss (XXX)")
+                sdf.setTimeZone(TimeZone.getTimeZone(timeZone?.replace("UTC", "GMT")))
+                time_tv.text = sdf.format(Date())
+            }
+        }
+    }
+
+    // this is for get server time
     @SuppressLint("CheckResult")
     @Throws(IOException::class)
     fun getNetworkTime() {
@@ -75,9 +108,27 @@ class CountryInfoActivity : BaseActivity() {
                     val inetAddress = InetAddress.getByName(TIME_SERVER)
                     val timeInfo = timeClient.getTime(inetAddress)
 
-                    val time = Date(timeInfo.message.receiveTimeStamp.time)
-                    time_tv.text = time.toString()
+                    getRealTime(timeInfo.message.receiveTimeStamp.time)
                 }) { error -> Toast.makeText(this, "get Error!", Toast.LENGTH_SHORT).show() }
+    }
+
+    @SuppressLint("SetTextI18n")
+    fun getRealTime(timeStamp: Long) {
+        val disposable = Flowable.just(true)
+                .observeOn(Schedulers.computation())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe({ result: Boolean ->
+                    kotlin.run {
+
+                    }
+                    while(true) {
+                        val time = Date(timeStamp)
+                        val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:ss (XXX)", Locale.US)
+                        time_tv.text = sdf.format(time)
+                    }
+                }) { error: Throwable? -> time_tv.text = "error!!" }
+
+        compositeDisposable.add(disposable)
     }
 
     companion object {
