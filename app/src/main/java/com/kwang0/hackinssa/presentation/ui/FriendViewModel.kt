@@ -18,8 +18,8 @@ class FriendViewModel(private val repository: FriendRepository) : ViewModel() {
                 })
     }
 
-    fun updateUserName(avatar: String?, name: String?, phone: String?, email: String?, tag: List<String?>?): Completable? {
-        this.friend = if (this.friend == null) Friend(avatar, name, phone, email, tag) else Friend(this.friend?.id, avatar, name, phone, email, tag)
+    fun updateUserName(avatar: String?, name: String?, phone: String?, email: String?, created: Int?): Completable? {
+        this.friend = if (this.friend == null) Friend(avatar, name, phone, email, created) else Friend(this.friend?.id, avatar, name, phone, email, created)
         return repository.insertOrUpdateFriend(this.friend!!)
     }
 }

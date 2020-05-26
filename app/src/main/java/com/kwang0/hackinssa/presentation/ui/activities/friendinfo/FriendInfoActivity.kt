@@ -51,11 +51,10 @@ class FriendInfoActivity : BaseActivity() {
 
         phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(this, "010-1234-5678") }
         email_iv.setOnClickListener { v -> IntentHelper.emailIntent(this, "admin@gmail.com") }
-
-        getIntentExtra()
     }
 
-    fun getIntentExtra() {
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
         friend = intent?.extras?.getSerializable("friend") as? Friend
 
         friend?.let {

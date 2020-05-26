@@ -54,12 +54,10 @@ class CountryInfoActivity : BaseActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-
-        getIntentExtra()
     }
 
-    fun getIntentExtra() {
-
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
         country = intent?.extras?.getSerializable("country") as? Country
 
         country?.let {

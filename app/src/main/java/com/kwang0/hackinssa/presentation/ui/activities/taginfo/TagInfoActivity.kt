@@ -1,5 +1,6 @@
 package com.kwang0.hackinssa.presentation.ui.activities.taginfo
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
@@ -17,15 +18,14 @@ class TagInfoActivity : BaseActivity() {
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        getIntentExtra()
     }
 
-    fun getIntentExtra() {
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
         val tag = intent?.extras?.getString("tag")
 
         tag?.let {
             supportActionBar?.title = it
         }
-
     }
 }

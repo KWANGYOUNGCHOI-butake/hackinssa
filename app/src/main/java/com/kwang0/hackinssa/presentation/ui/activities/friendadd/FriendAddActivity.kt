@@ -12,6 +12,7 @@ import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
+import com.kwang0.hackinssa.helper.IntentHelper
 import com.kwang0.hackinssa.helper.IntentHelper.COUNTRY_REQUEST_CODE
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
@@ -47,19 +48,14 @@ class FriendAddActivity : BaseActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
 
-        avatar_iv.setOnClickListener({ v ->
-        })
-        country_iv.setOnClickListener({ v ->
-            val intent = Intent(this, CountrySelectActivity::class.java)
-            startActivity(intent)
-        })
-
-        getIntentExtra()
+        avatar_iv.setOnClickListener({ v -> IntentHelper.galleryIntent(this) })
+        country_iv.setOnClickListener({ v -> IntentHelper.activityIntent(this, CountrySelectActivity::class.java) })
     }
 
-    fun getIntentExtra() {
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
         val friend = intent?.extras?.getSerializable("friend") as? Friend
-        val country = intent.extras?.getSerializable("country") as? Country
+        val country = intent?.extras?.getSerializable("country") as? Country
 
         friend?.let {
             PicassoHelper.loadImg(it.avatar, avatar_iv)

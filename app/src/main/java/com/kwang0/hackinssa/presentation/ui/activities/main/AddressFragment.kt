@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
+import com.kwang0.hackinssa.helper.IntentHelper
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.FriendAdapter
 import com.kwang0.hackinssa.presentation.ui.views.FriendView
@@ -50,8 +51,7 @@ class AddressFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_addr_add_friend) {
-            val intent = Intent(context, FriendAddActivity::class.java)
-            startActivity(intent)
+            IntentHelper.activityIntent(context, FriendAddActivity::class.java)
             true
         } else super.onOptionsItemSelected(item)
     }

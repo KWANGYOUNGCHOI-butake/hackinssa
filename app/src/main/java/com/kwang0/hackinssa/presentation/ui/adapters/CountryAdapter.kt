@@ -14,6 +14,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
+import com.kwang0.hackinssa.helper.IntentHelper
 import com.kwang0.hackinssa.helper.PicassoHelper
 import com.kwang0.hackinssa.presentation.ui.activities.countryinfo.CountryInfoActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity

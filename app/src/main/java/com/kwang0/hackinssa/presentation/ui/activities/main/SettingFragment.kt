@@ -11,6 +11,7 @@ import com.kwang0.hackinssa.App
 import com.kwang0.hackinssa.helper.LocaleHelper.Companion.LANGUAGE_ENGLISH
 import com.kwang0.hackinssa.helper.LocaleHelper.Companion.LANGUAGE_KOREAN
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.helper.IntentHelper
 
 
 class SettingFragment : Fragment() {
@@ -37,8 +38,7 @@ class SettingFragment : Fragment() {
 
     private fun setNewLocale(language: String, restartProcess: Boolean): Boolean {
         App.localeHelper?.setNewLocale(context, language)
-        val i = Intent(context, MainActivity::class.java)
-        startActivity(i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
+        IntentHelper.activityClearIntent(context, MainActivity::class.java)
         if (restartProcess) {
             System.exit(0)
         }
