@@ -8,39 +8,37 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.helper.PicassoHelper
+import com.kwang0.hackinssa.presentation.presenters.FavoritePresenter
+import com.kwang0.hackinssa.presentation.presenters.FavoritePresenterView
+import com.kwang0.hackinssa.presentation.presenters.impl.FavoritePresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
-import com.squareup.picasso.Picasso
-import io.reactivex.Flowable
-import io.reactivex.Observable
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import org.apache.commons.net.ntp.NTPUDPClient
-import java.io.IOException
-import java.net.InetAddress
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
 
-class CountryInfoActivity : BaseActivity() {
+class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
     val TAG = CountryInfoActivity::class.simpleName
 
     var country: Country? = null
+
+    lateinit private var favoritePresenter: FavoritePresenter
+    private val mDisposable = CompositeDisposable()
+    private var menu: Menu? = null
+    private var isFavorite = false
 
     lateinit var toolbar: Toolbar
     lateinit var iv: ImageView
     lateinit var name_tv: TextView
     lateinit var time_tv: TextView
-
-    var compositeDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,13 +49,38 @@ class CountryInfoActivity : BaseActivity() {
         name_tv = findViewById<TextView>(R.id.ci_name_tv)
         time_tv = findViewById<TextView>(R.id.ci_time_tv)
 
-
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        getIntentExtra(intent)
+
+        favoritePresenter = FavoritePresenterImpl(this, this)
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
+
+    override fun onStart() {
+        super.onStart()
+        mDisposable.add(favoritePresenter.isFavorite(country?.getName()!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ chk ->
+                    if(chk) {
+                        menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
+                    } else {
+                        menu?.getItem(0)?.setIcon(R.drawable.ic_star_border)
+                    }
+
+                }, { throwable -> Log.e(TAG, "Unable to get username", throwable) })!!)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        // clear all the subscriptions
+        mDisposable.clear()
+    }
+
+    fun getIntentExtra(intent: Intent?) {
         country = intent?.extras?.getSerializable("country") as? Country
 
         country?.let {
@@ -65,16 +88,6 @@ class CountryInfoActivity : BaseActivity() {
             name_tv.text = it.getNativeName()
             getLocaleTime(it.getTimezones()?.get(0))
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-//        getNetworkTime()
-    }
-
-    override fun onPause() {
-        super.onPause()
-//        compositeDisposable.dispose()
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -88,53 +101,41 @@ class CountryInfoActivity : BaseActivity() {
         }
     }
 
-    // this is for get server time
-    @SuppressLint("CheckResult")
-    @Throws(IOException::class)
-    fun getNetworkTime() {
-        Single.just(true)
-                .observeOn(Schedulers.computation())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ result ->
-                    val timeClient = NTPUDPClient()
-                    val inetAddress = InetAddress.getByName(TIME_SERVER)
-                    val timeInfo = timeClient.getTime(inetAddress)
-
-                    getRealTime(timeInfo.message.receiveTimeStamp.time)
-                }) { error -> Toast.makeText(this, "get Error!", Toast.LENGTH_SHORT).show() }
-    }
-
-    @SuppressLint("SetTextI18n")
-    fun getRealTime(timeStamp: Long) {
-        val disposable = Flowable.just(true)
-                .observeOn(Schedulers.computation())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe({ result: Boolean ->
-                    kotlin.run {
-
-                    }
-                    while(true) {
-                        val time = Date(timeStamp)
-                        val sdf = SimpleDateFormat("yyyy.MM.dd HH:mm:ss (XXX)", Locale.US)
-                        time_tv.text = sdf.format(time)
-                    }
-                }) { error: Throwable? -> time_tv.text = "error!!" }
-
-        compositeDisposable.add(disposable)
-    }
-
-    companion object {
-        const val TIME_SERVER = "time-a.nist.gov"
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        this.menu = menu
         menuInflater.inflate(R.menu.menu_country_info, menu)
+        mDisposable.add(favoritePresenter.isFavorite(country?.getName()!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ chk ->
+                    if(chk) {
+                        menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
+                    } else {
+                        menu?.getItem(0)?.setIcon(R.drawable.ic_star_border)
+                    }
+
+                }, { throwable -> Log.e(TAG, "Unable to get username", throwable) })!!)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_ci_star) {
+            if(isFavorite) {
+                item.setEnabled(false)
+                mDisposable.add(favoritePresenter.deleteFavorite(country?.getName()!!)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ item.setEnabled(true) },
+                                { throwable -> Log.e(TAG, "Unable to update username", throwable) }))
+            } else {
+                item.setEnabled(false)
+                mDisposable.add(favoritePresenter.insertFavorite(country?.getName()!!)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ item.setEnabled(true) },
+                                { throwable -> Log.e(TAG, "Unable to update username", throwable) }))
+            }
             true
         } else if(id == R.id.menu_ci_add_friend) {
             val intent = Intent(this, FriendAddActivity::class.java)
@@ -142,5 +143,9 @@ class CountryInfoActivity : BaseActivity() {
             startActivity(intent)
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    override fun starNotifyChange() {
+
     }
 }

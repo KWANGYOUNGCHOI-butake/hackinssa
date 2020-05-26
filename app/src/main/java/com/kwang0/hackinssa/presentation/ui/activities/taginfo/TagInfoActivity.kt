@@ -18,10 +18,11 @@ class TagInfoActivity : BaseActivity() {
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        getIntentExtra(intent)
+
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
+    fun getIntentExtra(intent: Intent?) {
         val tag = intent?.extras?.getString("tag")
 
         tag?.let {

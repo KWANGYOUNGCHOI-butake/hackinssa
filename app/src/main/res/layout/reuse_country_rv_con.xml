@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/country_rv_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/bigMargin">
 
     <ImageView
         android:id="@+id/country_rv_iv"
@@ -17,6 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/country_rv_iv"
         android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
         tools:ignore="RtlCompat" />
 
 </RelativeLayout>

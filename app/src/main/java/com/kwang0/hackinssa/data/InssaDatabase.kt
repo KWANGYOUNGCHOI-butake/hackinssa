@@ -22,17 +22,15 @@ abstract class InssaDatabase : RoomDatabase() {
         // volatile 을 사용해서 변수의 read와 write를 Main Memory에서 진행
         @Volatile
         private var INSTANCE: InssaDatabase? = null
-        fun getInstance(context: Context): InssaDatabase? {
-            if (INSTANCE == null) {
-                synchronized(InssaDatabase::class.java) {
-                    if (INSTANCE == null) {
-                        INSTANCE = Room.databaseBuilder(context.applicationContext,
-                                InssaDatabase::class.java, "inssa.db")
-                                .build()
-                    }
+        fun getInstance(context: Context): InssaDatabase =
+                INSTANCE ?: synchronized(this) {
+                    INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
                 }
-            }
-            return INSTANCE
-        }
+
+        private fun buildDatabase(context: Context) =
+                Room.databaseBuilder(context.applicationContext,
+                        InssaDatabase::class.java, "Sample.db")
+                        .build()
+
     }
 }

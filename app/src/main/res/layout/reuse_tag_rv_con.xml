@@ -4,21 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tag_rv_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/bigMargin">
 
     <TextView
         android:id="@+id/tag_rv_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textBig"
-        android:layout_margin="@dimen/bigMargin"/>
+        android:textSize="@dimen/textBig"/>
     <CheckBox
         android:id="@+id/tag_rv_chkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/bigMargin"
         android:visibility="gone"
         tools:ignore="RtlCompat" />
 

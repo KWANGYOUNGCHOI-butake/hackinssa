@@ -45,16 +45,16 @@ class FriendInfoActivity : BaseActivity() {
         country_iv = findViewById<ImageView>(R.id.fi_country_iv)
         tag_cg = findViewById<ChipGroup>(R.id.fi_tag_cg)
 
-
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        getIntentExra(intent)
 
         phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(this, "010-1234-5678") }
         email_iv.setOnClickListener { v -> IntentHelper.emailIntent(this, "admin@gmail.com") }
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
+    fun getIntentExra(intent: Intent?) {
         friend = intent?.extras?.getSerializable("friend") as? Friend
 
         friend?.let {

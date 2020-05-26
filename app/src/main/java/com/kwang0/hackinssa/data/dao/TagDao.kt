@@ -1,10 +1,6 @@
 package com.kwang0.hackinssa.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import com.kwang0.hackinssa.data.models.Friend
+import androidx.room.*
 import com.kwang0.hackinssa.data.models.Tag
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -18,6 +14,6 @@ interface TagDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTag(tag: Tag): Completable
 
-    @Query("DELETE FROM tags")
+    @Delete
     fun deleteTag(tag: Tag)
 }

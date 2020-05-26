@@ -8,10 +8,7 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "favorites")
-class Favorite @Ignore constructor(name: String) {
+class Favorite(@PrimaryKey
+               @ColumnInfo(name = "favoriteName") var name: String) {
 
-    @NonNull
-    @PrimaryKey
-    @ColumnInfo(name = "fcName")
-    var name: String? = name
 }

@@ -21,9 +21,6 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
     private var countryRepository: CountryRepository? = null
     private var countrySubscription: Disposable? = null
 
-    private val OPERATION_QUERY = 0
-
-    private var currentOperation = 0
     private var query: String? = null
 
     init {
@@ -31,7 +28,6 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
     }
 
     override fun search(query: String?) {
-        currentOperation = OPERATION_QUERY
         this.query = query
 
         val langRequest = countryRepository?.getByLang(query)?.onErrorReturn { e -> mutableListOf<Country?>() }
@@ -63,9 +59,6 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
     }
 
     override fun restoreData() {
-        when (currentOperation) {
-            OPERATION_QUERY -> search(query)
-            else -> search(query)
-        }
+        search(query)
     }
 }

@@ -47,13 +47,13 @@ class FriendAddActivity : BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        getIntentExtra(intent)
 
         avatar_iv.setOnClickListener({ v -> IntentHelper.galleryIntent(this) })
         country_iv.setOnClickListener({ v -> IntentHelper.activityIntent(this, CountrySelectActivity::class.java) })
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
+    fun getIntentExtra(intent: Intent?) {
         val friend = intent?.extras?.getSerializable("friend") as? Friend
         val country = intent?.extras?.getSerializable("country") as? Country
 

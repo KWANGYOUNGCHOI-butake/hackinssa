@@ -5,7 +5,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 
 interface FavoriteRepository {
-    fun getFavorite(): Flowable<Favorite>
-    fun insertOrUpdateFavorite(favorite: Favorite): Completable
-    fun deleteAllFavorites()
+    fun getFavorite(favoriteName: String): Flowable<Favorite?>
+    fun insertFavorite(favorite: Favorite): Completable
+    fun deleteFavorite(favorite: Favorite): Completable
 }

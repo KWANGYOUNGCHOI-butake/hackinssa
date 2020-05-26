@@ -3,6 +3,7 @@ package com.kwang0.hackinssa.data.models
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
@@ -12,32 +13,32 @@ import java.util.*
 class Friend: Serializable {
 
     @SerializedName("id")
-    @NonNull
     @PrimaryKey
     @ColumnInfo(name = "friendId")
-    var id: String? = null
+    var id: String
 
     @SerializedName("avatar")
     @ColumnInfo(name = "friendAvatar")
-    var avatar: String? = null
+    var avatar: String
 
     @SerializedName("name")
     @ColumnInfo(name = "friendName")
-    var name: String? = null
+    var name: String
 
     @SerializedName("phone")
     @ColumnInfo(name = "friendPhone")
-    var phone: String? = null
+    var phone: String
 
     @SerializedName("email")
     @ColumnInfo(name = "friendEmail")
-    var email: String? = null
+    var email: String
 
     @SerializedName("created")
     @ColumnInfo(name = "friendCreated")
-    var created: Int? = null
+    var created: Int
 
-    constructor(avatar: String?, name: String?, phone: String?, email: String?, created: Int?) {
+    @Ignore
+    constructor(avatar: String, name: String, phone: String, email: String, created: Int) {
         id = UUID.randomUUID().toString()
         this.avatar = avatar
         this.name = name
@@ -46,7 +47,7 @@ class Friend: Serializable {
         this.created = created
     }
 
-    constructor(@NonNull id: String?, avatar: String?, name: String?, phone: String?, email: String?, created: Int?) {
+    constructor(@NonNull id: String, avatar: String, name: String, phone: String, email: String, created: Int) {
         this.id = id
         this.avatar = avatar
         this.name = name
