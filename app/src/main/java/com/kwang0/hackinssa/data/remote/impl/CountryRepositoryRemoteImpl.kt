@@ -23,16 +23,16 @@ class CountryRepositoryRemoteImpl() : CountryRepositoryRemote{
         return countryService?.getAll()
     }
 
+    override fun getByLang(et: String?): Flowable<MutableList<Country?>?>? {
+        return countryService?.getByLang(et)
+    }
+
     override fun getByName(name: String?): Flowable<MutableList<Country?>?>? {
         return countryService?.getByName(name)
     }
 
-    override fun search(name: String?): Flowable<MutableList<Country?>?>? {
-        return countryService?.search(name)
-    }
-
-    override fun getByRegion(region: String?): Flowable<MutableList<Country?>?>? {
-        return countryService?.getByRegion(region)
+    override fun getByCalling(calling: Int?): Flowable<MutableList<Country?>?>? {
+        return countryService?.getByCalling(calling)
     }
 
     private fun setUpRetrofit() {

@@ -35,7 +35,7 @@ class CountrySelectActivity : BaseActivity() {
         countryViewSetUp()
 
         search_et.textChanges()
-                .throttleLast(100, TimeUnit.MILLISECONDS)
+//                .throttleLast(100, TimeUnit.MILLISECONDS)
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

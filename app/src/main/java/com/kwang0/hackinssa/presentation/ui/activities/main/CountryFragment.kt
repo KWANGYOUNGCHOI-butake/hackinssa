@@ -39,7 +39,7 @@ class CountryFragment : Fragment() {
         countryViewSetUp(v)
 
         search_et.textChanges()
-                .throttleLast(100, TimeUnit.MILLISECONDS)
+//                .throttleLast(100, TimeUnit.MILLISECONDS)
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())

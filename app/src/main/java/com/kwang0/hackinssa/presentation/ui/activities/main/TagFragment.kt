@@ -6,6 +6,7 @@ import android.view.View.GONE
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.jakewharton.rxbinding4.widget.textChanges
 
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
@@ -28,6 +29,7 @@ class TagFragment : Fragment(), TagMenuListener {
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_tag, container, false)
 
+        search_et = v.findViewById<EditText>(R.id.searchbar_et)
         empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
         empty_tv.visibility = GONE
 

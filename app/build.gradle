@@ -64,6 +64,10 @@ dependencies {
     // Apache Commons library
     implementation 'commons-net:commons-net:3.6'
 
+    // StreamSupport for api_version < 24
+    implementation 'net.sourceforge.streamsupport:streamsupport:1.7.2'
+    implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.2'
+
     //room
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"

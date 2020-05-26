@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/searchbar_iv"
         android:hint="@string/search_hint"
+        android:inputType="text"
         tools:ignore="RtlCompat" />
 
 </RelativeLayout>

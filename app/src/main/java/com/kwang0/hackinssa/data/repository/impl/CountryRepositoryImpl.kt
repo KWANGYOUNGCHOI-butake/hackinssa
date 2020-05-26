@@ -14,16 +14,16 @@ class CountryRepositoryImpl(private val countryRepositoryRemote: CountryReposito
         return countryRepositoryRemote.getAll()
     }
 
+    override fun getByLang(et: String?): Flowable<MutableList<Country?>?>? {
+        return countryRepositoryRemote.getByLang(et)
+    }
+
     override fun getByName(name: String?): Flowable<MutableList<Country?>?>? {
         return countryRepositoryRemote.getByName(name)
     }
 
-    override fun search(query: String?): Flowable<MutableList<Country?>?>? {
-        return countryRepositoryRemote.search(query)
-    }
-
-    override fun getByRegion(region: String?): Flowable<MutableList<Country?>?>? {
-        return countryRepositoryRemote.getByRegion(region)
+    override fun getByCalling(calling: Int?): Flowable<MutableList<Country?>?>? {
+        return countryRepositoryRemote.getByCalling(calling)
     }
 
 }

@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 
-class TagInfoActivity : AppCompatActivity() {
+class TagInfoActivity : BaseActivity() {
     var TAG = TagInfoActivity::class.simpleName
 
     lateinit var toolbar: Toolbar

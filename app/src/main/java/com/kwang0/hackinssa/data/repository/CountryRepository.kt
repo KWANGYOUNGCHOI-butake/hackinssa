@@ -6,7 +6,7 @@ import io.reactivex.Observable
 
 interface CountryRepository {
     fun getAll(): Flowable<MutableList<Country?>?>?
+    fun getByLang(et: String?): Flowable<MutableList<Country?>?>?
     fun getByName(name: String?): Flowable<MutableList<Country?>?>?
-    fun search(query: String?): Flowable<MutableList<Country?>?>?
-    fun getByRegion(region: String?): Flowable<MutableList<Country?>?>?
+    fun getByCalling(calling: Int?): Flowable<MutableList<Country?>?>?
 }

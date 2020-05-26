@@ -16,7 +16,6 @@ import com.kwang0.hackinssa.presentation.ui.views.FriendView
 class AddressFragment : Fragment() {
 
     lateinit var search_et: EditText
-    lateinit var empty_tv: TextView
 
     private var friendView: FriendView? = null
     private var friendList: MutableList<Friend?>? = null
@@ -25,7 +24,9 @@ class AddressFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_address, container, false)
-        
+
+        search_et = v.findViewById<EditText>(R.id.searchbar_et)
+
         friendView = FriendView(context)
         friendView?.bindView(v)
         friendView?.recyclerInit()
