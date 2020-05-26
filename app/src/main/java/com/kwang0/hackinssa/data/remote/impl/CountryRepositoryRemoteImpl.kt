@@ -16,7 +16,6 @@ class CountryRepositoryRemoteImpl() : CountryRepositoryRemote{
 
     init {
         setUpRetrofit()
-        createServices()
     }
 
     override fun getAll(): Flowable<MutableList<Country?>?>? {
@@ -41,9 +40,6 @@ class CountryRepositoryRemoteImpl() : CountryRepositoryRemote{
                 .addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(CountryRepositoryRemote.BASE_URL)
                 .build()
-    }
-
-    private fun createServices() {
         countryService = retrofit?.create(CountryRepositoryRemote::class.java)
     }
 }

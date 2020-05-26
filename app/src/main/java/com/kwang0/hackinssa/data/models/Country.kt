@@ -37,12 +37,6 @@ class Country: Serializable {
     @SerializedName("nativeName")
     private var nativeName: String? = null
 
-    @SerializedName("currencies")
-    private var currencies: List<Currency?>? = null
-
-    @SerializedName("languages")
-    private var languages: List<Language?>? = null
-
     fun getName(): String? {
         return name
     }
@@ -121,21 +115,5 @@ class Country: Serializable {
 
     fun setNativeName(nativeName: String?) {
         this.nativeName = nativeName
-    }
-
-    fun getCurrencies(): List<Currency?>? {
-        return currencies
-    }
-
-    fun setCurrencies(currencies: List<Currency?>?) {
-        this.currencies = currencies
-    }
-
-    fun getLanguages(): List<Language?>? {
-        return languages
-    }
-
-    fun setLanguages(languages: List<Language?>?) {
-        this.languages = languages
     }
 }

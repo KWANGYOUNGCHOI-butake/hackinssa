@@ -26,7 +26,7 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
     private var currentOperation = 0
     private var query: String? = null
 
-    override fun setUp() {
+    init {
         countryRepository = CountryRepositoryImpl(CountryRepositoryRemoteImpl())
     }
 

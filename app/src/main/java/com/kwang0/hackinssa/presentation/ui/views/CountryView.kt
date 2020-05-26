@@ -38,8 +38,6 @@ class CountryView(private var mContext: Context?): CountryPresenterView {
     fun recyclerInit() {
         countryPresenter = CountryPresenterImpl(this)
 
-        countryPresenter?.setUp()
-
         mList = ArrayList<Country?>()
         mAdapter = CountryAdapter(mContext, mList)
         rv?.setHasFixedSize(true)

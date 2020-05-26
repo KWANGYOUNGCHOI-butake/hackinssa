@@ -1,7 +1,7 @@
 package com.kwang0.hackinssa.data.repository.impl
 
 import com.kwang0.hackinssa.data.repository.FriendRepository
-import com.kwang0.hackinssa.data.FriendDao
+import com.kwang0.hackinssa.data.dao.FriendDao
 import com.kwang0.hackinssa.data.models.Friend
 import io.reactivex.Completable
 import io.reactivex.Flowable
