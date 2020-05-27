@@ -4,13 +4,12 @@ import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
-import com.kwang0.hackinssa.presentation.ui.extensions.FocusChangeListener
 
 
 class ChipAddDialogView(private val context: Context, private val chipAddListener: ChipAddListener) {
@@ -33,7 +32,6 @@ class ChipAddDialogView(private val context: Context, private val chipAddListene
         cancel_btn = chipAddDialogView.findViewById(R.id.chip_add_cancel_btn)
         chipAddDialogBuilder.setView(chipAddDialogView)
 
-        add_et.setOnFocusChangeListener(FocusChangeListener())
         confirm_btn.setOnClickListener({ v ->
             if(!TextUtils.isEmpty(add_et.editableText.toString())) {
                 chipAddListener.onChipAdded(add_et.editableText.toString())
