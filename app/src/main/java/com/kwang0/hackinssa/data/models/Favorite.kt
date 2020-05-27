@@ -9,6 +9,7 @@ import java.util.*
 
 @Entity(tableName = "favorites")
 class Favorite(@PrimaryKey
-               @ColumnInfo(name = "favoriteName") var name: String) {
+               @ColumnInfo(name = "favoriteName") var name: String,
+               @ColumnInfo(name = "isFavorite") var isFavorite: Boolean) {
 
 }

@@ -22,23 +22,26 @@ class FavoritePresenterImpl(context: Context, private var view: FavoritePresente
     private var favoriteRepository: FavoriteRepository
     private lateinit var favoriteSubscription: Disposable
 
+    private var favorite: Favorite ?= null
+
     init {
         favoriteRepository = FavoriteRepositoryImpl(FavoriteDaoImpl(context))
     }
 
     override fun isFavorite(favoriteName: String): Flowable<Boolean> {
         return favoriteRepository.getFavorite(favoriteName)
-                .map({ favorite: Favorite? ->
-                    if(favorite == null) false
-                    else true
+                .map({ favorite ->
+                    this.favorite = favorite
+                    favorite.isFavorite
                 })
     }
 
-    override fun insertFavorite(favoriteName: String): Completable {
-        return favoriteRepository.insertFavorite(Favorite(favoriteName))
-    }
-
-    override fun deleteFavorite(favoriteName: String): Completable {
-        return favoriteRepository.deleteFavorite(Favorite(favoriteName))
+    override fun insertOrUpdateFavorite(favoriteName: String): Completable {
+        if(this.favorite == null) {
+            return favoriteRepository.insertFavorite(Favorite(favoriteName, true))
+        } else {
+            favorite?.isFavorite = if(favorite?.isFavorite == true) false else true
+            return favoriteRepository.updateFavorite(favorite!!)
+        }
     }
 }

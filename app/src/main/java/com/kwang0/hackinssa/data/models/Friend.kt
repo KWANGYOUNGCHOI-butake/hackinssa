@@ -10,50 +10,28 @@ import java.io.Serializable
 import java.util.*
 
 @Entity(tableName = "friends")
-class Friend: Serializable {
+class Friend(@NonNull
+             @SerializedName("friendId")
+             @PrimaryKey (autoGenerate = true)
+             @ColumnInfo(name = "friendId") var friendId: Int,
 
-    @SerializedName("id")
-    @PrimaryKey
-    @ColumnInfo(name = "friendId")
-    var id: String
+             @NonNull
+             @SerializedName("friendAvatar")
+             @ColumnInfo(name = "friendAvatar") var friendAvatar: String,
 
-    @SerializedName("avatar")
-    @ColumnInfo(name = "friendAvatar")
-    var avatar: String
+             @NonNull
+             @SerializedName("friendName")
+             @ColumnInfo(name = "friendName") var friendName: String,
 
-    @SerializedName("name")
-    @ColumnInfo(name = "friendName")
-    var name: String
+             @SerializedName("friendPhone")
+             @ColumnInfo(name = "friendPhone") var friendPhone: String,
 
-    @SerializedName("phone")
-    @ColumnInfo(name = "friendPhone")
-    var phone: String
+             @SerializedName("friendEmail")
+             @ColumnInfo(name = "friendEmail") var friendEmail: String,
 
-    @SerializedName("email")
-    @ColumnInfo(name = "friendEmail")
-    var email: String
+             @NonNull
+             @SerializedName("friendCreated")
+             @ColumnInfo(name = "friendCreated") var friendCreated: Int) : Serializable {
 
-    @SerializedName("created")
-    @ColumnInfo(name = "friendCreated")
-    var created: Int
-
-    @Ignore
-    constructor(avatar: String, name: String, phone: String, email: String, created: Int) {
-        id = UUID.randomUUID().toString()
-        this.avatar = avatar
-        this.name = name
-        this.phone = phone
-        this.email = email
-        this.created = created
-    }
-
-    constructor(@NonNull id: String, avatar: String, name: String, phone: String, email: String, created: Int) {
-        this.id = id
-        this.avatar = avatar
-        this.name = name
-        this.phone = phone
-        this.email = email
-        this.created = created
-    }
 
 }

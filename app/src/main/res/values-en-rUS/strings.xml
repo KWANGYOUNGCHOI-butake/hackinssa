@@ -17,4 +17,6 @@
     <string name="email">Email</string>
     <string name="country">Country</string>
     <string name="tag">Tag</string>
+
+    <string name="confirm">confirm</string>
 </resources>

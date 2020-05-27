@@ -24,7 +24,20 @@ class TagDaoImpl(private val context: Context): TagDao {
         TODO("Not yet implemented")
     }
 
-    override fun deleteTag(tag: Tag) {
+    override fun update(tag: Tag): Completable {
         TODO("Not yet implemented")
     }
+
+    override fun deleteTagById(friendId: Int): Completable {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteTagByName(tagName: String): Completable {
+        TODO("Not yet implemented")
+    }
+
+    override fun deleteTag(friendId: Int, tagName: String): Completable {
+        TODO("Not yet implemented")
+    }
+
 }

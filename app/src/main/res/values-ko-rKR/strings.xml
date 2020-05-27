@@ -17,4 +17,6 @@
     <string name="email">이메일</string>
     <string name="country">국가</string>
     <string name="tag">태그</string>
+
+    <string name="confirm">확인</string>
 </resources>

@@ -14,8 +14,4 @@ class FriendRepositoryImpl(private val friendDao: FriendDao) : FriendRepository 
     override fun insertOrUpdateFriend(friend: Friend): Completable {
         return friendDao.insertFriend(friend)
     }
-
-    override fun deleteAllFriends() {
-        friendDao.deleteAllFriends()
-    }
 }

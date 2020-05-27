@@ -7,5 +7,4 @@ import io.reactivex.Flowable
 interface FriendRepository {
     fun getFriend(): Flowable<Friend>
     fun insertOrUpdateFriend(friend: Friend): Completable
-    fun deleteAllFriends()
 }

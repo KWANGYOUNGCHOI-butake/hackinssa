@@ -33,7 +33,6 @@ class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
     lateinit private var favoritePresenter: FavoritePresenter
     private val mDisposable = CompositeDisposable()
     private var menu: Menu? = null
-    private var isFavorite = false
 
     lateinit var toolbar: Toolbar
     lateinit var iv: ImageView
@@ -55,16 +54,20 @@ class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
         getIntentExtra(intent)
 
         favoritePresenter = FavoritePresenterImpl(this, this)
+
+        invalidateOptionsMenu()
     }
 
 
     override fun onStart() {
         super.onStart()
+
         mDisposable.add(favoritePresenter.isFavorite(country?.getName()!!)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ chk ->
-                    if(chk) {
+                .subscribe({ b ->
+                    System.out.println(b)
+                    if(b) {
                         menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
                     } else {
                         menu?.getItem(0)?.setIcon(R.drawable.ic_star_border)
@@ -86,6 +89,7 @@ class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
         country?.let {
             PicassoHelper.loadImg(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", iv)
             name_tv.text = it.getNativeName()
+            System.out.println(it.getTimezones()?.get(0))
             getLocaleTime(it.getTimezones()?.get(0))
         }
     }
@@ -101,41 +105,25 @@ class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
         this.menu = menu
-        menuInflater.inflate(R.menu.menu_country_info, menu)
-        mDisposable.add(favoritePresenter.isFavorite(country?.getName()!!)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ chk ->
-                    if(chk) {
-                        menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
-                    } else {
-                        menu?.getItem(0)?.setIcon(R.drawable.ic_star_border)
-                    }
+        return super.onPrepareOptionsMenu(menu)
+    }
 
-                }, { throwable -> Log.e(TAG, "Unable to get username", throwable) })!!)
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_country_info, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_ci_star) {
-            if(isFavorite) {
-                item.setEnabled(false)
-                mDisposable.add(favoritePresenter.deleteFavorite(country?.getName()!!)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ item.setEnabled(true) },
-                                { throwable -> Log.e(TAG, "Unable to update username", throwable) }))
-            } else {
-                item.setEnabled(false)
-                mDisposable.add(favoritePresenter.insertFavorite(country?.getName()!!)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ item.setEnabled(true) },
-                                { throwable -> Log.e(TAG, "Unable to update username", throwable) }))
-            }
+            item.setEnabled(false)
+            mDisposable.add(favoritePresenter.insertOrUpdateFavorite(country?.getName()!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ item.setEnabled(true) },
+                            { throwable -> Log.e(TAG, "Unable to insert or update username", throwable) }))
             true
         } else if(id == R.id.menu_ci_add_friend) {
             val intent = Intent(this, FriendAddActivity::class.java)

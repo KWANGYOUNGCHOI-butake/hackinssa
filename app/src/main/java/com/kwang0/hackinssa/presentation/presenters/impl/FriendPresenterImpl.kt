@@ -28,12 +28,12 @@ class FriendPresenterImpl(context: Context, view: FriendPresenterView) : FriendP
         return friendRepository.getFriend()
                 .map({ friend ->
                     this.friend = friend
-                    friend.name
+                    friend.friendName
                 })
     }
 
     override fun updateFriend(avatar: String, name: String, phone: String, email: String, created: Int): Completable {
-        this.friend = if (this.friend == null) Friend(avatar, name, phone, email, created) else Friend(this.friend.id, avatar, name, phone, email, created)
+        this.friend = Friend(this.friend.friendId, avatar, name, phone, email, created)
         return friendRepository.insertOrUpdateFriend(this.friend)
     }
 }

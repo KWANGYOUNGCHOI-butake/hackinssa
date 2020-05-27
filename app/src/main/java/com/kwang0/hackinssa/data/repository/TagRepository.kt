@@ -8,5 +8,5 @@ import io.reactivex.Flowable
 interface TagRepository {
     fun getTag(): Flowable<Tag>
     fun insertOrUpdateTag(tag: Tag): Completable
-    fun deleteTag(tag: Tag)
+    fun deleteTag(tag: Tag): Completable
 }

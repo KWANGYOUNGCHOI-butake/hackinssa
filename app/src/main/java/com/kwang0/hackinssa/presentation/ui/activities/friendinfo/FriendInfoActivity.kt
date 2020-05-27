@@ -58,10 +58,10 @@ class FriendInfoActivity : BaseActivity() {
         friend = intent?.extras?.getSerializable("friend") as? Friend
 
         friend?.let {
-            PicassoHelper.loadImg(it.avatar, avatar_iv)
-            name_tv.text = it.name
-            phone_tv.text = it.phone
-            email_tv.text = it.email
+            PicassoHelper.loadImg(it.friendAvatar, avatar_iv)
+            name_tv.text = it.friendName
+            phone_tv.text = it.friendPhone
+            email_tv.text = it.friendEmail
         }
     }
 

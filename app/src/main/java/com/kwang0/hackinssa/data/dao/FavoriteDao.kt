@@ -13,6 +13,6 @@ interface FavoriteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavorite(favorite: Favorite): Completable
 
-    @Delete
-    fun deleteFavorite(favorite: Favorite): Completable
+    @Update
+    fun updateFavorite(favorite: Favorite): Completable
 }

@@ -35,7 +35,7 @@ class AddressFragment : Fragment() {
         friendList = friendView?.getmList()
         friendAdapter = friendView?.getmAdapter()
 
-        friendList?.add(Friend("mina - avatar", "mina", "010-1234-5678", "sample@gmail.com", 0))
+        friendList?.add(Friend(1,"mina - avatar", "mina", "010-1234-5678", "sample@gmail.com", 0))
         friendAdapter?.notifyDataSetChanged()
 
         

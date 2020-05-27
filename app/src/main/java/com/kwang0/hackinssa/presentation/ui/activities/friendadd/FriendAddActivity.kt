@@ -58,10 +58,10 @@ class FriendAddActivity : BaseActivity() {
         val country = intent?.extras?.getSerializable("country") as? Country
 
         friend?.let {
-            PicassoHelper.loadImg(it.avatar, avatar_iv)
-            name_et.text = it.name?.toEditable()
-            phone_et.text = it.phone?.toEditable()
-            email_et.text = it.email?.toEditable()
+            PicassoHelper.loadImg(it.friendAvatar, avatar_iv)
+            name_et.text = it.friendName?.toEditable()
+            phone_et.text = it.friendPhone?.toEditable()
+            email_et.text = it.friendEmail?.toEditable()
         }
 
         country?.let {

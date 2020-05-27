@@ -5,6 +5,5 @@ import io.reactivex.Flowable
 
 interface FavoritePresenter {
     fun isFavorite(favoriteName: String): Flowable<Boolean>
-    fun insertFavorite(favoriteName: String): Completable
-    fun deleteFavorite(favoriteName: String): Completable
+    fun insertOrUpdateFavorite(favoriteName: String): Completable
 }

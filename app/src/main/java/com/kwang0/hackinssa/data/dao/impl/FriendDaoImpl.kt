@@ -20,11 +20,12 @@ class FriendDaoImpl(private val context: Context): FriendDao {
         TODO("Not yet implemented")
     }
 
+    override fun update(friend: Friend): Completable {
+        TODO("Not yet implemented")
+    }
+
     override fun insertFriend(friend: Friend): Completable {
         TODO("Not yet implemented")
     }
 
-    override fun deleteAllFriends() {
-        TODO("Not yet implemented")
-    }
 }

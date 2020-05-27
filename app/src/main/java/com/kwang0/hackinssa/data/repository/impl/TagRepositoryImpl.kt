@@ -16,7 +16,7 @@ class TagRepositoryImpl(private val tagDao: TagDao): TagRepository {
         return tagDao.insertTag(tag)
     }
 
-    override fun deleteTag(tag: Tag) {
-        return tagDao.deleteTag(tag)
+    override fun deleteTag(tag: Tag): Completable {
+        return tagDao.deleteTag(tag.friendId, tag.tagName)
     }
 }

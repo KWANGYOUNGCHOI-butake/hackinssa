@@ -16,7 +16,7 @@ class FavoriteRepositoryImpl(private val favoriteDao: FavoriteDao) : FavoriteRep
         return favoriteDao.insertFavorite(favorite)
     }
 
-    override fun deleteFavorite(favorite: Favorite): Completable {
-        return favoriteDao.deleteFavorite(favorite)
+    override fun updateFavorite(favorite: Favorite): Completable {
+        return favoriteDao.updateFavorite(favorite)
     }
 }

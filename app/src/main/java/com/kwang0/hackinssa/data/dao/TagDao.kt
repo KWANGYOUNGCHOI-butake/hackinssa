@@ -14,6 +14,15 @@ interface TagDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTag(tag: Tag): Completable
 
-    @Delete
-    fun deleteTag(tag: Tag)
+    @Update
+    fun update(tag: Tag): Completable
+
+    @Query("DELETE FROM tags WHERE friendId = :friendId")
+    fun deleteTagById(friendId: Int): Completable
+
+    @Query("DELETE FROM tags WHERE tagName = :tagName")
+    fun deleteTagByName(tagName: String): Completable
+
+    @Query("DELETE FROM tags WHERE friendId = :friendId AND tagName = :tagName")
+    fun deleteTag(friendId: Int, tagName: String): Completable
 }
