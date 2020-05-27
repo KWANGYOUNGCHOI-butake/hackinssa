@@ -7,6 +7,8 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.size
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
@@ -14,6 +16,7 @@ import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.helper.IntentHelper
 import com.kwang0.hackinssa.helper.PicassoHelper
+import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
 import com.squareup.picasso.Picasso
 
 class FriendInfoActivity : BaseActivity() {
@@ -52,6 +55,20 @@ class FriendInfoActivity : BaseActivity() {
 
         phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(this, "010-1234-5678") }
         email_iv.setOnClickListener { v -> IntentHelper.emailIntent(this, "admin@gmail.com") }
+
+
+        val chip = Chip(tag_cg.context)
+        chip.text = "example"
+
+        chip.isClickable = false
+        chip.isCheckable = false
+        chip.setOnClickListener({ v->
+            val intent = Intent(this, TagInfoActivity::class.java)
+            intent.putExtra("tag", chip.text.toString())
+            startActivity(intent)
+        })
+
+        tag_cg.addView(chip)
     }
 
     fun getIntentExra(intent: Intent?) {

@@ -1,15 +1,9 @@
 package com.kwang0.hackinssa.presentation.presenters.impl
 
 import android.content.Context
-import com.kwang0.hackinssa.data.dao.TagDao
-import com.kwang0.hackinssa.data.dao.impl.FavoriteDaoImpl
 import com.kwang0.hackinssa.data.dao.impl.TagDaoImpl
-import com.kwang0.hackinssa.data.repository.FavoriteRepository
 import com.kwang0.hackinssa.data.repository.TagRepository
-import com.kwang0.hackinssa.data.repository.impl.FavoriteRepositoryImpl
 import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
-import com.kwang0.hackinssa.presentation.presenters.FavoritePresenter
-import com.kwang0.hackinssa.presentation.presenters.FavoritePresenterView
 import com.kwang0.hackinssa.presentation.presenters.TagPresenter
 import com.kwang0.hackinssa.presentation.presenters.TagPresenterView
 import io.reactivex.disposables.Disposable

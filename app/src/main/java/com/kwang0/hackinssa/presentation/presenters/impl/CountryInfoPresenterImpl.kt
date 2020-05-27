@@ -2,22 +2,17 @@ package com.kwang0.hackinssa.presentation.presenters.impl
 
 import android.content.Context
 import com.kwang0.hackinssa.data.dao.impl.FavoriteDaoImpl
-import com.kwang0.hackinssa.data.dao.impl.FriendDaoImpl
 import com.kwang0.hackinssa.data.models.Favorite
 import com.kwang0.hackinssa.data.repository.FavoriteRepository
-import com.kwang0.hackinssa.data.repository.FriendRepository
 import com.kwang0.hackinssa.data.repository.impl.FavoriteRepositoryImpl
-import com.kwang0.hackinssa.data.repository.impl.FriendRepositoryImpl
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
-import com.kwang0.hackinssa.presentation.presenters.FavoritePresenter
-import com.kwang0.hackinssa.presentation.presenters.FavoritePresenterView
-import com.kwang0.hackinssa.presentation.presenters.FriendPresenterView
+import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenter
+import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenterView
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 
-class FavoritePresenterImpl(context: Context, private var view: FavoritePresenterView): FavoritePresenter {
-    private val TAG = FavoritePresenterImpl::class.simpleName
+class CountryInfoPresenterImpl(context: Context, private var view: CountryInfoPresenterView): CountryInfoPresenter {
+    private val TAG = CountryInfoPresenterImpl::class.simpleName
 
     private var favoriteRepository: FavoriteRepository
     private lateinit var favoriteSubscription: Disposable

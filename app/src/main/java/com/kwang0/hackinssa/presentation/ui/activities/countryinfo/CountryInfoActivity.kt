@@ -12,9 +12,9 @@ import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.helper.PicassoHelper
-import com.kwang0.hackinssa.presentation.presenters.FavoritePresenter
-import com.kwang0.hackinssa.presentation.presenters.FavoritePresenterView
-import com.kwang0.hackinssa.presentation.presenters.impl.FavoritePresenterImpl
+import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenter
+import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenterView
+import com.kwang0.hackinssa.presentation.presenters.impl.CountryInfoPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
@@ -25,12 +25,12 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.concurrent.fixedRateTimer
 
-class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
+class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     val TAG = CountryInfoActivity::class.simpleName
 
     var country: Country? = null
 
-    lateinit private var favoritePresenter: FavoritePresenter
+    lateinit private var countryInfoPresenter: CountryInfoPresenter
     private val mDisposable = CompositeDisposable()
     private var menu: Menu? = null
 
@@ -53,7 +53,7 @@ class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
 
         getIntentExtra(intent)
 
-        favoritePresenter = FavoritePresenterImpl(this, this)
+        countryInfoPresenter = CountryInfoPresenterImpl(this, this)
 
         invalidateOptionsMenu()
     }
@@ -62,7 +62,7 @@ class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
     override fun onStart() {
         super.onStart()
 
-        mDisposable.add(favoritePresenter.isFavorite(country?.getName()!!)
+        mDisposable.add(countryInfoPresenter.isFavorite(country?.getName()!!)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ b ->
@@ -119,7 +119,7 @@ class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_ci_star) {
             item.setEnabled(false)
-            mDisposable.add(favoritePresenter.insertOrUpdateFavorite(country?.getName()!!)
+            mDisposable.add(countryInfoPresenter.insertOrUpdateFavorite(country?.getName()!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ item.setEnabled(true) },
@@ -133,7 +133,7 @@ class CountryInfoActivity : BaseActivity(), FavoritePresenterView {
         } else super.onOptionsItemSelected(item)
     }
 
-    override fun starNotifyChange() {
+    override fun notifyFavoriteChange() {
 
     }
 }

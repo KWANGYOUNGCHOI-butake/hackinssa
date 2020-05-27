@@ -104,6 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@+id/fi_tag_tv"
+            android:theme="@style/Theme.MaterialComponents.Light"
             tools:ignore="RtlCompat" />
     </RelativeLayout>
 

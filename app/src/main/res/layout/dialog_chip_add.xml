@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/bigMargin">
 
     <EditText
         android:id="@+id/chip_add_et"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/bigMargin"/>
+
+    <Button
+        android:id="@+id/chip_add_cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cancel"
+        android:textSize="@dimen/textSmall"
+        android:padding="@dimen/smallPadding"
+        android:layout_margin="@dimen/smallMargin"
+        android:layout_toStartOf="@+id/chip_add_confirm_btn"
+        android:layout_below="@+id/chip_add_et"
+        android:background="@color/colorTrans"
+        android:textColor="@color/colorError"
+        tools:ignore="RtlCompat" />
 
     <Button
         android:id="@+id/chip_add_confirm_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/confirm"/>
+        android:text="@string/confirm"
+        android:textSize="@dimen/textSmall"
+        android:padding="@dimen/smallPadding"
+        android:layout_margin="@dimen/smallMargin"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/chip_add_et"
+        android:background="@color/colorTrans"
+        android:textColor="@color/colorPrimary"
+        tools:ignore="RtlCompat" />
 
 </RelativeLayout>

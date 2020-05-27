@@ -30,16 +30,16 @@ class FriendAdapter(var mContext: Context?, var mData: MutableList<Friend?>?) : 
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FriendAdapter.ViewHolder, position: Int) {
-        holder.name_tv.text = mData?.get(position)?.name
-        holder.contact_tv.text = mData?.get(position)?.phone + "   " + mData?.get(position)?.email
+        holder.name_tv.text = mData?.get(position)?.friendName
+        holder.contact_tv.text = mData?.get(position)?.friendPhone + "   " + mData?.get(position)?.friendEmail
 
         holder.layout.setOnClickListener({ v ->
             val intent = Intent(mContext, FriendInfoActivity::class.java)
             intent.putExtra("friend", mData?.get(position))
             mContext?.startActivity(intent)
         })
-        holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, mData?.get(position)?.phone) }
-        holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, mData?.get(position)?.email) }
+        holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, mData?.get(position)?.friendPhone) }
+        holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, mData?.get(position)?.friendEmail) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

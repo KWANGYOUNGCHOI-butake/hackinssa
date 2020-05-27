@@ -3,6 +3,8 @@
     <color name="colorPrimary">#0080FF</color>
     <color name="colorPrimaryDark">#1034A6</color>
     <color name="colorAccent">#03DAC5</color>
+    <color name="colorWarning">#FFD300</color>
+    <color name="colorError">#ED2939</color>
 
     <color name="colorBlack">#000000</color>
     <color name="colorMaxDarkGray">#060606</color>
@@ -18,4 +20,5 @@
     <color name="colorGrayTrans">#aa888888</color>
     <color name="colorLightGrayTrans">#aadddddd</color>
     <color name="colorWhiteTrans">#aaFFFFFF</color>
+    <color name="colorTrans">#FFFFFFFF</color>
 </resources>

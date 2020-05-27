@@ -8,6 +8,8 @@ import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.size
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
@@ -20,9 +22,11 @@ import com.kwang0.hackinssa.helper.toEditable
 import com.kwang0.hackinssa.helper.IntentHelper.IMG_REQUEST_CODE
 import com.kwang0.hackinssa.helper.PicassoHelper
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
+import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
+import com.kwang0.hackinssa.presentation.ui.views.ChipAddDialogView
 import com.squareup.picasso.Picasso
 
-class FriendAddActivity : BaseActivity() {
+class FriendAddActivity : BaseActivity(), ChipAddListener {
 
     lateinit var toolbar: Toolbar
     lateinit var avatar_iv: ImageView
@@ -31,6 +35,7 @@ class FriendAddActivity : BaseActivity() {
     lateinit var email_et: EditText
     lateinit var country_iv: ImageView
     lateinit var tag_cg: ChipGroup
+    lateinit var tag_add_iv: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +48,7 @@ class FriendAddActivity : BaseActivity() {
         email_et = findViewById<EditText>(R.id.fa_email_et)
         country_iv = findViewById<ImageView>(R.id.fa_country_iv)
         tag_cg = findViewById<ChipGroup>(R.id.fa_tag_cg)
+        tag_add_iv = findViewById<ImageView>(R.id.fa_tag_add_iv)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -51,6 +57,7 @@ class FriendAddActivity : BaseActivity() {
 
         avatar_iv.setOnClickListener({ v -> IntentHelper.galleryIntent(this) })
         country_iv.setOnClickListener({ v -> IntentHelper.activityIntent(this, CountrySelectActivity::class.java) })
+        tag_add_iv.setOnClickListener ({ v -> ChipAddDialogView(this, this).openPaymentDialog() })
     }
 
     fun getIntentExtra(intent: Intent?) {
@@ -59,9 +66,9 @@ class FriendAddActivity : BaseActivity() {
 
         friend?.let {
             PicassoHelper.loadImg(it.friendAvatar, avatar_iv)
-            name_et.text = it.friendName?.toEditable()
-            phone_et.text = it.friendPhone?.toEditable()
-            email_et.text = it.friendEmail?.toEditable()
+            name_et.text = it.friendName.toEditable()
+            phone_et.text = it.friendPhone.toEditable()
+            email_et.text = it.friendEmail.toEditable()
         }
 
         country?.let {
@@ -88,6 +95,17 @@ class FriendAddActivity : BaseActivity() {
         return if (id == R.id.menu_fa_ok) {
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    override fun onChipAdded(chipStr: String) {
+        val chip = Chip(tag_cg.context)
+        chip.text = chipStr
+
+        chip.isClickable = false
+        chip.isCheckable = false
+        chip.isCloseIconVisible = true
+
+        tag_cg.addView(chip, tag_cg.size - 1)
     }
 
 }
