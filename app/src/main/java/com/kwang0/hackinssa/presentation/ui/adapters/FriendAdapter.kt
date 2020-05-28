@@ -4,9 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.text.TextUtils
 import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -49,6 +52,8 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
         GlideHelper.loadImg(mContext, Uri.parse(item?.friendAvatar), holder.avatar_iv)
         holder.name_tv.text = item?.friendName
         holder.contact_tv.text = item?.friendPhone + "   " + item?.friendEmail
+        if(TextUtils.isEmpty(item?.friendPhone)) holder.phone_iv.visibility = GONE else holder.phone_iv.visibility = VISIBLE
+        if(TextUtils.isEmpty(item?.friendEmail)) holder.email_iv.visibility = GONE else holder.email_iv.visibility = VISIBLE
 
         if(mContext is MainActivity) {
             holder.layout.setOnClickListener({ v ->

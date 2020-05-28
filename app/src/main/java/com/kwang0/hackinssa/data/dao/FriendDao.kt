@@ -12,7 +12,7 @@ interface FriendDao {
     @Query("SELECT * FROM friends")
     fun getFriends(): Flowable<List<Friend>>
 
-    @Query("SELECT * FROM friends WHERE friendId = :friendId")
+    @Query("SELECT * FROM friends WHERE friendId = :friendId LIMIT 1")
     fun getFriend(friendId: String): Flowable<Friend>
 
     @Update

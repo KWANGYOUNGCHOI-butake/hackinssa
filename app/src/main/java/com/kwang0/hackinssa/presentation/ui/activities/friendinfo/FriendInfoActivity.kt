@@ -3,10 +3,14 @@ package com.kwang0.hackinssa.presentation.ui.activities.friendinfo
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.chip.Chip
@@ -33,8 +37,10 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     lateinit var toolbar: Toolbar
     lateinit var avatar_iv: ImageView
     lateinit var name_tv: TextView
+    lateinit var phone_layout: RelativeLayout
     lateinit var phone_tv: TextView
     lateinit var phone_iv: ImageView
+    lateinit var email_layout: RelativeLayout
     lateinit var email_tv: TextView
     lateinit var email_iv: ImageView
     lateinit var country_iv: ImageView
@@ -52,8 +58,10 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         avatar_iv = findViewById<ImageView>(R.id.fi_avatar_iv)
         name_tv = findViewById<TextView>(R.id.fi_name_tv)
+        phone_layout = findViewById<RelativeLayout>(R.id.fi_phone_layout)
         phone_tv = findViewById<TextView>(R.id.fi_phone_tv)
         phone_iv = findViewById<ImageView>(R.id.fi_phone_iv)
+        email_layout = findViewById<RelativeLayout>(R.id.fi_email_layout)
         email_tv =findViewById<TextView>(R.id.fi_email_tv)
         email_iv = findViewById<ImageView>(R.id.fi_email_iv)
         country_iv = findViewById<ImageView>(R.id.fi_country_iv)
@@ -106,7 +114,9 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
             GlideHelper.loadImg(this, Uri.parse(it.friendAvatar), avatar_iv)
             name_tv.text = it.friendName
             phone_tv.text = it.friendPhone
+            if(TextUtils.isEmpty(it.friendPhone)) phone_layout.visibility = VISIBLE else phone_layout.visibility = GONE
             email_tv.text = it.friendEmail
+            if(TextUtils.isEmpty(it.friendEmail)) email_layout.visibility = VISIBLE else email_layout.visibility = GONE
             GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.friendCountry.toLowerCase() + ".png?raw=true", country_iv)
         }
     }
