@@ -15,6 +15,9 @@ interface FriendDao {
     @Query("SELECT * FROM friends WHERE friendId = :friendId LIMIT 1")
     fun getFriend(friendId: String): Flowable<Friend>
 
+    @Query("SELECT * FROM friends WHERE friendID IN (SELECT friendId FROM tags WHERE tagName = :tagName)")
+    fun getFriendFromTagName(tagName: String): Flowable<List<Friend>>
+
     @Update
     fun updateFriend(friend: Friend): Completable
 

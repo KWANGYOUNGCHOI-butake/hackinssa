@@ -21,18 +21,18 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
     private var countryRepository: CountryRepository
     private var countrySubscription: Disposable? = null
 
-    private var query: String? = null
+    private var query: String = ""
 
     init {
         countryRepository = CountryRepositoryImpl(CountryRepositoryRemoteImpl())
     }
 
-    override fun search(query: String?) {
+    override fun search(query: String) {
         this.query = query
 
         val langRequest = countryRepository.getByLang(query).onErrorReturn { e -> listOf<Country>() }
         val nameRequest = countryRepository.getByName(query).onErrorReturn { e -> listOf<Country>() }
-        val callingRequest = countryRepository.getByCalling(query?.toIntOrNull()).onErrorReturn { e -> listOf<Country>() }
+        val callingRequest = countryRepository.getByCalling(query.toIntOrNull() ?: - 1).onErrorReturn { e -> listOf<Country>() }
 
         countrySubscription = Flowable.zip(langRequest, nameRequest, callingRequest,
                 Function3<List<Country>, List<Country>, List<Country>, List<Country>>

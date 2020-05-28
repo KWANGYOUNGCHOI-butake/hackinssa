@@ -30,7 +30,6 @@ class TagInfoActivity : BaseActivity() {
 
         friendViewSetUp()
 
-
         getIntentExtra(intent)
 
     }

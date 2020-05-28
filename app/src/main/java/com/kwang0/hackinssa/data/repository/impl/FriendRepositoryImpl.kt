@@ -15,6 +15,10 @@ class FriendRepositoryImpl(private val friendDao: FriendDao) : FriendRepository 
         return friendDao.getFriend(friendId)
     }
 
+    override fun getFriendFromTagName(tagName: String): Flowable<List<Friend>> {
+        return friendDao.getFriendFromTagName(tagName)
+    }
+
     override fun insertFriend(friend: Friend): Completable {
         return friendDao.insertFriend(friend)
     }

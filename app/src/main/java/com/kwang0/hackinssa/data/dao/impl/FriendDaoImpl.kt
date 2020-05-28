@@ -24,6 +24,10 @@ class FriendDaoImpl(private val context: Context): FriendDao {
         return friendDao.getFriend(friendId)
     }
 
+    override fun getFriendFromTagName(tagName: String): Flowable<List<Friend>> {
+        return friendDao.getFriendFromTagName(tagName)
+    }
+
     override fun updateFriend(friend: Friend): Completable {
         return friendDao.updateFriend(friend)
     }

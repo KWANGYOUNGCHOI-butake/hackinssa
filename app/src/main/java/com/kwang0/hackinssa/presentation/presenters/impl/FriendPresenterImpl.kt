@@ -20,14 +20,14 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
     private var friendRepository: FriendRepository
     private var friendSubscription: Disposable? = null
 
-    private var query: String? = null
-    private var tagName: String? = null
+    private var query: String = ""
+    private var tagName: String = ""
 
     init {
         friendRepository = FriendRepositoryImpl(FriendDaoImpl(context))
     }
 
-    override fun search(query: String?) {
+    override fun search(query: String) {
         this.query = query
 
         friendSubscription = friendRepository.getFriends()
@@ -37,10 +37,10 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
                     view.addResultsToList(friends.toMutableList()) }, { throwable -> view.handleError(throwable) })
     }
 
-    override fun searchByTag(tagName: String?) {
+    override fun searchByTag(tagName: String) {
         this.tagName = tagName
 
-        friendSubscription = friendRepository.getFriends()
+        friendSubscription = friendRepository.getFriendFromTagName(tagName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ friends ->
@@ -49,10 +49,6 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
 
     override fun clear() {
         view.handleEmpty()
-    }
-
-    override fun restoreData() {
-        search(query)
     }
 
 }

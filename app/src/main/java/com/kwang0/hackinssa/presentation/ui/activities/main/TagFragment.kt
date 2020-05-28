@@ -21,8 +21,6 @@ class TagFragment : Fragment(), TagMenuListener {
     lateinit var empty_tv: TextView
 
     private var tagView: TagView? = null
-    private var tagList: MutableList<String?>? = null
-    private var tagAdapter: TagAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

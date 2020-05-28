@@ -14,15 +14,15 @@ class CountryRepositoryImpl(private val countryRepositoryRemote: CountryReposito
         return countryRepositoryRemote.getAll()
     }
 
-    override fun getByLang(et: String?): Flowable<List<Country>> {
+    override fun getByLang(et: String): Flowable<List<Country>> {
         return countryRepositoryRemote.getByLang(et)
     }
 
-    override fun getByName(name: String?): Flowable<List<Country>> {
+    override fun getByName(name: String): Flowable<List<Country>> {
         return countryRepositoryRemote.getByName(name)
     }
 
-    override fun getByCalling(calling: Int?): Flowable<List<Country>> {
+    override fun getByCalling(calling: Int): Flowable<List<Country>> {
         return countryRepositoryRemote.getByCalling(calling)
     }
 

@@ -114,9 +114,9 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
             GlideHelper.loadImg(this, Uri.parse(it.friendAvatar), avatar_iv)
             name_tv.text = it.friendName
             phone_tv.text = it.friendPhone
-            if(TextUtils.isEmpty(it.friendPhone)) phone_layout.visibility = VISIBLE else phone_layout.visibility = GONE
+            if(TextUtils.isEmpty(it.friendPhone)) phone_layout.visibility = GONE else phone_layout.visibility = VISIBLE
             email_tv.text = it.friendEmail
-            if(TextUtils.isEmpty(it.friendEmail)) email_layout.visibility = VISIBLE else email_layout.visibility = GONE
+            if(TextUtils.isEmpty(it.friendEmail)) email_layout.visibility = GONE else email_layout.visibility = VISIBLE
             GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.friendCountry.toLowerCase() + ".png?raw=true", country_iv)
         }
     }
