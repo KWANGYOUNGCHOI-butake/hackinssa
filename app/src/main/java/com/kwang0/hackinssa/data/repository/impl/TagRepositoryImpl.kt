@@ -9,8 +9,8 @@ import io.reactivex.Flowable
 import org.intellij.lang.annotations.Flow
 
 class TagRepositoryImpl(private val tagDao: TagDao): TagRepository {
-    override fun getTag(): Flowable<List<Tag>> {
-        return tagDao.getTag()
+    override fun getTags(): Flowable<List<Tag>> {
+        return tagDao.getTags()
     }
 
     override fun getTagById(friendId: String): Flowable<List<Tag>> {
@@ -19,6 +19,10 @@ class TagRepositoryImpl(private val tagDao: TagDao): TagRepository {
 
     override fun insertTag(tag: Tag): Completable {
         return tagDao.insertTag(tag)
+    }
+
+    override fun insertTags(tagList: List<Tag>): Completable {
+        return tagDao.insertTags(tagList)
     }
 
     override fun deleteTagById(friendId: String): Completable {

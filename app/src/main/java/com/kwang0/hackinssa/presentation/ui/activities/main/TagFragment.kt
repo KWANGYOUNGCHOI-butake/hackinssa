@@ -36,11 +36,8 @@ class TagFragment : Fragment(), TagMenuListener {
 
         tagViewSetUp(v)
 
-        tagList = tagView?.getmList()
-        tagAdapter = tagView?.getmAdapter()
 
-        tagList?.add("tag1")
-        tagAdapter?.notifyDataSetChanged()
+        tagView?.tagPresenter?.search("")
 
         return v
     }

@@ -14,6 +14,9 @@ import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import java9.util.stream.Collector
+import java9.util.stream.Collectors
+import java9.util.stream.StreamSupport
 import java.util.*
 
 class FriendAddPresenterImpl(context: Context, private var view: FriendAddPresenterView): FriendAddPresenter {
@@ -22,9 +25,6 @@ class FriendAddPresenterImpl(context: Context, private var view: FriendAddPresen
     private var friendRepository: FriendRepository
     private var tagRepository: TagRepository
     private var friendAddSubscription: Disposable? = null
-
-    private var friend: Friend? = null
-    private var tag: Tag? = null
 
     init {
         friendRepository = FriendRepositoryImpl(FriendDaoImpl(context))
@@ -49,28 +49,26 @@ class FriendAddPresenterImpl(context: Context, private var view: FriendAddPresen
 
         if(friendId == null) {
             friendAddSubscription = friendRepository.insertFriend(friend)
+                    .andThen(tagRepository.deleteTagById(friend.friendId))
+                    .andThen({ tagList.forEach({ tag -> tagRepository.insertTag(Tag(friend.friendId, tag.tagName, tag.tagCreated)) }) })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete({
                         view.finishActivity()
-//                        tagRepository.deleteTagById(friend.friendId)
-//                                .doOnComplete({
-//                                    tagList.forEach({ tag -> tagRepository.insertTag(Tag(friend.friendId, tag.tagName, tag.tagCreated))
-//                                            .doOnComplete({ view.finishActivity() }) })
-//                                })
                     })
                     .subscribe({ view.addBtnEnabled() }, { throwable -> view.handleError(throwable) })
         } else {
             friendAddSubscription = friendRepository.updateFriend(friend)
+                    .andThen(tagRepository.deleteTagById(friend.friendId))
+                    .andThen(tagRepository.insertTags(
+                            StreamSupport
+                                    .stream(tagList)
+                                    .map { tag -> Tag(friend.friendId, tag.tagName, tag.tagCreated) }
+                                    .collect(Collectors.toList())))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete({
                         view.finishActivity()
-//                        tagRepository.deleteTagById(friend.friendId)
-//                                .doOnComplete({
-//                                    tagList.forEach({ tag -> tagRepository.insertTag(Tag(friend.friendId, tag.tagName, tag.tagCreated))
-//                                            .doOnComplete({ view.finishActivity() }) })
-//                                })
                     })
                     .subscribe({ view.addBtnEnabled() }, { throwable -> view.handleError(throwable) })
         }

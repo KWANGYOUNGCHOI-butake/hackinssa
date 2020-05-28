@@ -29,16 +29,10 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
     override fun search(query: String?) {
         this.query = query
 
-        val langRequest = countryRepository?.getByLang(query)?.onErrorReturn { e -> mutableListOf<Country?>() }
-        val nameRequest = countryRepository?.getByName(query)?.onErrorReturn { e -> mutableListOf<Country?>() }
-        val callingRequest = countryRepository?.getByCalling(query?.toIntOrNull())?.onErrorReturn { e -> mutableListOf<Country?>() }
+        val langRequest = countryRepository.getByLang(query)?.onErrorReturn { e -> mutableListOf<Country?>() }
+        val nameRequest = countryRepository.getByName(query)?.onErrorReturn { e -> mutableListOf<Country?>() }
+        val callingRequest = countryRepository.getByCalling(query?.toIntOrNull())?.onErrorReturn { e -> mutableListOf<Country?>() }
 
-
-//        countrySubscription = langRequest
-//                ?.subscribeOn(Schedulers.io())
-//                ?.observeOn(AndroidSchedulers.mainThread())
-//                ?.doOnComplete({ view?.adapterNotifyChanges() })
-//                ?.subscribe({ countries -> view?.addResultsToList(countries) }, { throwable -> view?.handleError(throwable) })
         countrySubscription = Flowable.zip(langRequest, nameRequest, callingRequest,
                 Function3<MutableList<Country?>?, MutableList<Country?>?, MutableList<Country?>?, MutableList<Country?>?>
                 { lang, name, calling ->

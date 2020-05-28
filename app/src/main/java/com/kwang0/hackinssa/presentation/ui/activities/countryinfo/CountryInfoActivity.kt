@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
-import com.kwang0.hackinssa.helper.PicassoHelper
+import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenter
 import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.CountryInfoPresenterImpl
@@ -62,17 +62,21 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     override fun onStart() {
         super.onStart()
 
-        mDisposable.add(countryInfoPresenter.isFavorite(country?.getName()!!)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ b ->
-                    if(b) {
-                        menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
-                    } else {
-                        menu?.getItem(0)?.setIcon(R.drawable.ic_star_border)
-                    }
 
-                }, { throwable -> Log.e(TAG, "Unable to get username", throwable) })!!)
+        if(menu != null) {
+            mDisposable.add(countryInfoPresenter.isFavorite(country?.getName()!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ b ->
+                        System.out.println(b)
+                        if(b) {
+                            menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
+                        } else {
+                            menu?.getItem(0)?.setIcon(R.drawable.ic_star_border)
+                        }
+
+                    }, { throwable -> Log.e(TAG, "Unable to get username", throwable) }))
+        }
     }
 
     override fun onStop() {
@@ -85,9 +89,8 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         country = intent?.extras?.getSerializable("country") as? Country
 
         country?.let {
-            PicassoHelper.loadImg(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", iv)
+            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", iv)
             name_tv.text = it.getNativeName()
-            System.out.println(it.getTimezones()?.get(0))
             getLocaleTime(it.getTimezones()?.get(0))
         }
     }
@@ -103,13 +106,24 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         }
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        this.menu = menu
-        return super.onPrepareOptionsMenu(menu)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_country_info, menu)
+        this.menu = menu
+
+
+        mDisposable.add(countryInfoPresenter.isFavorite(country?.getName()!!)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ b ->
+                    System.out.println(b)
+                    if(b) {
+                        this.menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
+                    } else {
+                        this.menu?.getItem(0)?.setIcon(R.drawable.ic_star_border)
+                    }
+
+                }, { throwable -> Log.e(TAG, "Unable to get username", throwable) }))
+
         return true
     }
 

@@ -2,8 +2,11 @@ package com.kwang0.hackinssa.presentation.ui.activities.friendadd
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Base64
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -18,22 +21,25 @@ import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.data.models.Tags
+import com.kwang0.hackinssa.helper.GlideHelper
+import com.kwang0.hackinssa.helper.GlideHelper.getThumbnail
 import com.kwang0.hackinssa.helper.IntentHelper
 import com.kwang0.hackinssa.helper.IntentHelper.COUNTRY_REQUEST_CODE
-import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
-import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
-import com.kwang0.hackinssa.helper.toEditable
 import com.kwang0.hackinssa.helper.IntentHelper.IMG_REQUEST_CODE
-import com.kwang0.hackinssa.helper.PicassoHelper
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
+import com.kwang0.hackinssa.helper.toEditable
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendAddPresenterImpl
+import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
+import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
 import com.kwang0.hackinssa.presentation.ui.views.ChipAddDialogView
 import java9.util.stream.Collectors
 import java9.util.stream.StreamSupport
+import java.io.ByteArrayOutputStream
+import java.io.File
+
 
 class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListener {
     private val TAG = FriendAddActivity::class.simpleName
@@ -92,16 +98,16 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
             avatarPath = it.friendAvatar
             countryPath = it.friendCountry
 
-            PicassoHelper.loadImg(it.friendAvatar, avatar_iv)
+            GlideHelper.loadImg(this, Uri.parse(it.friendAvatar), avatar_iv)
             name_et.text = it.friendName.toEditable()
             phone_et.text = it.friendPhone?.toEditable()
             email_et.text = it.friendEmail?.toEditable()
-            PicassoHelper.loadImg(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.friendCountry.toLowerCase() + ".png?raw=true", country_iv)
+            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.friendCountry.toLowerCase() + ".png?raw=true", country_iv)
         }
 
         country?.let {
             countryPath = it.getAlpha2Code()
-            PicassoHelper.loadImg(CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", country_iv)
+            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", country_iv)
         }
 
         tags?.let {
@@ -114,12 +120,13 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
 
         data?.let {
             if(requestCode == IMG_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-                avatarPath = it.dataString
-                PicassoHelper.loadImg(avatarPath, avatar_iv)
+                avatarPath = data.data?.toString()
+                System.out.println(avatarPath)
+                GlideHelper.loadImg(this, Uri.parse(avatarPath), avatar_iv)
             }
             if(requestCode == COUNTRY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
                 countryPath = it.getStringExtra("country")
-                PicassoHelper.loadImg(CountryAdapter.BASE_IMG_URL_250_PX.toString() + countryPath?.toLowerCase() + ".png?raw=true", country_iv)
+                GlideHelper.loadImg(this,CountryAdapter.BASE_IMG_URL_250_PX.toString() + countryPath?.toLowerCase() + ".png?raw=true", country_iv)
             }
         }
     }
@@ -148,7 +155,6 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
                         tagList)
             } else {
                 addBtnEnabled()
-                System.out.println("work??")
             }
             true
         } else super.onOptionsItemSelected(item)

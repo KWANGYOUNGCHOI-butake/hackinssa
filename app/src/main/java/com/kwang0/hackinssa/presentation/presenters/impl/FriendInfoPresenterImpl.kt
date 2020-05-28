@@ -12,6 +12,7 @@ import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
 import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenterView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
@@ -20,22 +21,28 @@ class FriendInfoPresenterImpl(context: Context, private var view: FriendInfoPres
 
     private var friendRepository: FriendRepository
     private var tagRepository: TagRepository
-    private var friendInfoSubscription: Disposable? = null
+    private var mDisposable = CompositeDisposable()
 
     init {
         friendRepository = FriendRepositoryImpl(FriendDaoImpl(context))
         tagRepository = TagRepositoryImpl(TagDaoImpl(context))
     }
 
-
-    override fun search(friendId: String) {
-        friendInfoSubscription = friendRepository.getFriend(friendId)
+    override fun onStart(friendId: String) {
+        mDisposable.add(friendRepository.getFriend(friendId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext({tagRepository.getTagById(friendId)
-                        .subscribe({ tags -> view.addTagResultsToList(tags.toMutableList()) },
-                                { throwable -> view.handleError(throwable) })})
                 .subscribe({ friend -> view.addFriendResult(friend) },
-                        { throwable -> view.handleError(throwable) })
+                        { throwable -> view.handleError(throwable) }) )
+        mDisposable.add(tagRepository.getTagById(friendId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ tags ->
+                    view.addTagResultsToList(tags.toMutableList()) },
+                        { throwable -> view.handleError(throwable) }))
+    }
+
+    override fun onStop() {
+        mDisposable.clear()
     }
 }

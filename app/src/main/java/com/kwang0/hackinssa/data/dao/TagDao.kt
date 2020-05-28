@@ -9,13 +9,16 @@ import io.reactivex.Flowable
 interface TagDao {
 
     @Query("SELECT * FROM tags")
-    fun getTag(): Flowable<List<Tag>>
+    fun getTags(): Flowable<List<Tag>>
 
     @Query("SELECT * FROM tags WHERE friendId = :friendId")
     fun getTagById(friendId: String): Flowable<List<Tag>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTag(tag: Tag): Completable
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTags(tagList: List<Tag>): Completable
 
     @Query("DELETE FROM tags WHERE friendId = :friendId")
     fun deleteTagById(friendId: String): Completable

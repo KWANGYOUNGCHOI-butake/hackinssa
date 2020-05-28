@@ -10,12 +10,25 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.data.models.Friend
+import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
 
 
-class TagAdapter(var mContext: Context?, var mData: MutableList<String?>?, var menuListener: TagMenuListener?)
+class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuListener: TagMenuListener?)
     : RecyclerView.Adapter<TagAdapter.ViewHolder>() {
+
+    fun addManyToList(tags: MutableList<Tag>) {
+        this.mData = tags
+        this.notifyDataSetChanged()
+    }
+
+    fun clearList() {
+        with(this.mData) {
+            this.clear()
+        }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagAdapter.ViewHolder {
@@ -25,16 +38,16 @@ class TagAdapter(var mContext: Context?, var mData: MutableList<String?>?, var m
     }
 
     override fun getItemCount(): Int {
-        return mData!!.size
+        return mData.size
     }
 
     override fun onBindViewHolder(holder: TagAdapter.ViewHolder, position: Int) {
-        holder.tv.text = mData?.get(position)
+        holder.tv.text = mData.get(position).tagName
 
         holder.layout.setOnClickListener({ v ->
             val intent = Intent(mContext, TagInfoActivity::class.java)
-            intent.putExtra("tag", mData?.get(position))
-            mContext?.startActivity(intent)
+            intent.putExtra("tag", mData.get(position))
+            mContext.startActivity(intent)
         })
         holder.layout.setOnLongClickListener{
             menuListener?.menuChanged()

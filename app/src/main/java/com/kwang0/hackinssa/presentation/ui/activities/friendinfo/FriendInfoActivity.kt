@@ -1,33 +1,29 @@
 package com.kwang0.hackinssa.presentation.ui.activities.friendinfo
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
+import android.util.Base64
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.size
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.data.models.Tags
+import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.helper.IntentHelper
-import com.kwang0.hackinssa.helper.PicassoHelper
-import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendInfoPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
-import com.squareup.picasso.Picasso
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 
 class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     private val TAG = FriendInfoActivity::class.simpleName
@@ -75,11 +71,12 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
 
     override fun onStart() {
         super.onStart()
-        friendInfoPresenter?.search(friend?.friendId ?: "")
+        friendInfoPresenter?.onStart(friend?.friendId ?: "")
     }
 
     override fun onStop() {
         super.onStop()
+        friendInfoPresenter?.onStop()
     }
 
     fun getIntentExra(intent: Intent?) {
@@ -105,10 +102,11 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     fun notifyFriendChange() {
 
         friend?.let {
-            PicassoHelper.loadImg(it.friendAvatar, avatar_iv)
+            GlideHelper.loadImg(this, Uri.parse(it.friendAvatar), avatar_iv)
             name_tv.text = it.friendName
             phone_tv.text = it.friendPhone
             email_tv.text = it.friendEmail
+            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.friendCountry.toLowerCase() + ".png?raw=true", country_iv)
         }
     }
 

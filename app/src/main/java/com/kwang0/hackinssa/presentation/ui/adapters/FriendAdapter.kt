@@ -3,6 +3,8 @@ package com.kwang0.hackinssa.presentation.ui.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +13,12 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
+import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.presentation.ui.activities.friendinfo.FriendInfoActivity
 import com.kwang0.hackinssa.helper.IntentHelper
-import com.kwang0.hackinssa.helper.PicassoHelper
 
-class FriendAdapter(var mContext: Context?, var mData: MutableList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
+class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
     fun addManyToList(friends: MutableList<Friend>) {
         this.mData = friends
@@ -44,15 +45,14 @@ class FriendAdapter(var mContext: Context?, var mData: MutableList<Friend>) : Re
     override fun onBindViewHolder(holder: FriendAdapter.ViewHolder, position: Int) {
         val item: Friend? = mData.get(position)
 
-        System.out.println(item?.friendAvatar)
-        PicassoHelper.loadImg(item?.friendAvatar, holder.avatar_iv)
+        GlideHelper.loadImg(mContext, Uri.parse(item?.friendAvatar), holder.avatar_iv)
         holder.name_tv.text = item?.friendName
         holder.contact_tv.text = item?.friendPhone + "   " + item?.friendEmail
 
         holder.layout.setOnClickListener({ v ->
             val intent = Intent(mContext, FriendInfoActivity::class.java)
             intent.putExtra("friend", item)
-            mContext?.startActivity(intent)
+            mContext.startActivity(intent)
         })
         holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, item?.friendPhone) }
         holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, item?.friendEmail) }

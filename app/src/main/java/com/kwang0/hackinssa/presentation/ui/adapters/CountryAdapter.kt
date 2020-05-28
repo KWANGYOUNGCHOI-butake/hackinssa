@@ -3,9 +3,6 @@ package com.kwang0.hackinssa.presentation.ui.adapters
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
-import android.content.res.Resources
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,14 +12,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
-import com.kwang0.hackinssa.helper.IntentHelper
-import com.kwang0.hackinssa.helper.PicassoHelper
+import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.presentation.ui.activities.countryinfo.CountryInfoActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
-import com.kwang0.hackinssa.presentation.ui.activities.main.CountryFragment
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
-import com.squareup.picasso.Picasso
-import java.util.*
 
 
 class CountryAdapter(val mContext: Context, var mData: MutableList<Country?>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
@@ -50,7 +43,7 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country?>?) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: Country? = mData?.get(position)
-        PicassoHelper.loadImg(BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", holder.iv)
+        GlideHelper.loadImg(mContext,BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", holder.iv)
 
         holder.tv.text = item.getNativeName()
         holder.layout.setOnClickListener {v ->

@@ -7,9 +7,10 @@ import io.reactivex.Flowable
 import org.intellij.lang.annotations.Flow
 
 interface TagRepository {
-    fun getTag(): Flowable<List<Tag>>
+    fun getTags(): Flowable<List<Tag>>
     fun getTagById(friendId: String): Flowable<List<Tag>>
     fun insertTag(tag: Tag): Completable
+    fun insertTags(tagList: List<Tag>): Completable
     fun deleteTagById(friendId: String): Completable
     fun deleteTag(friendId: String, tagName: String): Completable
 }

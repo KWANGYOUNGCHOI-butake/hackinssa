@@ -6,28 +6,38 @@ import com.kwang0.hackinssa.data.repository.TagRepository
 import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
 import com.kwang0.hackinssa.presentation.presenters.TagPresenter
 import com.kwang0.hackinssa.presentation.presenters.TagPresenterView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
-class TagPresenterImpl(context: Context, view: TagPresenterView): TagPresenter {
+class TagPresenterImpl(context: Context, private var view: TagPresenterView): TagPresenter {
     private val TAG = TagPresenterImpl::class.simpleName
 
-    private var view: TagPresenterView? = view
-    private var tagRepository: TagRepository? = null
-    private var tagSubscription: Disposable? = null
+    private var tagRepository: TagRepository
+    private var mDisposable = CompositeDisposable()
+
+    private var query: String? = null
 
     init {
         tagRepository = TagRepositoryImpl(TagDaoImpl(context))
     }
 
     override fun search(query: String?) {
-        TODO("Not yet implemented")
+        this.query = query
+
+        mDisposable.add(tagRepository.getTags()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ tags ->
+                    view.addResultsToList(tags.toMutableList()) }, { throwable -> view.handleError(throwable) }))
     }
 
     override fun clear() {
-        TODO("Not yet implemented")
+        view.handleEmpty()
     }
 
     override fun restoreData() {
-        TODO("Not yet implemented")
+        search(query)
     }
 }
