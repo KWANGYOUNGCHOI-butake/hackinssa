@@ -15,7 +15,7 @@ import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
 import java.util.*
 
-class CountryView(private var mContext: Context?): CountryPresenterView {
+class CountryView(private var mContext: Context): CountryPresenterView {
     var TAG = CountryView::class.simpleName
 
     var rv: RecyclerView? = null
@@ -48,12 +48,7 @@ class CountryView(private var mContext: Context?): CountryPresenterView {
         showEmptyLayout()
     }
 
-    override fun adapterNotifyChanges() {
-        mAdapter?.notifyDataSetChanged()
-    }
-
     override fun addResultsToList(countries: MutableList<Country?>?) {
-        Log.d(TAG, "countries : " + countries?.size)
         mAdapter?.addManyToList(countries)
         showExistLayout()
     }

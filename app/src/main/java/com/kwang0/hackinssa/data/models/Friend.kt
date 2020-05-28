@@ -12,8 +12,8 @@ import java.util.*
 @Entity(tableName = "friends")
 class Friend(@NonNull
              @SerializedName("friendId")
-             @PrimaryKey (autoGenerate = true)
-             @ColumnInfo(name = "friendId") var friendId: Int,
+             @PrimaryKey
+             @ColumnInfo(name = "friendId") val friendId: String,
 
              @NonNull
              @SerializedName("friendAvatar")
@@ -24,14 +24,14 @@ class Friend(@NonNull
              @ColumnInfo(name = "friendName") var friendName: String,
 
              @SerializedName("friendPhone")
-             @ColumnInfo(name = "friendPhone") var friendPhone: String,
+             @ColumnInfo(name = "friendPhone") var friendPhone: String?,
 
              @SerializedName("friendEmail")
-             @ColumnInfo(name = "friendEmail") var friendEmail: String,
+             @ColumnInfo(name = "friendEmail") var friendEmail: String?,
+
+             @SerializedName("friendCountry")
+             @ColumnInfo(name = "friendCountry") var friendCountry: String,
 
              @NonNull
              @SerializedName("friendCreated")
-             @ColumnInfo(name = "friendCreated") var friendCreated: Int) : Serializable {
-
-
-}
+             @ColumnInfo(name = "friendCreated") var friendCreated: Long) : Serializable

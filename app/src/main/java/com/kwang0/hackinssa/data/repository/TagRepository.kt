@@ -4,9 +4,12 @@ import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import org.intellij.lang.annotations.Flow
 
 interface TagRepository {
-    fun getTag(): Flowable<Tag>
-    fun insertOrUpdateTag(tag: Tag): Completable
-    fun deleteTag(tag: Tag): Completable
+    fun getTag(): Flowable<List<Tag>>
+    fun getTagById(friendId: String): Flowable<List<Tag>>
+    fun insertTag(tag: Tag): Completable
+    fun deleteTagById(friendId: String): Completable
+    fun deleteTag(friendId: String, tagName: String): Completable
 }

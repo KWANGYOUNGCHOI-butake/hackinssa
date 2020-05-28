@@ -43,6 +43,8 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_info)
 
+        countryInfoPresenter = CountryInfoPresenterImpl(this, this)
+
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         iv = findViewById<ImageView>(R.id.ci_iv)
         name_tv = findViewById<TextView>(R.id.ci_name_tv)
@@ -52,8 +54,6 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         getIntentExtra(intent)
-
-        countryInfoPresenter = CountryInfoPresenterImpl(this, this)
 
         invalidateOptionsMenu()
     }
@@ -66,7 +66,6 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ b ->
-                    System.out.println(b)
                     if(b) {
                         menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
                     } else {
@@ -79,7 +78,6 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     override fun onStop() {
         super.onStop()
 
-        // clear all the subscriptions
         mDisposable.clear()
     }
 

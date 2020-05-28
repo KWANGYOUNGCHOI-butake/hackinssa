@@ -10,7 +10,7 @@ import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import java.util.ArrayList
 
-class TagView(var mContext: Context?, var menuListener: TagMenuListener) {
+class TagView(var mContext: Context, var menuListener: TagMenuListener) {
     var rv: RecyclerView? = null
 
     private var mList: MutableList<String?>? = null

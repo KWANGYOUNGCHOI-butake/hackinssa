@@ -17,7 +17,7 @@ class CountryInfoPresenterImpl(context: Context, private var view: CountryInfoPr
     private var favoriteRepository: FavoriteRepository
     private lateinit var favoriteSubscription: Disposable
 
-    private var favorite: Favorite ?= null
+    private var favorite: Favorite? = null
 
     init {
         favoriteRepository = FavoriteRepositoryImpl(FavoriteDaoImpl(context))

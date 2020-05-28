@@ -2,6 +2,7 @@ package com.kwang0.hackinssa.presentation.presenters.impl
 
 import android.content.Context
 import com.kwang0.hackinssa.data.dao.impl.FriendDaoImpl
+import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.repository.FriendRepository
 import com.kwang0.hackinssa.data.repository.impl.FriendRepositoryImpl
@@ -9,31 +10,42 @@ import com.kwang0.hackinssa.presentation.presenters.FriendPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendPresenterView
 import io.reactivex.Completable
 import io.reactivex.Flowable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
-class FriendPresenterImpl(context: Context, view: FriendPresenterView) : FriendPresenter {
+class FriendPresenterImpl(context: Context, private var view: FriendPresenterView) : FriendPresenter {
     private val TAG = FriendPresenterImpl::class.simpleName
 
-    private var view: FriendPresenterView? = view
     private var friendRepository: FriendRepository
     private var friendSubscription: Disposable? = null
 
-    private lateinit var friend: Friend
+    private var query: String? = null
 
     init {
         friendRepository = FriendRepositoryImpl(FriendDaoImpl(context))
     }
 
-    override fun getFriendName(): Flowable<String> {
-        return friendRepository.getFriend()
-                .map({ friend ->
-                    this.friend = friend
-                    friend.friendName
-                })
+    override fun search(query: String?) {
+        this.query = query
+
+        friendSubscription = friendRepository.getFriends()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ friends ->
+                    view.addResultsToList(friends.toMutableList()) }, { throwable -> view.handleError(throwable) })
     }
 
-    override fun updateFriend(avatar: String, name: String, phone: String, email: String, created: Int): Completable {
-        this.friend = Friend(this.friend.friendId, avatar, name, phone, email, created)
-        return friendRepository.insertOrUpdateFriend(this.friend)
+    override fun searchByTag(tagName: String?) {
+
     }
+
+    override fun clear() {
+        view.handleEmpty()
+    }
+
+    override fun restoreData() {
+        search(query)
+    }
+
 }

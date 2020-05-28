@@ -8,36 +8,36 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 
 class TagDaoImpl(private val context: Context): TagDao {
-    private var database: InssaDatabase? = null
-    private var tagDao: TagDao? = null
+    var database: InssaDatabase
+    var tagDao: TagDao
 
     init {
         database = InssaDatabase.getInstance(context)
-        tagDao = database?.tagDao()
+        tagDao = database.tagDao()
     }
 
-    override fun getTag(): Flowable<Tag> {
-        TODO("Not yet implemented")
+    override fun getTag(): Flowable<List<Tag>> {
+        return tagDao.getTag()
+    }
+
+    override fun getTagById(friendId: String): Flowable<List<Tag>> {
+        return tagDao.getTagById(friendId)
     }
 
     override fun insertTag(tag: Tag): Completable {
-        TODO("Not yet implemented")
+        return tagDao.insertTag(tag)
     }
 
-    override fun update(tag: Tag): Completable {
-        TODO("Not yet implemented")
-    }
-
-    override fun deleteTagById(friendId: Int): Completable {
-        TODO("Not yet implemented")
+    override fun deleteTagById(friendId: String): Completable {
+        return tagDao.deleteTagById(friendId)
     }
 
     override fun deleteTagByName(tagName: String): Completable {
-        TODO("Not yet implemented")
+        return tagDao.deleteTagByName(tagName)
     }
 
-    override fun deleteTag(friendId: Int, tagName: String): Completable {
-        TODO("Not yet implemented")
+    override fun deleteTag(friendId: String, tagName: String): Completable {
+        return tagDao.deleteTag(friendId, tagName)
     }
 
 }

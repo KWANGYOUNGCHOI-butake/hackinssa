@@ -11,6 +11,7 @@ import com.jakewharton.rxbinding4.widget.textChanges
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
+import com.kwang0.hackinssa.presentation.ui.views.FriendView
 import com.kwang0.hackinssa.presentation.ui.views.TagView
 
 class TagFragment : Fragment(), TagMenuListener {
@@ -33,9 +34,7 @@ class TagFragment : Fragment(), TagMenuListener {
         empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
         empty_tv.visibility = GONE
 
-        tagView = TagView(context, this)
-        tagView?.bindView(v)
-        tagView?.recyclerInit()
+        tagViewSetUp(v)
 
         tagList = tagView?.getmList()
         tagAdapter = tagView?.getmAdapter()
@@ -88,5 +87,11 @@ class TagFragment : Fragment(), TagMenuListener {
         menu?.getItem(3)?.let {
             if(!it.isVisible) showTrashMenu()
         }
+    }
+
+    fun tagViewSetUp(v: View) {
+        tagView = TagView(v.context, this)
+        tagView?.bindView(v)
+        tagView?.recyclerInit()
     }
 }

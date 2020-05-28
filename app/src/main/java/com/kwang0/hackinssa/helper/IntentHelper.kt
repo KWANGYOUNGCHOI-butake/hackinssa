@@ -19,6 +19,11 @@ object IntentHelper {
         context?.startActivity(intent)
     }
 
+    fun activityResultIntent(activity: Activity?, cls: Class<*>, requestCode: Int) {
+        val intent = Intent(activity, cls)
+        activity?.startActivityForResult(intent, requestCode)
+    }
+
     fun activityClearIntent(context: Context?, cls: Class<*>) {
         val intent = Intent(context, cls)
         context?.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))

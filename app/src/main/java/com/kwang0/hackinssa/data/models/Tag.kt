@@ -13,9 +13,9 @@ import java.util.*
             childColumns = arrayOf("friendId")
         )])
 class Tag(@SerializedName("id")
-          var friendId: Int,
+          var friendId: String,
           @SerializedName("name")
           var tagName: String,
           @NonNull
           @SerializedName("created")
-          @ColumnInfo(name = "tagCreated") var tagCreated: Int) : Serializable
+          @ColumnInfo(name = "tagCreated") var tagCreated: Long) : Serializable {}

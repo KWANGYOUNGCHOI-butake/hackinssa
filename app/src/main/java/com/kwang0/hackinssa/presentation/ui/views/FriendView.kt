@@ -3,19 +3,26 @@ package com.kwang0.hackinssa.presentation.ui.views
 import android.app.Activity
 import android.content.Context
 import android.view.View
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
+import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
+import com.kwang0.hackinssa.presentation.presenters.FriendPresenter
+import com.kwang0.hackinssa.presentation.presenters.FriendPresenterView
+import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
+import com.kwang0.hackinssa.presentation.presenters.impl.FriendPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.presentation.ui.adapters.FriendAdapter
 import java.util.ArrayList
 
-class FriendView(private var mContext: Context?) {
+class FriendView(private var mContext: Context): FriendPresenterView {
     var rv: RecyclerView? = null
 
-    private var mList: MutableList<Friend?>? = null
+    var friendPresenter: FriendPresenter? = null
+    private var mList: MutableList<Friend> = ArrayList<Friend>()
     private var mAdapter: FriendAdapter? = null
 
     fun bindView(a: Activity) {
@@ -27,7 +34,8 @@ class FriendView(private var mContext: Context?) {
     }
 
     fun recyclerInit() {
-        mList = ArrayList<Friend?>()
+        friendPresenter = FriendPresenterImpl(mContext, this)
+
         mAdapter = FriendAdapter(mContext, mList)
         rv?.setHasFixedSize(true)
         rv?.isNestedScrollingEnabled = false
@@ -35,11 +43,11 @@ class FriendView(private var mContext: Context?) {
         rv?.adapter = mAdapter
     }
 
-    fun getmList(): MutableList<Friend?>? {
+    fun getmList(): MutableList<Friend> {
         return mList
     }
 
-    fun setmList(mList: MutableList<Friend?>?) {
+    fun setmList(mList: MutableList<Friend>) {
         this.mList = mList
     }
 
@@ -49,5 +57,16 @@ class FriendView(private var mContext: Context?) {
 
     fun setmAdapter(mAdapter: FriendAdapter?) {
         this.mAdapter = mAdapter
+    }
+
+    override fun addResultsToList(friends: MutableList<Friend>) {
+        mAdapter?.addManyToList(friends)
+    }
+
+    override fun handleEmpty() {
+        mAdapter?.clearList()
+    }
+
+    override fun handleError(throwable: Throwable?) {
     }
 }

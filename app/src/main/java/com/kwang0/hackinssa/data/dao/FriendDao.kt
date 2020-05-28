@@ -9,11 +9,14 @@ import io.reactivex.Flowable
 
 @Dao
 interface FriendDao {
-    @Query("SELECT * FROM friends LIMIT 1")
-    fun getFriend(): Flowable<Friend>
+    @Query("SELECT * FROM friends")
+    fun getFriends(): Flowable<List<Friend>>
+
+    @Query("SELECT * FROM friends WHERE friendId = :friendId")
+    fun getFriend(friendId: String): Flowable<Friend>
 
     @Update
-    fun update(friend: Friend): Completable
+    fun updateFriend(friend: Friend): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFriend(friend: Friend): Completable

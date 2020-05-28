@@ -18,4 +18,16 @@ class TagPresenterImpl(context: Context, view: TagPresenterView): TagPresenter {
     init {
         tagRepository = TagRepositoryImpl(TagDaoImpl(context))
     }
+
+    override fun search(query: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun clear() {
+        TODO("Not yet implemented")
+    }
+
+    override fun restoreData() {
+        TODO("Not yet implemented")
+    }
 }

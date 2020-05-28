@@ -14,11 +14,10 @@ import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 import java.util.stream.StreamSupport
 
-class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
+class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPresenter {
     private val TAG = CountryPresenterImpl::class.simpleName
 
-    private var view: CountryPresenterView? = view
-    private var countryRepository: CountryRepository? = null
+    private var countryRepository: CountryRepository
     private var countrySubscription: Disposable? = null
 
     private var query: String? = null
@@ -50,12 +49,11 @@ class CountryPresenterImpl(view: CountryPresenterView) : CountryPresenter {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                ?.doOnComplete({ view?.adapterNotifyChanges() })
-                ?.subscribe({ countries -> view?.addResultsToList(countries) }, { throwable -> view?.handleError(throwable) })
+                .subscribe({ countries -> view.addResultsToList(countries) }, { throwable -> view.handleError(throwable) })
     }
 
     override fun clear() {
-        view?.handleEmpty()
+        view.handleEmpty()
     }
 
     override fun restoreData() {

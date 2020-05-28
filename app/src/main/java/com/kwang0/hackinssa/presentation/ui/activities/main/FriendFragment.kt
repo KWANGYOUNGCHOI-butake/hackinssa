@@ -6,21 +6,24 @@ import android.view.*
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.jakewharton.rxbinding4.widget.textChanges
 
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.helper.IntentHelper
+import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.FriendAdapter
+import com.kwang0.hackinssa.presentation.ui.views.CountryView
 import com.kwang0.hackinssa.presentation.ui.views.FriendView
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
-class AddressFragment : Fragment() {
+class FriendFragment : Fragment() {
 
     lateinit var search_et: EditText
 
     private var friendView: FriendView? = null
-    private var friendList: MutableList<Friend?>? = null
-    private var friendAdapter: FriendAdapter? = null
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -28,16 +31,28 @@ class AddressFragment : Fragment() {
 
         search_et = v.findViewById<EditText>(R.id.searchbar_et)
 
-        friendView = FriendView(context)
-        friendView?.bindView(v)
-        friendView?.recyclerInit()
+        friendViewSetUp(v)
 
-        friendList = friendView?.getmList()
-        friendAdapter = friendView?.getmAdapter()
 
-        friendList?.add(Friend(1,"mina - avatar", "mina", "010-1234-5678", "sample@gmail.com", 0))
-        friendAdapter?.notifyDataSetChanged()
-
+        friendView?.friendPresenter?.search("")
+//        search_et.textChanges()
+////                .throttleLast(100, TimeUnit.MILLISECONDS)
+//                .debounce(200, TimeUnit.MILLISECONDS)
+//                .subscribeOn(AndroidSchedulers.mainThread())
+//                .observeOn(AndroidSchedulers.mainThread())
+////                .filter({ chars ->
+////                    val empty = TextUtils.isEmpty(chars.trim())
+////                    !empty
+////                })
+//                .subscribe({ chars ->
+//                    val searchTerm: String = chars.trim().toString()
+//                    if (chars.trim().length == 0) {
+//                        hideKeyboard()
+//                        friendView?.friendPresenter?.clear()
+//                    } else {
+//                        friendView?.friendPresenter?.search(searchTerm)
+//                    }
+//                })
         
         return v
     }
@@ -54,5 +69,11 @@ class AddressFragment : Fragment() {
             IntentHelper.activityIntent(context, FriendAddActivity::class.java)
             true
         } else super.onOptionsItemSelected(item)
+    }
+
+    fun friendViewSetUp(v: View) {
+        friendView = FriendView(v.context)
+        friendView?.bindView(v)
+        friendView?.recyclerInit()
     }
 }

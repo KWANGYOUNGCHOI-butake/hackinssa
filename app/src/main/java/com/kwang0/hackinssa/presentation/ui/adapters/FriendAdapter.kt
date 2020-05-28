@@ -11,12 +11,24 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.presentation.ui.activities.friendinfo.FriendInfoActivity
 import com.kwang0.hackinssa.helper.IntentHelper
+import com.kwang0.hackinssa.helper.PicassoHelper
 
-class FriendAdapter(var mContext: Context?, var mData: MutableList<Friend?>?) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
+class FriendAdapter(var mContext: Context?, var mData: MutableList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
+    fun addManyToList(friends: MutableList<Friend>) {
+        this.mData = friends
+        this.notifyDataSetChanged()
+    }
+
+    fun clearList() {
+        with(this.mData) {
+            this.clear()
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendAdapter.ViewHolder {
         val rootView: View
@@ -25,21 +37,25 @@ class FriendAdapter(var mContext: Context?, var mData: MutableList<Friend?>?) : 
     }
 
     override fun getItemCount(): Int {
-        return mData!!.size
+        return mData.size
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FriendAdapter.ViewHolder, position: Int) {
-        holder.name_tv.text = mData?.get(position)?.friendName
-        holder.contact_tv.text = mData?.get(position)?.friendPhone + "   " + mData?.get(position)?.friendEmail
+        val item: Friend? = mData.get(position)
+
+        System.out.println(item?.friendAvatar)
+        PicassoHelper.loadImg(item?.friendAvatar, holder.avatar_iv)
+        holder.name_tv.text = item?.friendName
+        holder.contact_tv.text = item?.friendPhone + "   " + item?.friendEmail
 
         holder.layout.setOnClickListener({ v ->
             val intent = Intent(mContext, FriendInfoActivity::class.java)
-            intent.putExtra("friend", mData?.get(position))
+            intent.putExtra("friend", item)
             mContext?.startActivity(intent)
         })
-        holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, mData?.get(position)?.friendPhone) }
-        holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, mData?.get(position)?.friendEmail) }
+        holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, item?.friendPhone) }
+        holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, item?.friendEmail) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

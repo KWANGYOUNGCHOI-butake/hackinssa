@@ -1,5 +1,6 @@
 package com.kwang0.hackinssa.presentation.ui.adapters
 
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -24,10 +25,11 @@ import com.squareup.picasso.Picasso
 import java.util.*
 
 
-class CountryAdapter(var mContext: Context?, var mData: MutableList<Country?>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
+class CountryAdapter(val mContext: Context, var mData: MutableList<Country?>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
     fun addManyToList(countries: MutableList<Country?>?) {
         this.mData = countries
+        this.notifyDataSetChanged()
     }
 
     fun clearList() {
@@ -55,9 +57,12 @@ class CountryAdapter(var mContext: Context?, var mData: MutableList<Country?>?) 
             if(mContext is MainActivity) {
                 val intent = Intent(mContext, CountryInfoActivity::class.java)
                 intent.putExtra("country", mData?.get(position))
-                mContext?.startActivity(intent)
+                mContext.startActivity(intent)
             } else if(mContext is CountrySelectActivity) {
-
+                val intent = Intent();
+                intent.putExtra("country", item.getAlpha2Code());
+                mContext.setResult(RESULT_OK, intent);
+                mContext.finish();
             }
         }
 

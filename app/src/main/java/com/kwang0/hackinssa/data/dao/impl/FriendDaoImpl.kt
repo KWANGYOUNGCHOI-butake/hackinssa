@@ -8,24 +8,28 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 
 class FriendDaoImpl(private val context: Context): FriendDao {
-    private var database: InssaDatabase? = null
-    private var friendDao: FriendDao? = null
+    var database: InssaDatabase
+    var friendDao: FriendDao
 
     init {
         database = InssaDatabase.getInstance(context)
-        friendDao = database?.friendDao()
+        friendDao = database.friendDao()
     }
 
-    override fun getFriend(): Flowable<Friend> {
-        TODO("Not yet implemented")
+    override fun getFriends(): Flowable<List<Friend>> {
+        return friendDao.getFriends()
     }
 
-    override fun update(friend: Friend): Completable {
-        TODO("Not yet implemented")
+    override fun getFriend(friendId: String): Flowable<Friend> {
+        return friendDao.getFriend(friendId)
+    }
+
+    override fun updateFriend(friend: Friend): Completable {
+        return friendDao.updateFriend(friend)
     }
 
     override fun insertFriend(friend: Friend): Completable {
-        TODO("Not yet implemented")
+        return friendDao.insertFriend(friend)
     }
 
 }
