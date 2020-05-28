@@ -8,4 +8,9 @@
 
     <include layout="@layout/reuse_toolbar"/>
 
+    <include layout="@layout/reuse_friend_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"/>
+
 </RelativeLayout>

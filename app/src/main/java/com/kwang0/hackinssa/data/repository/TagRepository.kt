@@ -9,6 +9,7 @@ import org.intellij.lang.annotations.Flow
 interface TagRepository {
     fun getTags(): Flowable<List<Tag>>
     fun getTagById(friendId: String): Flowable<List<Tag>>
+    fun getTagByName(tagName: String): Flowable<List<Tag>>
     fun insertTag(tag: Tag): Completable
     fun insertTags(tagList: List<Tag>): Completable
     fun deleteTagById(friendId: String): Completable

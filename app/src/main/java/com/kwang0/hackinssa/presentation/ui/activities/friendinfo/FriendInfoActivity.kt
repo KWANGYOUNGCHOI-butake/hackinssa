@@ -94,6 +94,7 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
         return if (id == R.id.menu_fi_edit) {
             val intent = Intent(this, FriendAddActivity::class.java)
             intent.putExtra("friend", friend)
+            intent.putExtra("tags", tags)
             startActivity(intent)
             true
         } else super.onOptionsItemSelected(item)
@@ -136,6 +137,11 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     override fun addTagResultsToList(tagList: MutableList<Tag>) {
         tags.tagList = tagList
         notifyTagChanges()
+    }
+
+    override fun clearTags() {
+        tags.tagList.clear()
+        tag_cg.removeAllViews()
     }
 
     override fun handleError(throwable: Throwable?) {

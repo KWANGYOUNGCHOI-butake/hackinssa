@@ -36,6 +36,7 @@ import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
 import com.kwang0.hackinssa.presentation.ui.views.ChipAddDialogView
 import java9.util.stream.Collectors
+import java9.util.stream.Stream
 import java9.util.stream.StreamSupport
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -107,7 +108,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
 
         country?.let {
             countryPath = it.getAlpha2Code()
-            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", country_iv)
+            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code().toLowerCase() + ".png?raw=true", country_iv)
         }
 
         tags?.let {

@@ -10,16 +10,16 @@ import retrofit2.http.Path
 interface CountryRepositoryRemote {
 
     @GET("all")
-    fun getAll(): Flowable<MutableList<Country?>?>?
+    fun getAll(): Flowable<List<Country>>
 
     @GET("lang/{et}")
-    fun getByLang( @Path("et") et: String? ): Flowable<MutableList<Country?>?>?
+    fun getByLang( @Path("et") et: String? ): Flowable<List<Country>>
 
     @GET("name/{name}")
-    fun getByName( @Path("name") name: String? ): Flowable<MutableList<Country?>?>?
+    fun getByName( @Path("name") name: String? ): Flowable<List<Country>>
 
     @GET("callingcode/{callingcode}")
-    fun getByCalling( @Path("callingcode") calling: Int? ): Flowable<MutableList<Country?>?>?
+    fun getByCalling( @Path("callingcode") calling: Int? ): Flowable<List<Country>>
 
     companion object { const val BASE_URL = "https://restcountries.eu/rest/v2/" }
 }

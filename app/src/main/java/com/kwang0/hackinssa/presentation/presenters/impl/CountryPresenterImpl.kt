@@ -12,7 +12,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
-import java.util.stream.StreamSupport
+import java9.util.stream.Stream
+import java9.util.stream.StreamSupport
 
 class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPresenter {
     private val TAG = CountryPresenterImpl::class.simpleName
@@ -29,17 +30,15 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
     override fun search(query: String?) {
         this.query = query
 
-        val langRequest = countryRepository.getByLang(query)?.onErrorReturn { e -> mutableListOf<Country?>() }
-        val nameRequest = countryRepository.getByName(query)?.onErrorReturn { e -> mutableListOf<Country?>() }
-        val callingRequest = countryRepository.getByCalling(query?.toIntOrNull())?.onErrorReturn { e -> mutableListOf<Country?>() }
+        val langRequest = countryRepository.getByLang(query).onErrorReturn { e -> listOf<Country>() }
+        val nameRequest = countryRepository.getByName(query).onErrorReturn { e -> listOf<Country>() }
+        val callingRequest = countryRepository.getByCalling(query?.toIntOrNull()).onErrorReturn { e -> listOf<Country>() }
 
         countrySubscription = Flowable.zip(langRequest, nameRequest, callingRequest,
-                Function3<MutableList<Country?>?, MutableList<Country?>?, MutableList<Country?>?, MutableList<Country?>?>
+                Function3<List<Country>, List<Country>, List<Country>, List<Country>>
                 { lang, name, calling ->
-                    val allCountries = lang
-                    allCountries.addAll(name)
-                    allCountries.addAll(calling)
-                    return@Function3 allCountries.distinctBy { it?.getName() }.sortedBy { it?.getName() }.toMutableList()
+                    val allCountries = lang.toMutableList().plus(name.toMutableList()).plus(calling.toMutableList())
+                    return@Function3 allCountries.distinctBy { it.getName() }.sortedBy { it.getName() }.toMutableList()
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

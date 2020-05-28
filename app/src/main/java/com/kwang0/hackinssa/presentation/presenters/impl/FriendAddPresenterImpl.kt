@@ -49,7 +49,6 @@ class FriendAddPresenterImpl(context: Context, private var view: FriendAddPresen
 
         if(friendId == null) {
             friendAddSubscription = friendRepository.insertFriend(friend)
-                    .andThen(tagRepository.deleteTagById(friend.friendId))
                     .andThen({ tagList.forEach({ tag -> tagRepository.insertTag(Tag(friend.friendId, tag.tagName, tag.tagCreated)) }) })
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

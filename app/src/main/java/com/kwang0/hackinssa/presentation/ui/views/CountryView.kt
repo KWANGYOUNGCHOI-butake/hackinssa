@@ -22,7 +22,7 @@ class CountryView(private var mContext: Context): CountryPresenterView {
     var empty_tv: TextView? = null
 
     var countryPresenter: CountryPresenter? = null
-    private var mList: MutableList<Country?>? = null
+    private var mList: MutableList<Country>? = null
     private var mAdapter: CountryAdapter? = null
 
     fun bindView(a: Activity) {
@@ -38,7 +38,7 @@ class CountryView(private var mContext: Context): CountryPresenterView {
     fun recyclerInit() {
         countryPresenter = CountryPresenterImpl(this)
 
-        mList = ArrayList<Country?>()
+        mList = ArrayList<Country>()
         mAdapter = CountryAdapter(mContext, mList)
         rv?.setHasFixedSize(true)
         rv?.isNestedScrollingEnabled = false
@@ -48,8 +48,8 @@ class CountryView(private var mContext: Context): CountryPresenterView {
         showEmptyLayout()
     }
 
-    override fun addResultsToList(countries: MutableList<Country?>?) {
-        mAdapter?.addManyToList(countries)
+    override fun addResultsToList(countries: List<Country>) {
+        mAdapter?.addManyToList(countries.toMutableList())
         showExistLayout()
     }
 
@@ -76,11 +76,11 @@ class CountryView(private var mContext: Context): CountryPresenterView {
         rv?.visibility = View.VISIBLE
     }
 
-    fun getmList(): MutableList<Country?>? {
+    fun getmList(): MutableList<Country>? {
         return mList
     }
 
-    fun setmList(mList: MutableList<Country?>?) {
+    fun setmList(mList: MutableList<Country>?) {
         this.mList = mList
     }
 

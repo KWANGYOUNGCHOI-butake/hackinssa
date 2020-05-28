@@ -10,19 +10,19 @@ import io.reactivex.Observable
 
 
 class CountryRepositoryImpl(private val countryRepositoryRemote: CountryRepositoryRemote) : CountryRepository {
-    override fun getAll(): Flowable<MutableList<Country?>?>? {
+    override fun getAll(): Flowable<List<Country>> {
         return countryRepositoryRemote.getAll()
     }
 
-    override fun getByLang(et: String?): Flowable<MutableList<Country?>?>? {
+    override fun getByLang(et: String?): Flowable<List<Country>> {
         return countryRepositoryRemote.getByLang(et)
     }
 
-    override fun getByName(name: String?): Flowable<MutableList<Country?>?>? {
+    override fun getByName(name: String?): Flowable<List<Country>> {
         return countryRepositoryRemote.getByName(name)
     }
 
-    override fun getByCalling(calling: Int?): Flowable<MutableList<Country?>?>? {
+    override fun getByCalling(calling: Int?): Flowable<List<Country>> {
         return countryRepositoryRemote.getByCalling(calling)
     }
 

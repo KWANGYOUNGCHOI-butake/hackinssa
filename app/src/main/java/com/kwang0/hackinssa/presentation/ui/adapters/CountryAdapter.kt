@@ -18,9 +18,9 @@ import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySele
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
 
 
-class CountryAdapter(val mContext: Context, var mData: MutableList<Country?>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
+class CountryAdapter(val mContext: Context, var mData: MutableList<Country>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
-    fun addManyToList(countries: MutableList<Country?>?) {
+    fun addManyToList(countries: MutableList<Country>?) {
         this.mData = countries
         this.notifyDataSetChanged()
     }

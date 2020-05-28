@@ -14,6 +14,9 @@ interface TagDao {
     @Query("SELECT * FROM tags WHERE friendId = :friendId")
     fun getTagById(friendId: String): Flowable<List<Tag>>
 
+    @Query("SELECT * FROM tags WHERE tagName = :tagName")
+    fun getTagByName(tagName: String): Flowable<List<Tag>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertTag(tag: Tag): Completable
 

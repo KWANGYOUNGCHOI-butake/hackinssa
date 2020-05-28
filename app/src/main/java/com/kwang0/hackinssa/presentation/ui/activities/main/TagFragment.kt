@@ -6,18 +6,16 @@ import android.view.View.GONE
 import android.widget.EditText
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.jakewharton.rxbinding4.widget.textChanges
 
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
-import com.kwang0.hackinssa.presentation.ui.views.FriendView
 import com.kwang0.hackinssa.presentation.ui.views.TagView
 
 class TagFragment : Fragment(), TagMenuListener {
 
     var menu: Menu? = null
-    var trashChk = false
+    override var menuChk = false
 
     lateinit var search_et: EditText
     lateinit var empty_tv: TextView
@@ -43,47 +41,61 @@ class TagFragment : Fragment(), TagMenuListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        this.menu = menu
-        menu.clear()
         inflater.inflate(R.menu.menu_tag, menu)
-
-        if(trashChk) showTrashMenu()
-        else hideTrashMenu()
+        this.menu = menu
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+        if(menuVisible.not()) {
+            this.menuChk = false
+            menuInit()
+        }
+    }
+
+    fun menuInit() {
+        tagView?.getmAdapter()?.setChkArraySize()
+        tagView?.getmAdapter()?.notifyDataSetChanged()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
-        return if (id == R.id.menu_tag_edit) {
-            showTrashMenu()
-            true
-        } else if (id == R.id.menu_tag_delete) {
-            hideTrashMenu()
+        return if (id == R.id.menu_tag_edit || id == R.id.menu_tag_delete) {
+            changeMenu()
             true
         } else super.onOptionsItemSelected(item)
     }
 
+
+
+    override fun menuChanged() {
+        changeMenu()
+    }
+
+    fun changeMenu() {
+        if(menuChk) {
+            hideTrashMenu()
+        } else {
+            showTrashMenu()
+        }
+        menuInit()
+    }
+
     fun showTrashMenu() {
-        trashChk = true
+        menuChk = true
         menu?.getItem(0)?.setVisible(false)
         menu?.getItem(1)?.setVisible(false)
         menu?.getItem(2)?.setVisible(false)
         menu?.getItem(3)?.setVisible(true)
     }
     fun hideTrashMenu() {
-        trashChk = false
+        menuChk = false
         menu?.getItem(0)?.setVisible(true)
         menu?.getItem(1)?.setVisible(true)
         menu?.getItem(2)?.setVisible(true)
         menu?.getItem(3)?.setVisible(false)
-    }
-
-
-    override fun menuChanged() {
-        menu?.getItem(3)?.let {
-            if(!it.isVisible) showTrashMenu()
-        }
     }
 
     fun tagViewSetUp(v: View) {
@@ -91,4 +103,6 @@ class TagFragment : Fragment(), TagMenuListener {
         tagView?.bindView(v)
         tagView?.recyclerInit()
     }
+
+
 }

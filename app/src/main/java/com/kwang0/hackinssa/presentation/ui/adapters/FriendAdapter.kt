@@ -17,6 +17,7 @@ import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.presentation.ui.activities.friendinfo.FriendInfoActivity
 import com.kwang0.hackinssa.helper.IntentHelper
+import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
 
 class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
@@ -49,11 +50,13 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
         holder.name_tv.text = item?.friendName
         holder.contact_tv.text = item?.friendPhone + "   " + item?.friendEmail
 
-        holder.layout.setOnClickListener({ v ->
-            val intent = Intent(mContext, FriendInfoActivity::class.java)
-            intent.putExtra("friend", item)
-            mContext.startActivity(intent)
-        })
+        if(mContext is MainActivity) {
+            holder.layout.setOnClickListener({ v ->
+                val intent = Intent(mContext, FriendInfoActivity::class.java)
+                intent.putExtra("friend", item)
+                mContext.startActivity(intent)
+            })
+        }
         holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, item?.friendPhone) }
         holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, item?.friendEmail) }
     }

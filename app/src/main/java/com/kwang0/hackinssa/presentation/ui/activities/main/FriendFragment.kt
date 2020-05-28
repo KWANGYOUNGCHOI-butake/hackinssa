@@ -1,23 +1,14 @@
 package com.kwang0.hackinssa.presentation.ui.activities.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.jakewharton.rxbinding4.widget.textChanges
 
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.helper.IntentHelper
-import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
-import com.kwang0.hackinssa.presentation.ui.adapters.FriendAdapter
-import com.kwang0.hackinssa.presentation.ui.views.CountryView
 import com.kwang0.hackinssa.presentation.ui.views.FriendView
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import java.util.concurrent.TimeUnit
 
 class FriendFragment : Fragment() {
 
@@ -27,7 +18,7 @@ class FriendFragment : Fragment() {
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val v = inflater.inflate(R.layout.fragment_address, container, false)
+        val v = inflater.inflate(R.layout.fragment_friend, container, false)
 
         search_et = v.findViewById<EditText>(R.id.searchbar_et)
 

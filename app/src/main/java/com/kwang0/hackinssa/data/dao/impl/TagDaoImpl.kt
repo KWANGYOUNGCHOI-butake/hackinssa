@@ -24,6 +24,10 @@ class TagDaoImpl(private val context: Context): TagDao {
         return tagDao.getTagById(friendId)
     }
 
+    override fun getTagByName(tagName: String): Flowable<List<Tag>> {
+        return tagDao.getTagByName(tagName)
+    }
+
     override fun insertTag(tag: Tag): Completable {
         return tagDao.insertTag(tag)
     }

@@ -1,7 +1,6 @@
 package com.kwang0.hackinssa.presentation.ui.activities.main;
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
@@ -42,10 +41,10 @@ class MainActivity: BaseActivity() {
     }
 
     override fun onBackPressed() {
-        if (container.getCurrentItem() == 0) {
-            super.onBackPressed();
-        }else {
-            container.setCurrentItem(0);
+        if (container.currentItem == 0) {
+            super.onBackPressed()
+        } else {
+            container.currentItem = 0
         }
     }
 }

@@ -43,6 +43,7 @@ class FriendInfoPresenterImpl(context: Context, private var view: FriendInfoPres
     }
 
     override fun onStop() {
+        view.clearTags()
         mDisposable.clear()
     }
 }

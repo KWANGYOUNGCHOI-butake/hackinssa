@@ -17,7 +17,7 @@ import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import java.util.ArrayList
 
-class TagView(var mContext: Context, var menuListener: TagMenuListener): TagPresenterView {
+class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPresenterView {
     var rv: RecyclerView? = null
     var empty_tv: TextView? = null
 
@@ -59,6 +59,10 @@ class TagView(var mContext: Context, var menuListener: TagMenuListener): TagPres
 
     fun setmAdapter(mAdapter: TagAdapter?) {
         this.mAdapter = mAdapter
+    }
+
+    fun chkArrayInit() {
+        mAdapter?.chkArray = BooleanArray(mList.size)
     }
 
     override fun addResultsToList(tags: MutableList<Tag>) {
