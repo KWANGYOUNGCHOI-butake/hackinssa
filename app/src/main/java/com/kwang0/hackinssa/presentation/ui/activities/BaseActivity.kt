@@ -36,7 +36,6 @@ abstract class BaseActivity: AppCompatActivity() {
                 val outRect = Rect()
                 v.getGlobalVisibleRect(outRect)
                 if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
-                    Log.d("focus", "touchevent")
                     v.clearFocus()
                     this.hideKeyboard(v)
                 }

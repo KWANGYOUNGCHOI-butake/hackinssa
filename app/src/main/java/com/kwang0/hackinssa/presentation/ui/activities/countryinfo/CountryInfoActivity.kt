@@ -54,31 +54,12 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         getIntentExtra(intent)
-
-        invalidateOptionsMenu()
     }
-
 
     override fun onStart() {
         super.onStart()
 
-
-        if(menu != null) {
-            country?.getName()?.let {
-                mDisposable.add(countryInfoPresenter.isFavorite(country?.getName() ?: "")
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({ b ->
-                            System.out.println(b)
-                            if(b) {
-                                menu?.getItem(0)?.setIcon(R.drawable.ic_star_fill)
-                            } else {
-                                menu?.getItem(0)?.setIcon(R.drawable.ic_star_border)
-                            }
-
-                        }, { throwable -> Log.e(TAG, "Unable to get username", throwable) }))
-            }
-        }
+        invalidateOptionsMenu()
     }
 
     override fun onStop() {
@@ -111,7 +92,6 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_country_info, menu)
         this.menu = menu
-
 
         country?.getName()?.let {
             mDisposable.add(countryInfoPresenter.isFavorite(country?.getName() ?: "")
