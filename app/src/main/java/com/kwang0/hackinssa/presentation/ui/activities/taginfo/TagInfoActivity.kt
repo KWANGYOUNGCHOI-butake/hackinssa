@@ -46,6 +46,5 @@ class TagInfoActivity : BaseActivity() {
     fun friendViewSetUp() {
         friendView = FriendView(this)
         friendView?.bindView(this)
-        friendView?.recyclerInit()
     }
 }

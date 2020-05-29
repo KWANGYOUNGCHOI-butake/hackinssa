@@ -13,5 +13,6 @@ interface TagRepository {
     fun insertTag(tag: Tag): Completable
     fun insertTags(tagList: List<Tag>): Completable
     fun deleteTagById(friendId: String): Completable
+    fun deleteTagByNames(tagNames: List<String>): Completable
     fun deleteTag(friendId: String, tagName: String): Completable
 }

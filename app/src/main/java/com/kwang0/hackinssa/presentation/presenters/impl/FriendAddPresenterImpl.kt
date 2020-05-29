@@ -49,13 +49,18 @@ class FriendAddPresenterImpl(context: Context, private var view: FriendAddPresen
 
         if(friendId == null) {
             friendAddSubscription = friendRepository.insertFriend(friend)
-                    .andThen({ tagList.forEach({ tag -> tagRepository.insertTag(Tag(friend.friendId, tag.tagName, tag.tagCreated)) }) })
+                    .andThen(tagRepository.deleteTagById(friend.friendId))
+                    .andThen(tagRepository.insertTags(
+                            StreamSupport
+                                    .stream(tagList)
+                                    .map { tag -> Tag(friend.friendId, tag.tagName, tag.tagCreated) }
+                                    .collect(Collectors.toList())))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete({
+                    .subscribe({
                         view.finishActivity()
-                    })
-                    .subscribe({ view.addBtnEnabled() }, { throwable -> view.handleError(throwable) })
+                        view.addBtnEnabled()
+                    }, { throwable -> view.handleError(throwable) })
         } else {
             friendAddSubscription = friendRepository.updateFriend(friend)
                     .andThen(tagRepository.deleteTagById(friend.friendId))
@@ -66,10 +71,10 @@ class FriendAddPresenterImpl(context: Context, private var view: FriendAddPresen
                                     .collect(Collectors.toList())))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete({
+                    .subscribe({
                         view.finishActivity()
-                    })
-                    .subscribe({ view.addBtnEnabled() }, { throwable -> view.handleError(throwable) })
+                        view.addBtnEnabled()
+                    }, { throwable -> view.handleError(throwable) })
         }
 
     }

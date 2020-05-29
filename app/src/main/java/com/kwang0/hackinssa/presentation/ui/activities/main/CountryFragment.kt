@@ -63,7 +63,6 @@ class CountryFragment : Fragment() {
     fun countryViewSetUp(v: View) {
         countryView = CountryView(v.context)
         countryView?.bindView(v)
-        countryView?.recyclerInit()
     }
 
 }

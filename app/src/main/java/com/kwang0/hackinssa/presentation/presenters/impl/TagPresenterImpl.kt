@@ -15,29 +15,40 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
     private val TAG = TagPresenterImpl::class.simpleName
 
     private var tagRepository: TagRepository
+    private var tagSubscription: Disposable? = null
     private var mDisposable = CompositeDisposable()
 
-    private var query: String? = null
+    private var tagName: String = ""
 
     init {
         tagRepository = TagRepositoryImpl(TagDaoImpl(context))
     }
 
-    override fun search(query: String?) {
-        this.query = query
+    override fun searchByTagName(tagName: String) {
+        this.tagName = tagName
 
-        mDisposable.add(tagRepository.getTags()
+        mDisposable.add(tagRepository.getTagByName(tagName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ tags ->
-                    view.addResultsToList(tags.toMutableList()) }, { throwable -> view.handleError(throwable) }))
+                    view.addResultsToList(tags.toMutableList().sortedBy { it.tagCreated }
+                            .distinctBy { it.tagName }
+                            .toMutableList()) }, { throwable -> view.handleError(throwable) }))
     }
+
+    override fun deleteByTagNames(tagNames: List<String>) {
+        tagSubscription = tagRepository.deleteTagByNames(tagNames)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ view.finishDelete() }, { throwable -> view.handleError(throwable) })
+    }
+
 
     override fun clear() {
         view.handleEmpty()
     }
 
     override fun restoreData() {
-        search(query)
+        searchByTagName(tagName)
     }
 }

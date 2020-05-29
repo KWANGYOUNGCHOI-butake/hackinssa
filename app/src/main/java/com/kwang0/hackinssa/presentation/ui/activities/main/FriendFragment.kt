@@ -50,13 +50,13 @@ class FriendFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         menu.clear()
-        inflater.inflate(R.menu.menu_addr, menu)
+        inflater.inflate(R.menu.menu_friend, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
-        return if (id == R.id.menu_addr_add_friend) {
+        return if (id == R.id.menu_friend_add_friend) {
             IntentHelper.activityIntent(context, FriendAddActivity::class.java)
             true
         } else super.onOptionsItemSelected(item)
@@ -65,6 +65,5 @@ class FriendFragment : Fragment() {
     fun friendViewSetUp(v: View) {
         friendView = FriendView(v.context)
         friendView?.bindView(v)
-        friendView?.recyclerInit()
     }
 }

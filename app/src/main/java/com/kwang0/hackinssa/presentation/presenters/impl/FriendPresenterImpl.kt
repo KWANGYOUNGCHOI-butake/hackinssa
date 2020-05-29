@@ -40,7 +40,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
     override fun searchByTag(tagName: String) {
         this.tagName = tagName
 
-        friendSubscription = friendRepository.getFriendFromTagName(tagName)
+        friendSubscription = friendRepository.getFriendsFromTagName(tagName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ friends ->

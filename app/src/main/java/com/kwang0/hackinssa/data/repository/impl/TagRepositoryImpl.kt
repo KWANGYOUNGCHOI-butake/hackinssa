@@ -33,6 +33,10 @@ class TagRepositoryImpl(private val tagDao: TagDao): TagRepository {
         return tagDao.deleteTagById(friendId)
     }
 
+    override fun deleteTagByNames(tagNames: List<String>): Completable {
+        return tagDao.deleteTagByNames(tagNames)
+    }
+
     override fun deleteTag(friendId: String, tagName: String): Completable {
         return tagDao.deleteTag(friendId, tagName)
     }

@@ -14,7 +14,7 @@ interface TagDao {
     @Query("SELECT * FROM tags WHERE friendId = :friendId")
     fun getTagById(friendId: String): Flowable<List<Tag>>
 
-    @Query("SELECT * FROM tags WHERE tagName = :tagName")
+    @Query("SELECT * FROM tags WHERE tagName LIKE '%' || :tagName || '%'")
     fun getTagByName(tagName: String): Flowable<List<Tag>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -26,8 +26,8 @@ interface TagDao {
     @Query("DELETE FROM tags WHERE friendId = :friendId")
     fun deleteTagById(friendId: String): Completable
 
-    @Query("DELETE FROM tags WHERE tagName = :tagName")
-    fun deleteTagByName(tagName: String): Completable
+    @Query("DELETE FROM tags WHERE tagName IN (:tagNames)")
+    fun deleteTagByNames(tagNames: List<String>): Completable
 
     @Query("DELETE FROM tags WHERE friendId = :friendId AND tagName = :tagName")
     fun deleteTag(friendId: String, tagName: String): Completable

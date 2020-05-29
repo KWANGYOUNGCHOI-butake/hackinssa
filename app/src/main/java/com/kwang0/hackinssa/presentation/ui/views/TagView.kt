@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
+import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_CREATED
+import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_NAME
 import com.kwang0.hackinssa.presentation.presenters.FriendPresenter
 import com.kwang0.hackinssa.presentation.presenters.TagPresenter
 import com.kwang0.hackinssa.presentation.presenters.TagPresenterView
@@ -18,31 +20,72 @@ import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import java.util.ArrayList
 
 class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPresenterView {
-    var rv: RecyclerView? = null
-    var empty_tv: TextView? = null
+    private lateinit var rv: RecyclerView
+    private lateinit var empty_tv: TextView
 
-    var tagPresenter: TagPresenter? = null
+    var tagPresenter: TagPresenter
     private var mList: MutableList<Tag> = ArrayList<Tag>()
-    private var mAdapter: TagAdapter? = null
+    private var mAdapter: TagAdapter
+
+    init {
+        tagPresenter = TagPresenterImpl(mContext, this)
+        mAdapter = TagAdapter(mContext, mList, menuListener)
+    }
 
     fun bindView(a: Activity) {
         rv = a.findViewById<RecyclerView>(R.id.tag_rv)
         empty_tv = a.findViewById<TextView>(R.id.reuse_empty_tv)
+        recyclerInit()
     }
 
     fun bindView(v: View) {
         rv = v.findViewById<RecyclerView>(R.id.tag_rv)
         empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
+        recyclerInit()
     }
 
     fun recyclerInit() {
-        tagPresenter = TagPresenterImpl(mContext, this)
+        rv.setHasFixedSize(true)
+        rv.isNestedScrollingEnabled = false
+        rv.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
+        rv.adapter = mAdapter
+    }
 
-        mAdapter = TagAdapter(mContext, mList, menuListener)
-        rv?.setHasFixedSize(true)
-        rv?.isNestedScrollingEnabled = false
-        rv?.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
-        rv?.adapter = mAdapter
+    fun showEmptyLayout() {
+        empty_tv.visibility = View.VISIBLE
+        rv.visibility = View.GONE
+    }
+
+    fun showExistLayout() {
+        empty_tv.visibility = View.GONE
+        rv.visibility = View.VISIBLE
+    }
+
+    fun sortNameResults() {
+        mAdapter.currentSort = FLAG_SORT_NAME
+        mAdapter.addManyToList(mAdapter.mData)
+    }
+
+    fun sortCreatedResults() {
+        mAdapter.currentSort = FLAG_SORT_CREATED
+        mAdapter.addManyToList(mAdapter.mData)
+    }
+
+    override fun addResultsToList(tags: MutableList<Tag>) {
+        mAdapter.addManyToList(tags)
+        showExistLayout()
+    }
+
+    override fun finishDelete() {
+        menuListener?.menuChanged()
+    }
+
+    override fun handleEmpty() {
+        mAdapter.clearList()
+        showEmptyLayout()
+    }
+
+    override fun handleError(throwable: Throwable?) {
     }
 
     fun getmList(): MutableList<Tag> {
@@ -53,26 +96,12 @@ class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPre
         this.mList = mList
     }
 
-    fun getmAdapter(): TagAdapter? {
+    fun getmAdapter(): TagAdapter {
         return mAdapter
     }
 
-    fun setmAdapter(mAdapter: TagAdapter?) {
+    fun setmAdapter(mAdapter: TagAdapter) {
         this.mAdapter = mAdapter
     }
 
-    fun chkArrayInit() {
-        mAdapter?.chkArray = BooleanArray(mList.size)
-    }
-
-    override fun addResultsToList(tags: MutableList<Tag>) {
-        mAdapter?.addManyToList(tags)
-    }
-
-    override fun handleEmpty() {
-        mAdapter?.clearList()
-    }
-
-    override fun handleError(throwable: Throwable?) {
-    }
 }

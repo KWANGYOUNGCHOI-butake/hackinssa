@@ -17,6 +17,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
+import com.kwang0.hackinssa.data.models.Tag
+import com.kwang0.hackinssa.helper.FlagHelper
+import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_NAME
 import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.presentation.ui.activities.friendinfo.FriendInfoActivity
 import com.kwang0.hackinssa.helper.IntentHelper
@@ -24,9 +27,19 @@ import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
 
 class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
+    var currentSort = FLAG_SORT_NAME
+
     fun addManyToList(friends: MutableList<Friend>) {
-        this.mData = friends
+        this.mData = dataSort(friends)
         this.notifyDataSetChanged()
+    }
+
+    fun dataSort(tags: MutableList<Friend>): MutableList<Friend> {
+        if(currentSort == FlagHelper.FLAG_SORT_CREATED) {
+            return tags.sortedBy { it.friendCreated }.toMutableList()
+        } else  {
+            return tags.sortedBy { it.friendName }.toMutableList()
+        }
     }
 
     fun clearList() {

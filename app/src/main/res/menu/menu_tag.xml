@@ -9,7 +9,7 @@
     <item android:id="@+id/menu_tag_name_q"
         app:showAsAction="never"
         android:title="이름 순"/>
-    <item android:id="@+id/mene_tag_create_q"
+    <item android:id="@+id/menu_tag_create_q"
         app:showAsAction="never"
         android:title="등록된 순"/>
     <item android:id="@+id/menu_tag_delete"

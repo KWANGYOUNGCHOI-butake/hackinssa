@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
+import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_CREATED
+import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_NAME
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
 import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
@@ -22,18 +24,30 @@ import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
 class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuListener: TagMenuListener?)
     : RecyclerView.Adapter<TagAdapter.ViewHolder>() {
 
-    // for tagFragment menu click
-    var chkArray = BooleanArray(0)
+    var currentSort = FLAG_SORT_NAME
+    var chkSet = HashSet<String>()
 
     fun addManyToList(tags: MutableList<Tag>) {
-        this.mData = tags
+        this.mData = dataSort(tags)
         this.notifyDataSetChanged()
+    }
+
+    fun dataSort(tags: MutableList<Tag>): MutableList<Tag> {
+        if(currentSort == FLAG_SORT_CREATED) {
+            return tags.sortedBy { it.tagCreated }.toMutableList()
+        } else  {
+            return tags.sortedBy { it.tagName }.toMutableList()
+        }
     }
 
     fun clearList() {
         with(this.mData) {
             this.clear()
         }
+    }
+
+    fun chkSetInit() {
+        chkSet = HashSet<String>()
     }
 
 
@@ -54,13 +68,13 @@ class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuLis
 
         if(isChk) {
             holder.chkBox.visibility = VISIBLE
-            if(chkArray[position]) {
+            if(chkSet.contains(mData.get(position).tagName)) {
                 holder.chkBox.isChecked = true
             } else {
                 holder.chkBox.isChecked = false
             }
             holder.layout.setOnClickListener({ v ->
-                chkArray[position] = if(chkArray[position]) false else true
+                chkSet.add(mData.get(position).tagName)
                 notifyItemChanged(position)
             })
             holder.layout.setOnLongClickListener{
@@ -75,14 +89,11 @@ class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuLis
             })
             holder.layout.setOnLongClickListener{
                 menuListener?.menuChanged()
-                setChkArraySize()
-                chkArray[position] = if(chkArray[position]) false else true
+                chkSetInit()
+                chkSet.add(mData.get(position).tagName)
                 true
             }
         }
-    }
-    fun setChkArraySize() {
-        chkArray = BooleanArray(mData.size)
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

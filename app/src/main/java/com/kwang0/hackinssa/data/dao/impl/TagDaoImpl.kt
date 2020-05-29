@@ -40,8 +40,8 @@ class TagDaoImpl(private val context: Context): TagDao {
         return tagDao.deleteTagById(friendId)
     }
 
-    override fun deleteTagByName(tagName: String): Completable {
-        return tagDao.deleteTagByName(tagName)
+    override fun deleteTagByNames(tagNames: List<String>): Completable {
+        return tagDao.deleteTagByNames(tagNames)
     }
 
     override fun deleteTag(friendId: String, tagName: String): Completable {

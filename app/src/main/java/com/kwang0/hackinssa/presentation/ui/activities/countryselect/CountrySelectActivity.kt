@@ -58,6 +58,5 @@ class CountrySelectActivity : BaseActivity() {
     fun countryViewSetUp() {
         countryView = CountryView(this)
         countryView?.bindView(this)
-        countryView?.recyclerInit()
     }
 }

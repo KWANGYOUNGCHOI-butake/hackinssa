@@ -164,23 +164,16 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
     fun onChipAddedFromExtra(tag: Tag) {
         if(tagList.filter { it.tagName == tag.tagName }.isNotEmpty() && tagList.size >= 5) return
         tagList.add(tag)
-        val chip = Chip(tag_cg.context)
-        chip.text = tag.tagName
-
-        chip.isClickable = false
-        chip.isCheckable = false
-        chip.isCloseIconVisible = true
-        chip.setOnCloseIconClickListener({ v ->
-            tagList = StreamSupport.stream(tagList).filter({ it.tagName != chip.text }).collect(Collectors.toList())
-            tag_cg.removeView(v)
-        })
-
-        tag_cg.addView(chip, tag_cg.size - 1)
+        addChipToChipGroup(tag.tagName)
     }
 
     override fun onChipAdded(chipStr: String) {
         if(tagList.filter { it.tagName == chipStr }.isNotEmpty() && tagList.size >= 5) return
         tagList.add(Tag("", chipStr, System.currentTimeMillis()))
+        addChipToChipGroup(chipStr)
+    }
+
+    fun addChipToChipGroup(chipStr: String) {
         val chip = Chip(tag_cg.context)
         chip.text = chipStr
 
@@ -204,6 +197,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
     }
 
     override fun handleError(throwable: Throwable?) {
+        addBtnEnabled()
         Log.d(TAG, "Throwable : " + throwable?.message)
     }
 

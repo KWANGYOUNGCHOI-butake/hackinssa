@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
+import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
 import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
@@ -18,43 +19,47 @@ import java.util.*
 class CountryView(private var mContext: Context): CountryPresenterView {
     var TAG = CountryView::class.simpleName
 
-    var rv: RecyclerView? = null
-    var empty_tv: TextView? = null
+    private lateinit var rv: RecyclerView
+    private lateinit var empty_tv: TextView
 
-    var countryPresenter: CountryPresenter? = null
-    private var mList: MutableList<Country>? = null
-    private var mAdapter: CountryAdapter? = null
+    var countryPresenter: CountryPresenter
+    private var mList: MutableList<Country> = ArrayList<Country>()
+    private var mAdapter: CountryAdapter
+
+    init {
+        countryPresenter = CountryPresenterImpl(this)
+
+        mAdapter = CountryAdapter(mContext, mList)
+    }
 
     fun bindView(a: Activity) {
         rv = a.findViewById<RecyclerView>(R.id.country_rv)
         empty_tv = a.findViewById<TextView>(R.id.reuse_empty_tv)
+        recyclerInit()
     }
 
     fun bindView(v: View) {
         rv = v.findViewById<RecyclerView>(R.id.country_rv)
         empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
+        recyclerInit()
     }
 
     fun recyclerInit() {
-        countryPresenter = CountryPresenterImpl(this)
-
-        mList = ArrayList<Country>()
-        mAdapter = CountryAdapter(mContext, mList)
-        rv?.setHasFixedSize(true)
-        rv?.isNestedScrollingEnabled = false
-        rv?.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
-        rv?.adapter = mAdapter
+        rv.setHasFixedSize(true)
+        rv.isNestedScrollingEnabled = false
+        rv.layoutManager = LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
+        rv.adapter = mAdapter
 
         showEmptyLayout()
     }
 
     override fun addResultsToList(countries: List<Country>) {
-        mAdapter?.addManyToList(countries.toMutableList())
+        mAdapter.addManyToList(countries.toMutableList())
         showExistLayout()
     }
 
     override fun handleEmpty() {
-        mAdapter?.clearList()
+        mAdapter.clearList()
         showEmptyLayout()
     }
 
@@ -67,28 +72,28 @@ class CountryView(private var mContext: Context): CountryPresenterView {
     }
 
     fun showEmptyLayout() {
-        empty_tv?.visibility = View.VISIBLE
-        rv?.visibility = View.GONE
+        empty_tv.visibility = View.VISIBLE
+        rv.visibility = View.GONE
     }
 
     fun showExistLayout() {
-        empty_tv?.visibility = View.GONE
-        rv?.visibility = View.VISIBLE
+        empty_tv.visibility = View.GONE
+        rv.visibility = View.VISIBLE
     }
 
-    fun getmList(): MutableList<Country>? {
+    fun getmList(): MutableList<Country> {
         return mList
     }
 
-    fun setmList(mList: MutableList<Country>?) {
+    fun setmList(mList: MutableList<Country>) {
         this.mList = mList
     }
 
-    fun getmAdapter(): CountryAdapter? {
+    fun getmAdapter(): CountryAdapter {
         return mAdapter
     }
 
-    fun setmAdapter(mAdapter: CountryAdapter?) {
+    fun setmAdapter(mAdapter: CountryAdapter) {
         this.mAdapter = mAdapter
     }
 
