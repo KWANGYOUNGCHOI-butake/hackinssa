@@ -18,16 +18,16 @@ import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySele
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
 
 
-class CountryAdapter(val mContext: Context, var mData: MutableList<Country>?) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
+class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
 
-    fun addManyToList(countries: MutableList<Country>?) {
+    fun addManyToList(countries: MutableList<Country>) {
         this.mData = countries
         this.notifyDataSetChanged()
     }
 
     fun clearList() {
         with(this.mData) {
-            this?.clear()
+            this.clear()
         }
     }
 
@@ -38,18 +38,18 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>?) : 
     }
 
     override fun getItemCount(): Int {
-        return mData?.size!!
+        return mData.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item: Country? = mData?.get(position)
-        GlideHelper.loadImg(mContext,BASE_IMG_URL_250_PX.toString() + item?.getAlpha2Code()!!.toLowerCase() + ".png?raw=true", holder.iv)
+        val item: Country = mData.get(position)
+        GlideHelper.loadImg(mContext,BASE_IMG_URL_250_PX.toString() + item.getAlpha2Code().toLowerCase() + ".png?raw=true", holder.iv)
 
         holder.tv.text = item.getNativeName()
         holder.layout.setOnClickListener {v ->
             if(mContext is MainActivity) {
                 val intent = Intent(mContext, CountryInfoActivity::class.java)
-                intent.putExtra("country", mData?.get(position))
+                intent.putExtra("country", mData.get(position))
                 mContext.startActivity(intent)
             } else if(mContext is CountrySelectActivity) {
                 val intent = Intent();

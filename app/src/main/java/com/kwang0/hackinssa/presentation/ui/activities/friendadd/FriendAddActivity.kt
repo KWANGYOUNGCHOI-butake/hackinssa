@@ -151,7 +151,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
                         friend?.friendCreated ?: System.currentTimeMillis(),
                         tagList)
             } else {
-                Toast.makeText(this, "Valid Failed!!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Valid Failed", Toast.LENGTH_SHORT).show()
                 addBtnEnabled()
             }
             true

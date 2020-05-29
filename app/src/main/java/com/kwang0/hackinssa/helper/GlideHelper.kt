@@ -43,8 +43,8 @@ object GlideHelper {
     val THUMBNAIL_SIZE = 48
 
     @Throws(FileNotFoundException::class, IOException::class)
-    fun getThumbnail(context: Context?, uri: Uri?): Bitmap? {
-        var input: InputStream? = context?.getContentResolver()?.openInputStream(uri!!)
+    fun getThumbnail(context: Context, uri: Uri): Bitmap? {
+        var input: InputStream? = context.getContentResolver()?.openInputStream(uri)
         val onlyBoundsOptions = BitmapFactory.Options()
         onlyBoundsOptions.inJustDecodeBounds = true
         onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888
@@ -58,7 +58,7 @@ object GlideHelper {
         val bitmapOptions = BitmapFactory.Options()
         bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio)
         bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888
-        input = context?.getContentResolver()?.openInputStream(uri!!)
+        input = context.getContentResolver()?.openInputStream(uri)
         val bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions)
         input?.close()
         return bitmap
