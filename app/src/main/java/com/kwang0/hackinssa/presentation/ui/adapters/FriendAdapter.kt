@@ -34,11 +34,11 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
         this.notifyDataSetChanged()
     }
 
-    fun dataSort(tags: MutableList<Friend>): MutableList<Friend> {
+    fun dataSort(friends: MutableList<Friend>): MutableList<Friend> {
         if(currentSort == FlagHelper.FLAG_SORT_CREATED) {
-            return tags.sortedBy { it.friendCreated }.toMutableList()
+            return friends.sortedBy { it.friendCreated }.toMutableList()
         } else  {
-            return tags.sortedBy { it.friendName }.toMutableList()
+            return friends.sortedBy { it.friendName }.toMutableList()
         }
     }
 

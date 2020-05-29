@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.*
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import com.jakewharton.rxbinding4.widget.textChanges
 
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.helper.IntentHelper
+import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.views.FriendView
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 
 class FriendFragment : Fragment() {
 
@@ -24,26 +27,18 @@ class FriendFragment : Fragment() {
 
         friendViewSetUp(v)
 
-
-        friendView?.friendPresenter?.search("")
-//        search_et.textChanges()
-////                .throttleLast(100, TimeUnit.MILLISECONDS)
-//                .debounce(200, TimeUnit.MILLISECONDS)
-//                .subscribeOn(AndroidSchedulers.mainThread())
-//                .observeOn(AndroidSchedulers.mainThread())
-////                .filter({ chars ->
-////                    val empty = TextUtils.isEmpty(chars.trim())
-////                    !empty
-////                })
-//                .subscribe({ chars ->
-//                    val searchTerm: String = chars.trim().toString()
-//                    if (chars.trim().length == 0) {
-//                        hideKeyboard()
-//                        friendView?.friendPresenter?.clear()
-//                    } else {
-//                        friendView?.friendPresenter?.search(searchTerm)
-//                    }
-//                })
+        search_et.textChanges()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ chars ->
+                    val searchTerm: String = chars.trim().toString()
+                    if (chars.trim().length == 0) {
+                        hideKeyboard()
+                        friendView?.friendPresenter?.search()
+                    } else {
+                        friendView?.friendPresenter?.search(searchTerm)
+                    }
+                })
         
         return v
     }
@@ -58,6 +53,12 @@ class FriendFragment : Fragment() {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_friend_add_friend) {
             IntentHelper.activityIntent(context, FriendAddActivity::class.java)
+            true
+        } else if(id == R.id.menu_friend_name_q) {
+            friendView?.sortNameResults()
+            true
+        } else if(id == R.id.menu_friend_create_q) {
+            friendView?.sortCreatedResults()
             true
         } else super.onOptionsItemSelected(item)
     }

@@ -15,6 +15,15 @@ interface FriendDao {
     @Query("SELECT * FROM friends WHERE friendId = :friendId LIMIT 1")
     fun getFriend(friendId: String): Flowable<Friend>
 
+    @Query("SELECT * FROM friends WHERE friendName LIKE '%' || :friendName || '%'")
+    fun getFriendsFromName(friendName: String): Flowable<List<Friend>>
+
+    @Query("SELECT * FROM friends WHERE friendPhone LIKE '%' || :friendPhone || '%'")
+    fun getFriendsFromPhone(friendPhone: String): Flowable<List<Friend>>
+
+    @Query("SELECT * FROM friends WHERE friendEmail LIKE '%' || :friendEmail || '%'")
+    fun getFriendsFromEmail(friendEmail: String): Flowable<List<Friend>>
+
     @Query("SELECT * FROM friends WHERE friendID IN (SELECT friendId FROM tags WHERE tagName = :tagName)")
     fun getFriendsFromTagName(tagName: String): Flowable<List<Friend>>
 

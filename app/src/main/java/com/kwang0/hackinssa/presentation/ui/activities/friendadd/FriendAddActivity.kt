@@ -152,7 +152,9 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
                         avatarPath!!,
                         name_et.editableText.toString(),
                         phone_et.editableText.toString(),
-                        email_et.editableText.toString(), countryPath!!, System.currentTimeMillis(),
+                        email_et.editableText.toString(),
+                        countryPath!!,
+                        friend?.friendCreated ?: System.currentTimeMillis(),
                         tagList)
             } else {
                 addBtnEnabled()

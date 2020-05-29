@@ -15,6 +15,18 @@ class FriendRepositoryImpl(private val friendDao: FriendDao) : FriendRepository 
         return friendDao.getFriend(friendId)
     }
 
+    override fun getFriendsFromName(friendName: String): Flowable<List<Friend>> {
+        return friendDao.getFriendsFromName(friendName)
+    }
+
+    override fun getFriendsFromPhone(friendPhone: String): Flowable<List<Friend>> {
+        return friendDao.getFriendsFromPhone(friendPhone)
+    }
+
+    override fun getFriendsFromEmail(friendEmail: String): Flowable<List<Friend>> {
+        return friendDao.getFriendsFromEmail(friendEmail)
+    }
+
     override fun getFriendsFromTagName(tagName: String): Flowable<List<Friend>> {
         return friendDao.getFriendsFromTagName(tagName)
     }

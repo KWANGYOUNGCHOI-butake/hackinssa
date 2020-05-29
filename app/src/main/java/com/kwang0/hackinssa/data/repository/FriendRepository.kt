@@ -7,6 +7,9 @@ import io.reactivex.Flowable
 interface FriendRepository {
     fun getFriends(): Flowable<List<Friend>>
     fun getFriend(friendId: String): Flowable<Friend>
+    fun getFriendsFromName(friendName: String): Flowable<List<Friend>>
+    fun getFriendsFromPhone(friendPhone: String): Flowable<List<Friend>>
+    fun getFriendsFromEmail(friendEmail: String): Flowable<List<Friend>>
     fun getFriendsFromTagName(tagName: String): Flowable<List<Friend>>
     fun insertFriend(friend: Friend): Completable
     fun updateFriend(friend: Friend): Completable

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
+import com.kwang0.hackinssa.helper.FlagHelper
 import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendPresenterView
@@ -63,6 +64,16 @@ class FriendView(private var mContext: Context): FriendPresenterView {
 
     fun setmAdapter(mAdapter: FriendAdapter) {
         this.mAdapter = mAdapter
+    }
+
+    fun sortNameResults() {
+        mAdapter.currentSort = FlagHelper.FLAG_SORT_NAME
+        mAdapter.addManyToList(mAdapter.mData)
+    }
+
+    fun sortCreatedResults() {
+        mAdapter.currentSort = FlagHelper.FLAG_SORT_CREATED
+        mAdapter.addManyToList(mAdapter.mData)
     }
 
     override fun addResultsToList(friends: MutableList<Friend>) {
