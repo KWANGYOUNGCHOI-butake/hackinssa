@@ -4,5 +4,5 @@
     <item android:id="@+id/menu_fa_ok"
         android:icon="@drawable/ic_check"
         app:showAsAction="ifRoom"
-        android:title="확인" />
+        android:title="@string/menu_fa_ok" />
 </menu>

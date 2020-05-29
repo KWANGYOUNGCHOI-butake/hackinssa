@@ -4,5 +4,5 @@
     <item android:id="@+id/menu_fi_edit"
         android:icon="@drawable/ic_edit"
         app:showAsAction="ifRoom"
-        android:title="수정" />
+        android:title="@string/menu_fi_edit" />
 </menu>

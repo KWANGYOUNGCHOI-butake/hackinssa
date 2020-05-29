@@ -4,9 +4,9 @@
     <item android:id="@+id/menu_ci_star"
         android:icon="@drawable/ic_star_border"
         app:showAsAction="ifRoom"
-        android:title="별표" />
+        android:title="@string/menu_ci_star" />
     <item android:id="@+id/menu_ci_add_friend"
         android:icon="@drawable/ic_user_add"
         app:showAsAction="ifRoom"
-        android:title="친구추가" />
+        android:title="@string/menu_ci_add_friend" />
 </menu>

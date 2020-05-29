@@ -64,7 +64,7 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
 
         GlideHelper.loadImg(mContext, Uri.parse(item?.friendAvatar), holder.avatar_iv)
         holder.name_tv.text = item?.friendName
-        holder.contact_tv.text = item?.friendPhone + "   " + item?.friendEmail
+        holder.contact_tv.text = (item?.friendPhone + "   " + item?.friendEmail).trim()
         if(TextUtils.isEmpty(item?.friendPhone)) holder.phone_iv.visibility = GONE else holder.phone_iv.visibility = VISIBLE
         if(TextUtils.isEmpty(item?.friendEmail)) holder.email_iv.visibility = GONE else holder.email_iv.visibility = VISIBLE
 

@@ -5,16 +5,16 @@
     <item android:id="@+id/menu_tag_edit"
         android:icon="@drawable/ic_double_check"
         app:showAsAction="ifRoom"
-        android:title="선택" />
+        android:title="@string/menu_tag_edit" />
     <item android:id="@+id/menu_tag_name_q"
         app:showAsAction="never"
-        android:title="이름 순"/>
+        android:title="@string/menu_tag_name_q"/>
     <item android:id="@+id/menu_tag_create_q"
         app:showAsAction="never"
-        android:title="등록된 순"/>
+        android:title="@string/menu_tag_create_q"/>
     <item android:id="@+id/menu_tag_delete"
         android:icon="@drawable/ic_trash_can"
         android:visible="false"
         app:showAsAction="ifRoom"
-        android:title="삭제" />
+        android:title="@string/menu_tag_delete" />
 </menu>

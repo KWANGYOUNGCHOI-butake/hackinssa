@@ -4,11 +4,11 @@
     <item android:id="@+id/menu_friend_add_friend"
         android:icon="@drawable/ic_user_add"
         app:showAsAction="ifRoom"
-        android:title="친구추가"/>
+        android:title="@string/menu_friend_add"/>
     <item android:id="@+id/menu_friend_name_q"
         app:showAsAction="never"
-        android:title="이름 순"/>
+        android:title="@string/menu_friend_name_q"/>
     <item android:id="@+id/menu_friend_create_q"
         app:showAsAction="never"
-        android:title="등록된 순"/>
+        android:title="@string/menu_friend_create_q"/>
 </menu>

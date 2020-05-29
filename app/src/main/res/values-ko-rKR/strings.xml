@@ -7,6 +7,9 @@
     <string name="tab_tag">태그</string>
     <string name="tab_setting">설정</string>
 
+    <string name="intent_email">어떤 어플로 메일을 보내겠습니까?</string>
+    <string name="intent_gallery">어떤 어플로 사진을 고르시겠습니까?</string>
+
     <string name="search_hint">검색</string>
     <string name="search_empty">검색어를 입력해 주세요</string>
     <string name="setting_ko">한국어</string>
@@ -20,4 +23,16 @@
 
     <string name="confirm">확인</string>
     <string name="cancel">취소</string>
+
+    <string name="menu_ci_star">별표</string>
+    <string name="menu_ci_add_friend">친구추가</string>
+    <string name="menu_friend_add">친구추가</string>
+    <string name="menu_friend_name_q">이름 순</string>
+    <string name="menu_friend_create_q">등록된 순</string>
+    <string name="menu_fa_ok">확인</string>
+    <string name="menu_fi_edit">수정</string>
+    <string name="menu_tag_edit">선택</string>
+    <string name="menu_tag_name_q">이름 순</string>
+    <string name="menu_tag_create_q">등록된 순</string>
+    <string name="menu_tag_delete">삭제</string>
 </resources>

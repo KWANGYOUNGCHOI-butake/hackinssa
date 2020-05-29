@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
+import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
@@ -36,7 +37,7 @@ object IntentHelper {
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
 
         try {
-            context?.startActivity(Intent.createChooser(intent, "Choose Email Client..."))
+            context?.startActivity(Intent.createChooser(intent, context.getString(R.string.intent_email)))
         }
         catch (e: Exception){
             Toast.makeText(context, e.message, Toast.LENGTH_LONG).show()
@@ -58,7 +59,7 @@ object IntentHelper {
     fun galleryIntent(activity: Activity?) {
         val intent = Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        activity?.startActivityForResult(Intent.createChooser(intent, "Select Image"), IMG_REQUEST_CODE)
+        activity?.startActivityForResult(Intent.createChooser(intent, activity.getString(R.string.intent_gallery)), IMG_REQUEST_CODE)
     }
 
 }
