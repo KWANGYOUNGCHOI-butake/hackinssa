@@ -2,16 +2,15 @@ package com.kwang0.hackinssa.presentation.ui.activities.friendadd
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Base64
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.size
 import com.google.android.material.chip.Chip
@@ -21,12 +20,9 @@ import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.data.models.Tags
-import com.kwang0.hackinssa.helper.GlideHelper
-import com.kwang0.hackinssa.helper.GlideHelper.getThumbnail
-import com.kwang0.hackinssa.helper.IntentHelper
+import com.kwang0.hackinssa.helper.*
 import com.kwang0.hackinssa.helper.IntentHelper.COUNTRY_REQUEST_CODE
 import com.kwang0.hackinssa.helper.IntentHelper.IMG_REQUEST_CODE
-import com.kwang0.hackinssa.helper.toEditable
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendAddPresenterImpl
@@ -36,10 +32,7 @@ import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
 import com.kwang0.hackinssa.presentation.ui.views.ChipAddDialogView
 import java9.util.stream.Collectors
-import java9.util.stream.Stream
 import java9.util.stream.StreamSupport
-import java.io.ByteArrayOutputStream
-import java.io.File
 
 
 class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListener {
@@ -58,7 +51,6 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
 
     private var add_item: MenuItem? = null
 
-    private var country: Country? = null
     private var friend: Friend? = null
     private var tagList: MutableList<Tag> = ArrayList<Tag>()
 
@@ -91,7 +83,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
     }
 
     fun getIntentExtra(intent: Intent?) {
-        country = intent?.extras?.getSerializable("country") as? Country
+        val country = intent?.extras?.getSerializable("country") as? Country
         friend = intent?.extras?.getSerializable("friend") as? Friend
         val tags = intent?.extras?.getSerializable("tags") as? Tags
 
@@ -126,7 +118,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
                 GlideHelper.loadImg(this, Uri.parse(avatarPath), avatar_iv)
             }
             if(requestCode == COUNTRY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-                countryPath = it.getStringExtra("country")
+                countryPath = it.getStringExtra("country") as? String
                 GlideHelper.loadImg(this,CountryAdapter.BASE_IMG_URL_250_PX.toString() + countryPath?.toLowerCase() + ".png?raw=true", country_iv)
             }
         }
@@ -143,20 +135,23 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
         return if (id == R.id.menu_fa_ok) {
             add_item?.isEnabled = false
 
+
             if(avatarPath != null &&
-                    !TextUtils.isEmpty(name_et.editableText.toString()) &&
-                    (!TextUtils.isEmpty(phone_et.editableText.toString()) || !TextUtils.isEmpty(phone_et.editableText.toString())) &&
+                    !TextUtils.isEmpty(name_et.editableText.toString().trim()) &&
+                    ((!TextUtils.isEmpty(phone_et.editableText.toString().trim()) && ValidHelper.isPhoneValid(phone_et.editableText.toString().trim(), countryPath)) ||
+                            (!TextUtils.isEmpty(email_et.editableText.toString().trim()) && ValidHelper.isEmailValid(email_et.editableText.toString().trim()))) &&
                     countryPath != null) {
 
                 friendAddPresenter?.insertOrUpdateFriend(friend?.friendId,
                         avatarPath!!,
-                        name_et.editableText.toString(),
-                        phone_et.editableText.toString(),
-                        email_et.editableText.toString(),
+                        name_et.editableText.toString().trim(),
+                        phone_et.editableText.toString().trim(),
+                        email_et.editableText.toString().trim(),
                         countryPath!!,
                         friend?.friendCreated ?: System.currentTimeMillis(),
                         tagList)
             } else {
+                Toast.makeText(this, "Valid Failed!!", Toast.LENGTH_SHORT).show()
                 addBtnEnabled()
             }
             true

@@ -33,4 +33,8 @@
         <item name="android:dropDownHorizontalOffset">@dimen/overflowHorOffset</item>
         <item name="android:dropDownVerticalOffset">@dimen/overflowVerOffset</item>
     </style>
+
+    <style name="GrayDrawable">
+        <item name="drawableTint">@color/colorGray</item>
+    </style>
 </resources>

@@ -21,21 +21,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/name"
-        android:layout_below="@id/fa_avatar_iv"/>
+        android:layout_below="@id/fa_avatar_iv"
+        android:maxLines="1"
+        android:inputType="text"
+        android:imeOptions="actionDone"/>
 
     <EditText
         android:id="@+id/fa_phone_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/phone"
-        android:layout_below="@id/fa_name_et"/>
+        android:layout_below="@id/fa_name_et"
+        android:maxLines="1"
+        android:inputType="phone"
+        android:imeOptions="actionDone"/>
 
     <EditText
         android:id="@+id/fa_email_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/email"
-        android:layout_below="@id/fa_phone_et"/>
+        android:layout_below="@id/fa_phone_et"
+        android:maxLines="1"
+        android:inputType="textEmailAddress"
+        android:imeOptions="actionDone"/>
 
 
     <RelativeLayout

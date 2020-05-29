@@ -43,10 +43,6 @@ class CountryFragment : Fragment() {
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .filter({ chars ->
-//                    val empty = TextUtils.isEmpty(chars.trim())
-//                    !empty
-//                })
                 .subscribe({ chars ->
                     val searchTerm: String = chars.trim().toString()
                     if (chars.trim().length == 0) {

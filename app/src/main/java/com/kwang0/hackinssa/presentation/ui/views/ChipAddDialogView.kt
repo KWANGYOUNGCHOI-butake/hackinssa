@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.helper.ValidHelper
 import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
 
@@ -33,13 +34,17 @@ class ChipAddDialogView(private val context: Context, private val chipAddListene
         chipAddDialogBuilder.setView(chipAddDialogView)
 
         confirm_btn.setOnClickListener({ v ->
-            if(!TextUtils.isEmpty(add_et.editableText.toString())) {
-                chipAddListener.onChipAdded(add_et.editableText.toString())
+            context.hideKeyboard(v)
+            if(!TextUtils.isEmpty(add_et.editableText.toString().trim()) && ValidHelper.isTagValid(add_et.editableText.toString().trim())) {
+                chipAddListener.onChipAdded(add_et.editableText.toString().trim())
                 chip_add_dialog.dismiss()
             }})
-        cancel_btn.setOnClickListener({ v -> chip_add_dialog.dismiss() })
+        cancel_btn.setOnClickListener({ v ->
+            context.hideKeyboard(v)
+            chip_add_dialog.dismiss() })
 
         chip_add_dialog = chipAddDialogBuilder.create()
+        chip_add_dialog.setCancelable(false)
         chip_add_dialog.show()
     }
 }

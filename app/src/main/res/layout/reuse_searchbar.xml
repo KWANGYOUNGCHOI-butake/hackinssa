@@ -23,7 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/searchbar_iv"
         android:hint="@string/search_hint"
+        android:maxLines="1"
         android:inputType="text"
+        android:imeOptions="actionDone"
         tools:ignore="RtlCompat" />
 
 </RelativeLayout>

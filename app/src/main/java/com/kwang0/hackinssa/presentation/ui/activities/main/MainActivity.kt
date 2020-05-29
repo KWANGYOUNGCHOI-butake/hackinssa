@@ -1,6 +1,8 @@
 package com.kwang0.hackinssa.presentation.ui.activities.main;
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Log
 import androidx.appcompat.widget.Toolbar
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout

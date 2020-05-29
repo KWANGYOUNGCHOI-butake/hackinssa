@@ -10,7 +10,10 @@
         android:id="@+id/chip_add_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/bigMargin"/>
+        android:layout_margin="@dimen/bigMargin"
+        android:maxLines="1"
+        android:inputType="text"
+        android:imeOptions="actionDone"/>
 
     <Button
         android:id="@+id/chip_add_cancel_btn"

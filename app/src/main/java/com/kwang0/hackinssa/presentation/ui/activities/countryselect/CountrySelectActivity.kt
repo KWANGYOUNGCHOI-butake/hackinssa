@@ -1,18 +1,10 @@
 package com.kwang0.hackinssa.presentation.ui.activities.countryselect
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Country
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
-import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
-import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.views.CountryView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
