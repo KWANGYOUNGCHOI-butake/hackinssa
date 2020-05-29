@@ -11,13 +11,16 @@
         android:id="@+id/tag_rv_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/textBig"/>
+        android:textSize="@dimen/textBig"
+        android:layout_toStartOf="@id/tag_rv_chkBox"
+        tools:ignore="RtlCompat" />
     <CheckBox
         android:id="@+id/tag_rv_chkBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/bigMargin"
         android:visibility="gone"
         tools:ignore="RtlCompat" />
 

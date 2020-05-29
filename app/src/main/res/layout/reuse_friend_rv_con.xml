@@ -18,6 +18,8 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/friend_rv_avatar_iv"
         android:layout_toStartOf="@+id/friend_rv_contact_layout"
+        android:layout_marginStart="@dimen/bigMargin"
+        android:layout_marginEnd="@dimen/margin"
         tools:ignore="RtlCompat" >
         <TextView
             android:id="@+id/friend_rv_name_tv"
@@ -44,12 +46,15 @@
             android:id="@+id/friend_rv_phone_iv"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_phone"/>
+            android:src="@drawable/ic_phone"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"/>
         <ImageView
             android:id="@+id/friend_rv_email_iv"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_email"/>
+            android:src="@drawable/ic_email"
+            android:layout_marginStart="@dimen/margin"/>
     </LinearLayout>
 
 </RelativeLayout>

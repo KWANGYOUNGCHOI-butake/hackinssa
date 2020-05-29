@@ -18,8 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/country_rv_iv"
         android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginStart="@dimen/bigMargin"
         tools:ignore="RtlCompat" />
 
 </RelativeLayout>

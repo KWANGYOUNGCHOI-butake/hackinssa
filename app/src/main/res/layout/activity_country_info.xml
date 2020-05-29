@@ -14,14 +14,16 @@
         android:layout_height="108dp"
         android:src="@drawable/ic_place_holder"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/toolbar"/>
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="@dimen/bigMargin"/>
     <TextView
         android:id="@+id/ci_name_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ci_iv"
         android:textSize="@dimen/textSuperBig"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_margin="@dimen/bigMargin"/>
     <TextView
         android:id="@+id/ci_time_des_tv"
         android:layout_width="match_parent"
@@ -29,13 +31,15 @@
         android:text="현지시간"
         android:layout_below="@+id/ci_name_tv"
         android:textSize="@dimen/textSmall"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_margin="@dimen/bigMargin"/>
     <TextView
         android:id="@+id/ci_time_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ci_time_des_tv"
         android:textSize="@dimen/textSmall"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_margin="@dimen/bigMargin"/>
 
 </RelativeLayout>
