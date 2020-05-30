@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.TextUtils
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -25,6 +24,8 @@ import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.presentation.ui.activities.friendinfo.FriendInfoActivity
 import com.kwang0.hackinssa.helper.IntentHelper
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
+import java9.util.stream.Collectors
+import java9.util.stream.Stream
 
 class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
 
@@ -82,7 +83,7 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
         holder.name_tv.text = item.friendName
     }
     private fun setContactText(holder: ViewHolder, item: Friend) {
-        holder.contact_tv.text = (item.friendPhone + "   " + item.friendEmail).trim()
+        holder.contact_tv.text = Stream.of(item.friendPhone, item.friendEmail).collect(Collectors.joining(", "))
         if(TextUtils.isEmpty(item.friendPhone)) holder.phone_iv.visibility = GONE else holder.phone_iv.visibility = VISIBLE
         if(TextUtils.isEmpty(item.friendEmail)) holder.email_iv.visibility = GONE else holder.email_iv.visibility = VISIBLE
     }
