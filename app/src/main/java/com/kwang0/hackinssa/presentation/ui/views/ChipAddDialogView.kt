@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.helper.ValidHelper
@@ -35,9 +36,12 @@ class ChipAddDialogView(private val context: Context, private val chipAddListene
 
         confirm_btn.setOnClickListener { v ->
             context.hideKeyboard(v)
-            if(!TextUtils.isEmpty(add_et.editableText.toString().trim()) && ValidHelper.isTagValid(add_et.editableText.toString().trim())) {
+            if(!TextUtils.isEmpty(add_et.editableText.toString().trim())
+                    && ValidHelper.isTagValid(add_et.editableText.toString().trim())) {
                 chipAddListener.onChipAdded(add_et.editableText.toString().trim())
                 chip_add_dialog.dismiss()
+            } else {
+                Toast.makeText(context, context.getString(R.string.tag_add_fail), Toast.LENGTH_LONG).show()
             }
         }
         cancel_btn.setOnClickListener { v ->

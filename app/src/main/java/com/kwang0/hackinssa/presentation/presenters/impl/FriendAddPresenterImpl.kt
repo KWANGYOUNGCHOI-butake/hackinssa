@@ -19,6 +19,8 @@ import com.kwang0.hackinssa.data.repository.TagRepository
 import com.kwang0.hackinssa.data.repository.impl.FriendRepositoryImpl
 import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
 import com.kwang0.hackinssa.helper.*
+import com.kwang0.hackinssa.helper.exception.EmailException
+import com.kwang0.hackinssa.helper.exception.PhoneException
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
@@ -100,6 +102,12 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
             }
         } catch (e: NullPointerException) {
             Toast.makeText(context, context.getString(R.string.exception_npe), Toast.LENGTH_LONG).show()
+            view.addBtnEnable()
+        } catch (e: PhoneException) {
+            Toast.makeText(context, context.getString(R.string.exception_phone), Toast.LENGTH_LONG).show()
+            view.addBtnEnable()
+        } catch (e: EmailException) {
+            Toast.makeText(context, context.getString(R.string.exception_email), Toast.LENGTH_LONG).show()
             view.addBtnEnable()
         }
     }

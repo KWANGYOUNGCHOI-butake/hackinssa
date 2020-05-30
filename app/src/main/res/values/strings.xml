@@ -35,8 +35,11 @@
     <string name="menu_tag_create_q">Create Filter</string>
     <string name="menu_tag_delete">Delete</string>
 
-    <string name="friend_add_fail">Friend Add Failed</string>
+    <string name="friend_add_fail">Friend Add Fail: Please confirm input fileds are correct</string>
+    <string name="tag_add_fail">Tag Add Fail : you can add Letters, Numbers, Underscore</string>
 
     <string name="exception_out_of_bounds">Error occur when loading list</string>
     <string name="exception_npe">Error occur when loading object</string>
+    <string name="exception_phone">Please confirm phone number is correct</string>
+    <string name="exception_email">Please confirm email is correct</string>
 </resources>
