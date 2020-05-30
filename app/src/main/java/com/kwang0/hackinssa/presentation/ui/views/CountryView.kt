@@ -64,11 +64,7 @@ class CountryView(private var mContext: Context): CountryPresenterView {
     }
 
     override fun handleError(throwable: Throwable?) {
-        if (throwable?.message == "HTTP 404 Not Found") {
-//            showPlaceholderNoResultsLayout()
-        } else {
-//            showPlaceholderLayout()
-        }
+        Log.d(TAG, "Throwable : " + throwable?.message)
     }
 
     fun showEmptyLayout() {

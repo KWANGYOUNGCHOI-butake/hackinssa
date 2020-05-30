@@ -2,6 +2,7 @@ package com.kwang0.hackinssa.presentation.ui.views
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,8 @@ import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import java.util.ArrayList
 
 class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPresenterView {
+    private val TAG = TagView::class.simpleName
+
     private lateinit var rv: RecyclerView
     private lateinit var empty_tv: TextView
 
@@ -86,6 +89,7 @@ class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPre
     }
 
     override fun handleError(throwable: Throwable?) {
+        Log.d(TAG, "Throwable : " + throwable?.message)
     }
 
     fun getmList(): MutableList<Tag> {

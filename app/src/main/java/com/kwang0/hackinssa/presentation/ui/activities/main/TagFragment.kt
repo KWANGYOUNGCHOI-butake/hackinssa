@@ -62,6 +62,7 @@ class TagFragment : Fragment(), TagMenuListener {
                 })
     }
 
+    // 메뉴 생성 뷰페이저 변환시 호출 -> 메뉴 초기화
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_tag, menu)
         this.menu = menu
@@ -70,19 +71,7 @@ class TagFragment : Fragment(), TagMenuListener {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun setMenuVisibility(menuVisible: Boolean) {
-        super.setMenuVisibility(menuVisible)
-        if(menuVisible.not()) {
-            this.menuChk = false
-            tagTrashArrInit()
-        }
-    }
-
-    fun tagTrashArrInit() {
-        tagView?.getmAdapter()?.chkSetInit()
-        tagView?.getmAdapter()?.notifyDataSetChanged()
-    }
-
+    // 메뉴선택
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_tag_edit) {
@@ -102,19 +91,38 @@ class TagFragment : Fragment(), TagMenuListener {
         } else super.onOptionsItemSelected(item)
     }
 
+    // TagAdapter 에서 item 을 길게 선택했을 때,
+    // TagPresenter 의 deleteByTagNames 를 완료했을 때 메뉴를 변경해 줌
     override fun menuChanged() {
         changeMenu()
     }
 
+    // menuChk 를 통해 현재 메뉴를 표시해 줌
     fun changeMenu() {
         if(menuChk) {
             hideTrashMenu()
         } else {
             showTrashMenu()
         }
-        tagTrashArrInit()
+        tagTrashSetInit()
     }
 
+    // 뷰페이저 변환이 일어나면 menuChk값과 지울 태그들 set을 초기화 시켜 줌
+    override fun setMenuVisibility(menuVisible: Boolean) {
+        super.setMenuVisibility(menuVisible)
+        if(menuVisible.not()) {
+            menuChk = false
+            tagTrashSetInit()
+        }
+    }
+
+    // 지울 태그들 set을 초기화 시킴
+    fun tagTrashSetInit() {
+        tagView?.getmAdapter()?.chkSetInit()
+        tagView?.getmAdapter()?.notifyDataSetChanged()
+    }
+
+    // 휴지통 메뉴를 표시해 줌
     fun showTrashMenu() {
         menuChk = true
         menu?.getItem(0)?.setVisible(false)
@@ -123,6 +131,8 @@ class TagFragment : Fragment(), TagMenuListener {
         menu?.getItem(3)?.setVisible(true)
         search_bar.visibility = GONE
     }
+
+    // 휴지통 메뉴를 숨겨 줌
     fun hideTrashMenu() {
         menuChk = false
         menu?.getItem(0)?.setVisible(true)
@@ -136,6 +146,4 @@ class TagFragment : Fragment(), TagMenuListener {
         tagView = TagView(v.context, this)
         tagView?.bindView(v)
     }
-
-
 }

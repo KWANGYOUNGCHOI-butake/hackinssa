@@ -21,6 +21,8 @@ import com.kwang0.hackinssa.presentation.ui.adapters.FriendAdapter
 import java.util.ArrayList
 
 class FriendView(private var mContext: Context): FriendPresenterView {
+    private val TAG = FriendView::class.simpleName
+
     private lateinit var rv: RecyclerView
 
     var friendPresenter: FriendPresenter
@@ -85,6 +87,6 @@ class FriendView(private var mContext: Context): FriendPresenterView {
     }
 
     override fun handleError(throwable: Throwable?) {
-        Log.d("friendView", "thrwoable: " + throwable?.message)
+        Log.d(TAG, "Throwable : " + throwable?.message)
     }
 }
