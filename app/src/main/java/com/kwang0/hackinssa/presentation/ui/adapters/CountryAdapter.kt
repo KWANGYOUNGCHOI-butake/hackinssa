@@ -3,6 +3,7 @@ package com.kwang0.hackinssa.presentation.ui.adapters
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +11,15 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.kwang0.hackinssa.App
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.helper.GlideHelper
+import com.kwang0.hackinssa.helper.LocaleHelper
 import com.kwang0.hackinssa.presentation.ui.activities.countryinfo.CountryInfoActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
+import java.util.*
 
 
 class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
@@ -45,7 +49,16 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
         val item: Country = mData.get(position)
         GlideHelper.loadImg(mContext,BASE_IMG_URL_250_PX.toString() + item.getAlpha2Code().toLowerCase() + ".png?raw=true", holder.iv)
 
-        holder.tv.text = item.getNativeName()
+        holder.tv.text = if(App.localeHelper?.getLanguage() == LocaleHelper.LANGUAGE_KOREAN) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val countryRegion: Locale = Locale.Builder().setRegion(item.getAlpha2Code()).build()
+                val langKorean: Locale = Locale.Builder().setLanguage("ko").build()
+                countryRegion.getDisplayCountry(langKorean)
+            } else {
+                item.getNativeName()
+            }
+        } else item.getName()
+
         holder.layout.setOnClickListener {v ->
             if(mContext is MainActivity) {
                 val intent = Intent(mContext, CountryInfoActivity::class.java)

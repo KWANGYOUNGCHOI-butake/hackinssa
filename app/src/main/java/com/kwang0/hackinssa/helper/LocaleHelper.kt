@@ -37,7 +37,7 @@ class LocaleHelper(context: Context?) {
 
     private fun updateResources(context: Context?, language: String?): Context? {
         var tempContext: Context? = context
-        val locale = Locale(language ?: "")
+        val locale = Locale(language)
         Locale.setDefault(locale)
         val res: Resources? = tempContext?.getResources()
         val config = Configuration(res?.getConfiguration())
