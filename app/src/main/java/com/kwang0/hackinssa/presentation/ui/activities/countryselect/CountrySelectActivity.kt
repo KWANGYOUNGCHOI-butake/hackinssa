@@ -1,6 +1,7 @@
 package com.kwang0.hackinssa.presentation.ui.activities.countryselect
 
 import android.os.Bundle
+import android.view.View
 import android.widget.EditText
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.kwang0.hackinssa.R
@@ -26,15 +27,14 @@ class CountrySelectActivity : BaseActivity() {
 
         countryViewSetUp()
 
-        search_et.textChanges()
-//                .throttleLast(100, TimeUnit.MILLISECONDS)
+        searchTextChanges(search_et)
+    }
+
+    fun searchTextChanges(et: EditText) {
+        et.textChanges()
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-//                .filter({ chars ->
-//                    val empty = TextUtils.isEmpty(chars.trim())
-//                    !empty
-//                })
                 .subscribe({ chars ->
                     val searchTerm: String = chars.trim().toString()
                     if (chars.trim().length == 0) {
@@ -45,7 +45,6 @@ class CountrySelectActivity : BaseActivity() {
                     }
                 })
     }
-
 
     fun countryViewSetUp() {
         countryView = CountryView(this)

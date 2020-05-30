@@ -35,7 +35,7 @@ import java9.util.stream.Collectors
 import java9.util.stream.StreamSupport
 
 
-class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListener {
+class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
     private val TAG = FriendAddActivity::class.simpleName
 
     private var friendAddPresenter: FriendAddPresenter? = null
@@ -51,17 +51,9 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
 
     private var add_item: MenuItem? = null
 
-    private var friend: Friend? = null
-    private var tagList: MutableList<Tag> = ArrayList<Tag>()
-
-    private var avatarPath: String? = null
-    private var countryPath: String? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend_add)
-
-        friendAddPresenter = FriendAddPresenterImpl(this, this)
 
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         avatar_iv = findViewById<ImageView>(R.id.fa_avatar_iv)
@@ -75,52 +67,23 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        getIntentExtra(intent)
+        friendAddPresenter = FriendAddPresenterImpl(this, this)
+        friendAddPresenter?.onCreate()
 
-        avatar_iv.setOnClickListener({ v -> IntentHelper.galleryIntent(this) })
-        country_iv.setOnClickListener({ v -> IntentHelper.activityResultIntent(this, CountrySelectActivity::class.java, COUNTRY_REQUEST_CODE) })
-        tag_add_iv.setOnClickListener ({ v -> ChipAddDialogView(this, this).openPaymentDialog() })
+        avatar_iv.setOnClickListener({ v -> friendAddPresenter?.onAvatarSelect() })
+        country_iv.setOnClickListener({ v -> friendAddPresenter?.onCountrySelect() })
+        tag_add_iv.setOnClickListener ({ v -> friendAddPresenter?.onChipAddSelect() })
     }
 
-    fun getIntentExtra(intent: Intent?) {
-        val country = intent?.extras?.getSerializable("country") as? Country
-        friend = intent?.extras?.getSerializable("friend") as? Friend
-        val tags = intent?.extras?.getSerializable("tags") as? Tags
-
-        friend?.let {
-            avatarPath = it.friendAvatar
-            countryPath = it.friendCountry
-
-            GlideHelper.loadImg(this, Uri.parse(it.friendAvatar), avatar_iv)
-            name_et.text = it.friendName.toEditable()
-            phone_et.text = it.friendPhone?.toEditable()
-            email_et.text = it.friendEmail?.toEditable()
-            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.friendCountry.toLowerCase() + ".png?raw=true", country_iv)
-        }
-
-        country?.let {
-            countryPath = it.getAlpha2Code()
-            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.getAlpha2Code().toLowerCase() + ".png?raw=true", country_iv)
-        }
-
-        tags?.let {
-            it.tagList.forEach({ tag -> onChipAddedFromExtra(tag) })
-        }
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        data?.let {
-            if(requestCode == IMG_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-                avatarPath = data.data?.toString()
-                System.out.println(avatarPath)
-                GlideHelper.loadImg(this, Uri.parse(avatarPath), avatar_iv)
-            }
-            if(requestCode == COUNTRY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-                countryPath = it.getStringExtra("country") as? String
-                GlideHelper.loadImg(this,CountryAdapter.BASE_IMG_URL_250_PX.toString() + countryPath?.toLowerCase() + ".png?raw=true", country_iv)
-            }
+        if(requestCode == IMG_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            friendAddPresenter?.imageRequestResult(data?.data?.toString())
+        }
+        if(requestCode == COUNTRY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            friendAddPresenter?.countryRequestResult(data?.getStringExtra("country"))
         }
     }
 
@@ -133,69 +96,83 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView, ChipAddListene
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_fa_ok) {
-            add_item?.isEnabled = false
-
-
-            if(avatarPath != null &&
-                    !TextUtils.isEmpty(name_et.editableText.toString().trim()) &&
-                    ((!TextUtils.isEmpty(phone_et.editableText.toString().trim()) && ValidHelper.isPhoneValid(phone_et.editableText.toString().trim(), countryPath)) ||
-                            (!TextUtils.isEmpty(email_et.editableText.toString().trim()) && ValidHelper.isEmailValid(email_et.editableText.toString().trim()))) &&
-                    countryPath != null) {
-
-                friendAddPresenter?.insertOrUpdateFriend(friend?.friendId,
-                        avatarPath!!,
-                        name_et.editableText.toString().trim(),
-                        phone_et.editableText.toString().trim(),
-                        email_et.editableText.toString().trim(),
-                        countryPath!!,
-                        friend?.friendCreated ?: System.currentTimeMillis(),
-                        tagList)
-            } else {
-                Toast.makeText(this, "Valid Failed", Toast.LENGTH_SHORT).show()
-                addBtnEnabled()
-            }
+            friendAddPresenter?.onFriendAddSelect()
             true
         } else super.onOptionsItemSelected(item)
     }
 
-    fun onChipAddedFromExtra(tag: Tag) {
-        if(tagList.filter { it.tagName == tag.tagName }.isNotEmpty() && tagList.size >= 5) return
-        tagList.add(tag)
-        addChipToChipGroup(tag.tagName)
-    }
 
-    override fun onChipAdded(chipStr: String) {
-        if(tagList.filter { it.tagName == chipStr }.isNotEmpty() && tagList.size >= 5) return
-        tagList.add(Tag("", chipStr, System.currentTimeMillis()))
-        addChipToChipGroup(chipStr)
-    }
-
-    fun addChipToChipGroup(chipStr: String) {
+    override fun addChipToChipGroup(chipStr: String) {
         val chip = Chip(tag_cg.context)
         chip.text = chipStr
 
         chip.isClickable = false
         chip.isCheckable = false
         chip.isCloseIconVisible = true
-        chip.setOnCloseIconClickListener({ v ->
-            tagList = StreamSupport.stream(tagList).filter({ it.tagName != chip.text }).collect(Collectors.toList())
+        chip.setOnCloseIconClickListener { v ->
+            friendAddPresenter?.onChipItemRemove(chip.text as String)
             tag_cg.removeView(v)
-        })
+        }
 
         tag_cg.addView(chip, tag_cg.size - 1)
+    }
+
+    override fun removeChip(text: String, tagList: MutableList<Tag>): MutableList<Tag> {
+        return StreamSupport.stream(tagList).filter({ it.tagName != text }).collect(Collectors.toList())
     }
 
     override fun finishActivity() {
         finish()
     }
 
-    override fun addBtnEnabled() {
+    override fun addBtnEnable() {
         add_item?.isEnabled = true
     }
 
+    override fun addBtnDisable() {
+        add_item?.isEnabled = false
+    }
+
+    override fun showToast(text: String) {
+        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
+    }
+
     override fun handleError(throwable: Throwable?) {
-        addBtnEnabled()
+        addBtnEnable()
         Log.d(TAG, "Throwable : " + throwable?.message)
     }
+
+    override fun getNameText(): String {
+        return name_et.editableText.toString().trim()
+    }
+
+    override fun getPhoneText(): String {
+        return phone_et.editableText.toString().trim()
+    }
+
+    override fun getEmailText(): String {
+        return email_et.editableText.toString().trim()
+    }
+
+    override fun setAvatar(path: String) {
+        GlideHelper.loadImg(this, Uri.parse(path), avatar_iv)
+    }
+
+    override fun setNameText(name: String) {
+        name_et.text = name.toEditable()
+    }
+
+    override fun setPhoneText(phone: String?) {
+        phone_et.text = phone?.toEditable()
+    }
+
+    override fun setEmailText(email: String?) {
+        email_et.text = email?.toEditable()
+    }
+
+    override fun setCountryFlag(code: String) {
+        GlideHelper.loadImg(this, GlideHelper.countryFlag(code), country_iv)
+    }
+
 
 }

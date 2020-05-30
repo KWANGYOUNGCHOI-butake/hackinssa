@@ -1,6 +1,10 @@
 package com.kwang0.hackinssa.presentation.presenters
 
 interface FriendInfoPresenter {
-    fun onStart(friendId: String)
+    fun onCreate()
+    fun onStart()
     fun onStop()
+    fun onPhoneSelect()
+    fun onEmailSelect()
+    fun onEditSelect()
 }

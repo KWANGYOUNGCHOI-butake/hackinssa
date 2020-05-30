@@ -38,8 +38,13 @@ class CountryFragment : Fragment() {
 
         countryViewSetUp(v)
 
-        search_et.textChanges()
-//                .throttleLast(100, TimeUnit.MILLISECONDS)
+        searchTextChanges(search_et)
+
+        return v
+    }
+
+    fun searchTextChanges(et: EditText) {
+        et.textChanges()
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -52,8 +57,6 @@ class CountryFragment : Fragment() {
                         countryView?.countryPresenter?.search(searchTerm)
                     }
                 })
-
-        return v
     }
 
     fun countryViewSetUp(v: View) {

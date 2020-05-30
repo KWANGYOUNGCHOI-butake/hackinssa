@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Base64
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
@@ -46,14 +47,9 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     lateinit var country_iv: ImageView
     lateinit var tag_cg: ChipGroup
 
-    var friend: Friend? = null
-    var tags = Tags(ArrayList<Tag>())
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend_info)
-
-        friendInfoPresenter = FriendInfoPresenterImpl(this, this)
 
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         avatar_iv = findViewById<ImageView>(R.id.fi_avatar_iv)
@@ -70,16 +66,17 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        getIntentExra(intent)
+        friendInfoPresenter = FriendInfoPresenterImpl(this, this)
+        friendInfoPresenter?.onCreate()
 
-        phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(this, friend?.friendPhone) }
-        email_iv.setOnClickListener { v -> IntentHelper.emailIntent(this, friend?.friendEmail) }
+        phone_iv.setOnClickListener { v -> friendInfoPresenter?.onPhoneSelect() }
+        email_iv.setOnClickListener { v -> friendInfoPresenter?.onEmailSelect() }
 
     }
 
     override fun onStart() {
         super.onStart()
-        friendInfoPresenter?.onStart(friend?.friendId ?: "")
+        friendInfoPresenter?.onStart()
     }
 
     override fun onStop() {
@@ -87,10 +84,6 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
         friendInfoPresenter?.onStop()
     }
 
-    fun getIntentExra(intent: Intent?) {
-        friend = intent?.extras?.getSerializable("friend") as? Friend
-
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_friend_info, menu)
@@ -100,29 +93,21 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_fi_edit) {
-            val intent = Intent(this, FriendAddActivity::class.java)
-            intent.putExtra("friend", friend)
-            intent.putExtra("tags", tags)
-            startActivity(intent)
+            friendInfoPresenter?.onEditSelect()
             true
         } else super.onOptionsItemSelected(item)
     }
 
-    fun notifyFriendChange() {
-
-        friend?.let {
-            GlideHelper.loadImg(this, Uri.parse(it.friendAvatar), avatar_iv)
-            name_tv.text = it.friendName
-            phone_tv.text = it.friendPhone
-            if(TextUtils.isEmpty(it.friendPhone)) phone_layout.visibility = GONE else phone_layout.visibility = VISIBLE
-            email_tv.text = it.friendEmail
-            if(TextUtils.isEmpty(it.friendEmail)) email_layout.visibility = GONE else email_layout.visibility = VISIBLE
-            GlideHelper.loadImg(this, CountryAdapter.BASE_IMG_URL_250_PX.toString() + it.friendCountry.toLowerCase() + ".png?raw=true", country_iv)
-        }
+    override fun addFriendResult(friend: Friend) {
+        setAvatar(friend.friendAvatar)
+        setNameText(friend.friendName)
+        setPhoneText(friend.friendPhone)
+        setEmailText(friend.friendEmail)
+        setCountryFlag(friend.friendCountry)
     }
 
-    fun notifyTagChanges() {
-        tags.tagList.forEach({ tag ->
+    override fun addTagResultsToList(tagList: List<Tag>) {
+        tagList.forEach({ tag ->
             val chip = Chip(tag_cg.context)
             chip.text = tag.tagName
 
@@ -139,22 +124,33 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
         })
     }
 
-    override fun addFriendResult(friend: Friend) {
-        this.friend = friend
-        notifyFriendChange()
-    }
-
-    override fun addTagResultsToList(tagList: MutableList<Tag>) {
-        tags.tagList = tagList
-        notifyTagChanges()
-    }
-
     override fun clearTags() {
-        tags.tagList.clear()
         tag_cg.removeAllViews()
     }
 
     override fun handleError(throwable: Throwable?) {
+        Log.d(TAG, "Throwable : " + throwable?.message)
+    }
 
+    override fun setAvatar(path: String) {
+        GlideHelper.loadImg(this, Uri.parse(path), avatar_iv)
+    }
+
+    override fun setNameText(name: String) {
+        name_tv.text = name
+    }
+
+    override fun setPhoneText(phone: String?) {
+        phone_tv.text = phone
+        if(TextUtils.isEmpty(phone)) phone_layout.visibility = GONE else phone_layout.visibility = VISIBLE
+    }
+
+    override fun setEmailText(email: String?) {
+        email_tv.text = email
+        if(TextUtils.isEmpty(email)) email_layout.visibility = GONE else email_layout.visibility = VISIBLE
+    }
+
+    override fun setCountryFlag(code: String) {
+        GlideHelper.loadImg(this, GlideHelper.countryFlag(code), country_iv)
     }
 }

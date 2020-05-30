@@ -12,6 +12,7 @@ import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.views.FriendView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import java.util.concurrent.TimeUnit
 
 class FriendFragment : Fragment() {
 
@@ -27,7 +28,13 @@ class FriendFragment : Fragment() {
 
         friendViewSetUp(v)
 
-        search_et.textChanges()
+        searchTextChanges(search_et)
+        
+        return v
+    }
+
+    fun searchTextChanges(et: EditText) {
+        et.textChanges()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ chars ->
@@ -39,8 +46,6 @@ class FriendFragment : Fragment() {
                         friendView?.friendPresenter?.search(searchTerm)
                     }
                 })
-        
-        return v
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

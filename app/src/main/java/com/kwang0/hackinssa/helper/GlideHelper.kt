@@ -7,10 +7,12 @@ import android.net.Uri
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.kwang0.hackinssa.R
+import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
+import java.util.*
 
 
 object GlideHelper {
@@ -38,6 +40,10 @@ object GlideHelper {
                 .placeholder(R.drawable.ic_place_holder)
                 .circleCrop()
                 .into(target)
+    }
+
+    fun countryFlag(code: String): String {
+        return (CountryAdapter.BASE_IMG_URL_250_PX + code.toLowerCase(Locale.ROOT) + ".png?raw=true")
     }
 
     val THUMBNAIL_SIZE = 48

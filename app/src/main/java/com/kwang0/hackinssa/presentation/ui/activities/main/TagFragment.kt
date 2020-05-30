@@ -42,8 +42,13 @@ class TagFragment : Fragment(), TagMenuListener {
 
         tagViewSetUp(v)
 
+        searchTextChanges(search_et)
 
-        search_et.textChanges()
+        return v
+    }
+
+    fun searchTextChanges(et: EditText) {
+        et.textChanges()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ chars ->
@@ -55,8 +60,6 @@ class TagFragment : Fragment(), TagMenuListener {
                         tagView?.tagPresenter?.searchByTagName(searchTerm)
                     }
                 })
-
-        return v
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

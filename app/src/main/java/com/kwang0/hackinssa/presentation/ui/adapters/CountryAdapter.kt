@@ -47,16 +47,15 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: Country = mData.get(position)
-        GlideHelper.loadImg(mContext,BASE_IMG_URL_250_PX.toString() + item.getAlpha2Code().toLowerCase() + ".png?raw=true", holder.iv)
+        GlideHelper.loadImg(mContext, GlideHelper.countryFlag(item.getAlpha2Code()), holder.iv)
 
         holder.tv.text = if(App.localeHelper?.getLanguage() == LocaleHelper.LANGUAGE_KOREAN) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val countryRegion: Locale = Locale.Builder().setRegion(item.getAlpha2Code()).build()
                 val langKorean: Locale = Locale.Builder().setLanguage("ko").build()
-                countryRegion.getDisplayCountry(langKorean)
-            } else {
-                item.getNativeName()
+                item.setNativeName(countryRegion.getDisplayCountry(langKorean))
             }
+            item.getNativeName()
         } else item.getName()
 
         holder.layout.setOnClickListener {v ->

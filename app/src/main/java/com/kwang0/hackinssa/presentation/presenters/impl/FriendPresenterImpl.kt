@@ -1,5 +1,6 @@
 package com.kwang0.hackinssa.presentation.presenters.impl
 
+import android.app.Activity
 import android.content.Context
 import com.kwang0.hackinssa.data.dao.impl.FriendDaoImpl
 import com.kwang0.hackinssa.data.models.Country
