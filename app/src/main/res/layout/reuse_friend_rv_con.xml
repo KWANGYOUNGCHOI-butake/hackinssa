@@ -41,24 +41,26 @@
     <LinearLayout
         android:id="@+id/friend_rv_contact_layout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_height="0dp"
+        android:layout_alignTop="@+id/friend_rv_avatar_iv"
+        android:layout_alignBottom="@id/friend_rv_avatar_iv"
         android:layout_alignParentEnd="true"
         android:orientation="horizontal"
         tools:ignore="RtlCompat">
         <ImageView
             android:id="@+id/friend_rv_phone_iv"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/bigSquareIconHeight"
+            android:layout_height="@dimen/bigSquareIconHeight"
             android:src="@drawable/ic_phone"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/margin"/>
         <ImageView
             android:id="@+id/friend_rv_email_iv"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/bigSquareIconHeight"
+            android:layout_height="@dimen/bigSquareIconHeight"
             android:src="@drawable/ic_email"
-            android:layout_marginStart="@dimen/margin"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/bigMargin"/>
     </LinearLayout>
 
 </RelativeLayout>

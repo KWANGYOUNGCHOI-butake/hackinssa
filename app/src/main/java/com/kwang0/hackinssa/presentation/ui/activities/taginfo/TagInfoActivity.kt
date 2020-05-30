@@ -27,6 +27,7 @@ class TagInfoActivity : BaseActivity() {
 
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
 
         friendViewSetUp()
 
