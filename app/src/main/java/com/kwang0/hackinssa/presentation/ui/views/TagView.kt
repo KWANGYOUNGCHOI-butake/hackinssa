@@ -89,7 +89,7 @@ class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPre
     }
 
     override fun handleError(throwable: Throwable?) {
-        Log.d(TAG, "Throwable : " + throwable?.message)
+        Log.e(TAG, "Throwable : " + throwable?.message)
     }
 
     fun getmList(): MutableList<Tag> {

@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.helper.ValidHelper
+import com.kwang0.hackinssa.helper.exception.TagException
 import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
 
@@ -36,11 +37,13 @@ class ChipAddDialogView(private val context: Context, private val chipAddListene
 
         confirm_btn.setOnClickListener { v ->
             context.hideKeyboard(v)
-            if(!TextUtils.isEmpty(add_et.editableText.toString().trim())
-                    && ValidHelper.isTagValid(add_et.editableText.toString().trim())) {
-                chipAddListener.onChipAdded(add_et.editableText.toString().trim())
-                chip_add_dialog.dismiss()
-            } else {
+            try {
+                if(!TextUtils.isEmpty(add_et.editableText.toString().trim())
+                        && ValidHelper.isTagValid(add_et.editableText.toString().trim())) {
+                    chipAddListener.onChipAdded(add_et.editableText.toString().trim())
+                    chip_add_dialog.dismiss()
+                }
+            } catch (e: TagException) {
                 Toast.makeText(context, context.getString(R.string.tag_add_fail), Toast.LENGTH_LONG).show()
             }
         }

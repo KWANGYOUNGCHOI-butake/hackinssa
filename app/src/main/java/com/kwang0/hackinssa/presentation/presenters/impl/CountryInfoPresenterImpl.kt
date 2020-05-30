@@ -55,7 +55,7 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ b -> view.notifyFavoriteChange(b) },
-                            { throwable -> Log.e(TAG, "Unable to get favorite", throwable) }))
+                            { throwable -> view.handleError(throwable) }))
         }
     }
 
@@ -70,14 +70,13 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ view.starBtnEnable() },
-                            { throwable -> Log.e(TAG, "Unable to insert or update favorite", throwable) })) }
+                            { throwable -> view.handleError(throwable) })) }
     }
 
     override fun onFriendAddSelect() {
         view.startFriendAddAct(country)
     }
 
-    @Throws(Exception::class)
     fun getIntentExtra(intent: Intent?) {
         country = intent?.extras?.getSerializable("country") as? Country
 

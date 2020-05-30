@@ -1,5 +1,6 @@
 package com.kwang0.hackinssa
 
+import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.helper.ValidHelper
 import org.junit.Assert
 import org.junit.Test
@@ -40,5 +41,35 @@ class TagUnitTest {
     @Test
     fun tag_dot_isValid() {
         Assert.assertEquals(true, ValidHelper.isTagValid("/au34up9rba0-2l.pz_+!@"))
+    }
+    @Test
+    fun tags_isValid() {
+        val tags = listOf(Tag("1", "11",1),
+                Tag("2", "22",1))
+        Assert.assertEquals(true, ValidHelper.isTagsValid(tags))
+    }
+    @Test
+    fun tags_same_isValid() {
+        val tags = listOf(Tag("1", "11",1),
+                Tag("2", "22",1),
+                Tag("3", "33",1),
+                Tag("1", "11",1))
+        Assert.assertEquals(true, ValidHelper.isTagsValid(tags))
+    }
+    @Test
+    fun tags_size_isValid() {
+        val tags = listOf(Tag("1", "11",1),
+                Tag("2", "22",1),
+                Tag("3", "33",1),
+                Tag("4", "44",1),
+                Tag("5", "55",1),
+                Tag("6", "66",1))
+        Assert.assertEquals(true, ValidHelper.isTagsValid(tags))
+    }
+    @Test
+    fun tags_match_isValid() {
+        val tags = listOf(Tag("1", "1f1f1f-",1),
+                Tag("2", "22",1))
+        Assert.assertEquals(true, ValidHelper.isTagsValid(tags))
     }
 }

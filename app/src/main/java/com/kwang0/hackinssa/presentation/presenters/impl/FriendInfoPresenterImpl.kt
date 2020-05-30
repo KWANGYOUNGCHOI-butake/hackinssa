@@ -72,7 +72,6 @@ class FriendInfoPresenterImpl(private val context: Context, private var view: Fr
         context.startActivity(intent)
     }
 
-    @Throws(Exception::class)
     private fun getIntentExra(intent: Intent?) {
         friend = intent?.extras?.getSerializable("friend") as? Friend
     }

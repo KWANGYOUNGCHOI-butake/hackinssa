@@ -7,6 +7,7 @@ interface CountryInfoPresenterView {
     fun starBtnEnable()
     fun starBtnDisable()
     fun startFriendAddAct(country: Country?)
+    fun handleError(throwable: Throwable?)
     fun setCountryFlag(code: String)
     fun setNameText(name: String)
     fun setTimeText(time: String)

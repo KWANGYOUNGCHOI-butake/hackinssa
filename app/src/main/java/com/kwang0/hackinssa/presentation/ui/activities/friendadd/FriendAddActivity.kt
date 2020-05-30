@@ -4,22 +4,17 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.size
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Country
-import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
-import com.kwang0.hackinssa.data.models.Tags
 import com.kwang0.hackinssa.helper.*
 import com.kwang0.hackinssa.helper.IntentHelper.COUNTRY_REQUEST_CODE
 import com.kwang0.hackinssa.helper.IntentHelper.IMG_REQUEST_CODE
@@ -27,10 +22,6 @@ import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendAddPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
-import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
-import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
-import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
-import com.kwang0.hackinssa.presentation.ui.views.ChipAddDialogView
 import java9.util.stream.Collectors
 import java9.util.stream.StreamSupport
 
@@ -108,6 +99,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
 
     override fun addChipToChipGroup(chipStr: String) {
         val chip = Chip(tag_cg.context)
+        chip.minWidth = resources.getDimensionPixelSize(R.dimen.chipMinWidth)
         chip.text = chipStr
 
         chip.isClickable = false
@@ -139,7 +131,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
 
     override fun handleError(throwable: Throwable?) {
         addBtnEnable()
-        Log.d(TAG, "Throwable : " + throwable?.message)
+        Log.e(TAG, "Throwable : " + throwable?.message)
     }
 
     override fun getNameText(): String {

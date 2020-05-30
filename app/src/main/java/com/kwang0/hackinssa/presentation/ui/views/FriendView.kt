@@ -83,6 +83,6 @@ class FriendView(private var mContext: Context): FriendPresenterView {
     }
 
     override fun handleError(throwable: Throwable?) {
-        Log.d(TAG, "Throwable : " + throwable?.message)
+        Log.e(TAG, "Throwable : " + throwable?.message)
     }
 }

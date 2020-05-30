@@ -21,8 +21,7 @@ import com.kwang0.hackinssa.data.repository.TagRepository
 import com.kwang0.hackinssa.data.repository.impl.FriendRepositoryImpl
 import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
 import com.kwang0.hackinssa.helper.*
-import com.kwang0.hackinssa.helper.exception.EmailException
-import com.kwang0.hackinssa.helper.exception.PhoneException
+import com.kwang0.hackinssa.helper.exception.*
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
@@ -96,6 +95,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
             if(!TextUtils.isEmpty(friendName) &&
                     ((!TextUtils.isEmpty(friendPhone) && ValidHelper.isPhoneValid(friendPhone, countryPath)) ||
                             (!TextUtils.isEmpty(friendEmail) && ValidHelper.isEmailValid(friendEmail)))) {
+                ValidHelper.isTagsValid(tagList)
                 insertOrUpdateFriend(friend?.friendId,
                         avatarPath!!,
                         friendName,
@@ -117,6 +117,15 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
         } catch (e: EmailException) {
             Toast.makeText(context, context.getString(R.string.exception_email), Toast.LENGTH_LONG).show()
             view.addBtnEnable()
+        } catch (e: TagException) {
+            Toast.makeText(context, context.getString(R.string.exception_tag), Toast.LENGTH_LONG).show()
+            view.addBtnEnable()
+        } catch (e: TagSameException) {
+            Toast.makeText(context, context.getString(R.string.tag_add_same_fail), Toast.LENGTH_LONG).show()
+            view.addBtnEnable()
+        } catch (e: TagSizeException) {
+            Toast.makeText(context, context.getString(R.string.tag_add_fail), Toast.LENGTH_LONG).show()
+            view.addBtnEnable()
         } catch (e: NumberParseException) {
             Toast.makeText(context, context.getString(R.string.exception_number), Toast.LENGTH_LONG).show()
             view.addBtnEnable()
@@ -137,7 +146,6 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
         tagList = view.removeChip(text, tagList)
     }
 
-    @Throws(Exception::class)
     private fun getIntentExtra(intent: Intent?) {
         country = intent?.extras?.getSerializable("country") as? Country
         friend = intent?.extras?.getSerializable("friend") as? Friend
@@ -223,15 +231,25 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
     }
 
     override fun onChipAddedFromExtra(tag: Tag) {
-        if(tagList.filter { it.tagName == tag.tagName }.isNotEmpty() && tagList.size >= 5) return
+        if(!canAddChip(tag.tagName)) return
         tagList.add(tag)
         view.addChipToChipGroup(tag.tagName)
     }
 
     override fun onChipAdded(chipStr: String) {
-        if(tagList.filter { it.tagName == chipStr }.isNotEmpty() && tagList.size >= 5) return
+        if(!canAddChip(chipStr)) return
         tagList.add(Tag("", chipStr, System.currentTimeMillis()))
         view.addChipToChipGroup(chipStr)
     }
 
+    fun canAddChip(tagName: String): Boolean {
+        if(tagList.filter { it.tagName == tagName }.isNotEmpty()) {
+            Toast.makeText(context, context.getString(R.string.tag_add_same_fail), Toast.LENGTH_LONG).show()
+            return false
+        } else if(tagList.size >= 5) {
+            Toast.makeText(context, context.getString(R.string.exception_tag), Toast.LENGTH_LONG).show()
+            return false
+        }
+        return true
+    }
 }

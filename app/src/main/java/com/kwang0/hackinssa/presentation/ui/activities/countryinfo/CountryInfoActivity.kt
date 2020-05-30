@@ -112,6 +112,11 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         startActivity(intent)
     }
 
+    override fun handleError(throwable: Throwable?) {
+        starBtnEnable()
+        Log.e(TAG, "Throwable : " + throwable?.message)
+    }
+
     override fun setCountryFlag(code: String) {
         GlideHelper.loadImg(this, GlideHelper.countryFlag(code), iv)
     }

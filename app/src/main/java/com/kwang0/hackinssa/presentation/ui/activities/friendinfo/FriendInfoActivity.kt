@@ -109,6 +109,7 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     override fun addTagResultsToList(tagList: List<Tag>) {
         tagList.forEach { tag ->
             val chip = Chip(tag_cg.context)
+            chip.minWidth = resources.getDimensionPixelSize(R.dimen.chipMinWidth)
             chip.text = tag.tagName
 
             chip.isClickable = false
@@ -129,7 +130,7 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     }
 
     override fun handleError(throwable: Throwable?) {
-        Log.d(TAG, "Throwable : " + throwable?.message)
+        Log.e(TAG, "Throwable : " + throwable?.message)
     }
 
     override fun setAvatar(path: String) {

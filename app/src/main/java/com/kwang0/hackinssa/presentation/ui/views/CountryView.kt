@@ -64,7 +64,7 @@ class CountryView(private var mContext: Context): CountryPresenterView {
     }
 
     override fun handleError(throwable: Throwable?) {
-        Log.d(TAG, "Throwable : " + throwable?.message)
+        Log.e(TAG, "Throwable : " + throwable?.message)
     }
 
     fun showEmptyLayout() {
