@@ -35,4 +35,6 @@
     <string name="menu_tag_name_q">이름 순</string>
     <string name="menu_tag_create_q">등록된 순</string>
     <string name="menu_tag_delete">삭제</string>
+
+    <string name="friend_add_fail">친구추가 실패</string>
 </resources>

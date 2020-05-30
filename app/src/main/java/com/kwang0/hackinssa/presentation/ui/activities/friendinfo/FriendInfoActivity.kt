@@ -107,21 +107,21 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     }
 
     override fun addTagResultsToList(tagList: List<Tag>) {
-        tagList.forEach({ tag ->
+        tagList.forEach { tag ->
             val chip = Chip(tag_cg.context)
             chip.text = tag.tagName
 
             chip.isClickable = false
             chip.isCheckable = false
             chip.isCloseIconVisible = false
-            chip.setOnClickListener({ v->
+            chip.setOnClickListener { v->
                 val intent = Intent(this, TagInfoActivity::class.java)
                 intent.putExtra("tag", chip.text.toString())
                 startActivity(intent)
-            })
+            }
 
             tag_cg.addView(chip)
-        })
+        }
     }
 
     override fun clearTags() {

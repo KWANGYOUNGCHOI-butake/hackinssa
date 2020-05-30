@@ -62,39 +62,59 @@ class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuLis
     }
 
     override fun onBindViewHolder(holder: TagAdapter.ViewHolder, position: Int) {
-        holder.tv.text = mData.get(position).tagName
-
+        val item: Tag = mData.get(position)
         val isChk = this.menuListener?.menuChk ?: false
 
+        setNameText(holder, item)
         if(isChk) {
-            holder.chkBox.visibility = VISIBLE
-            if(chkSet.contains(mData.get(position).tagName)) {
-                holder.chkBox.isChecked = true
-            } else {
-                holder.chkBox.isChecked = false
-            }
-            holder.layout.setOnClickListener({ v ->
-                chkSet.add(mData.get(position).tagName)
-                notifyItemChanged(position)
-            })
-            holder.layout.setOnLongClickListener{
-                true
-            }
+            setChkBoxIsChk(holder, item)
+            setLayoutSelectIsChk(holder, item, position)
+            setLayoutLongSelectIsChk(holder, item)
         } else {
-            holder.chkBox.visibility = GONE
-            holder.layout.setOnClickListener({ v ->
-                val intent = Intent(mContext, TagInfoActivity::class.java)
-                intent.putExtra("tag", mData.get(position).tagName)
-                mContext.startActivity(intent)
-            })
-            holder.layout.setOnLongClickListener{
-                menuListener?.menuChanged()
-                chkSetInit()
-                chkSet.add(mData.get(position).tagName)
-                true
-            }
+            setChkBoxIsNotChk(holder, item)
+            setLayoutSelectIsNotChk(holder, item)
+            setLayoutLongSelectIsNotChk(holder, item)
         }
     }
+
+    private fun setNameText(holder: ViewHolder, item: Tag) {
+        holder.tv.text = item.tagName
+    }
+    private fun setChkBoxIsChk(holder: ViewHolder, item: Tag) {
+        holder.chkBox.visibility = VISIBLE
+        holder.chkBox.isChecked = chkSet.contains(item.tagName)
+    }
+    private fun setChkBoxIsNotChk(holder: ViewHolder, item: Tag) {
+        holder.chkBox.visibility = GONE
+    }
+    private fun setLayoutSelectIsChk(holder: ViewHolder, item: Tag, position: Int) {
+        holder.layout.setOnClickListener { v ->
+            chkSet.add(item.tagName)
+            notifyItemChanged(position)
+        }
+    }
+    private fun setLayoutSelectIsNotChk(holder: ViewHolder, item: Tag) {
+        holder.layout.setOnClickListener { v ->
+            val intent = Intent(mContext, TagInfoActivity::class.java)
+            intent.putExtra("tag", item.tagName)
+            mContext.startActivity(intent)
+        }
+    }
+    private fun setLayoutLongSelectIsChk(holder: ViewHolder, item: Tag) {
+
+        holder.layout.setOnLongClickListener{
+            true
+        }
+    }
+    private fun setLayoutLongSelectIsNotChk(holder: ViewHolder, item: Tag) {
+        holder.layout.setOnLongClickListener{
+            menuListener?.menuChanged()
+            chkSetInit()
+            chkSet.add(item.tagName)
+            true
+        }
+    }
+
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var layout: RelativeLayout

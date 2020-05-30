@@ -70,9 +70,9 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
         friendAddPresenter = FriendAddPresenterImpl(this, this)
         friendAddPresenter?.onCreate()
 
-        avatar_iv.setOnClickListener({ v -> friendAddPresenter?.onAvatarSelect() })
-        country_iv.setOnClickListener({ v -> friendAddPresenter?.onCountrySelect() })
-        tag_add_iv.setOnClickListener ({ v -> friendAddPresenter?.onChipAddSelect() })
+        avatar_iv.setOnClickListener { v -> friendAddPresenter?.onAvatarSelect() }
+        country_iv.setOnClickListener { v -> friendAddPresenter?.onCountrySelect() }
+        tag_add_iv.setOnClickListener { v -> friendAddPresenter?.onChipAddSelect() }
     }
 
 

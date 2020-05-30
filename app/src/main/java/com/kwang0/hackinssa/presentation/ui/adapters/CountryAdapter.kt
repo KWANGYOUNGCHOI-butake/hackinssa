@@ -47,8 +47,16 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: Country = mData.get(position)
-        GlideHelper.loadImg(mContext, GlideHelper.countryFlag(item.getAlpha2Code()), holder.iv)
 
+        setCountryFlag(holder, item.getAlpha2Code())
+        setCountryText(holder, item)
+        setLayoutSelect(holder, item)
+    }
+
+    private fun setCountryFlag(holder: ViewHolder, code: String) {
+        GlideHelper.loadImg(mContext, GlideHelper.countryFlag(code), holder.iv)
+    }
+    private fun setCountryText(holder: ViewHolder, item: Country) {
         holder.tv.text = if(App.localeHelper?.getLanguage() == LocaleHelper.LANGUAGE_KOREAN) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val countryRegion: Locale = Locale.Builder().setRegion(item.getAlpha2Code()).build()
@@ -57,11 +65,12 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
             }
             item.getNativeName()
         } else item.getName()
-
+    }
+    private fun setLayoutSelect(holder: ViewHolder, item: Country) {
         holder.layout.setOnClickListener {v ->
             if(mContext is MainActivity) {
                 val intent = Intent(mContext, CountryInfoActivity::class.java)
-                intent.putExtra("country", mData.get(position))
+                intent.putExtra("country", item)
                 mContext.startActivity(intent)
             } else if(mContext is CountrySelectActivity) {
                 val intent = Intent();
@@ -70,7 +79,6 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
                 mContext.finish();
             }
         }
-
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

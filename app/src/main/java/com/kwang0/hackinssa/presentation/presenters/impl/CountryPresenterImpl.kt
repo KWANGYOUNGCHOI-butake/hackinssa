@@ -35,8 +35,8 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
         val callingRequest = countryRepository.getByCalling(query.toIntOrNull() ?: - 1).onErrorReturn { e -> listOf<Country>() }
 
         countrySubscription = Flowable.zip(langRequest, nameRequest, callingRequest,
-                Function3<List<Country>, List<Country>, List<Country>, List<Country>>
-                { lang, name, calling ->
+                Function3<List<Country>, List<Country>, List<Country>, List<Country>> {
+                    lang, name, calling ->
                     val allCountries = lang.toMutableList().plus(name.toMutableList()).plus(calling.toMutableList())
                     return@Function3 allCountries.distinctBy { it.getName() }.sortedBy { it.getName() }.toMutableList()
                 })

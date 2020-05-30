@@ -33,19 +33,19 @@ class FriendFragment : Fragment() {
         return v
     }
 
-    fun searchTextChanges(et: EditText) {
+    private fun searchTextChanges(et: EditText) {
         et.textChanges()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ chars ->
+                .subscribe { chars ->
                     val searchTerm: String = chars.trim().toString()
-                    if (chars.trim().length == 0) {
+                    if (chars.trim().isEmpty()) {
                         hideKeyboard()
                         friendView?.friendPresenter?.search()
                     } else {
                         friendView?.friendPresenter?.search(searchTerm)
                     }
-                })
+                }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -68,7 +68,7 @@ class FriendFragment : Fragment() {
         } else super.onOptionsItemSelected(item)
     }
 
-    fun friendViewSetUp(v: View) {
+    private fun friendViewSetUp(v: View) {
         friendView = FriendView(v.context)
         friendView?.bindView(v)
     }

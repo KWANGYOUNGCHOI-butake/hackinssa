@@ -130,7 +130,7 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         time_tv.text = time
     }
 
-    fun menuInit() {
+    private fun menuInit() {
         invalidateOptionsMenu()
     }
 }

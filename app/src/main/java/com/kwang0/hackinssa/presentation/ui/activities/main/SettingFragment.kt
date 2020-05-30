@@ -27,10 +27,10 @@ class SettingFragment : Fragment() {
         if(App.localeHelper?.getLanguage().equals(LANGUAGE_KOREAN)) radioGrp.check(R.id.setting_radioBtn_ko)
         else radioGrp.check(R.id.setting_radioBtn_en)
 
-        v.findViewById<RadioGroup>(R.id.setting_radioGrp).setOnCheckedChangeListener({ group, checkedId ->
+        v.findViewById<RadioGroup>(R.id.setting_radioGrp).setOnCheckedChangeListener { group, checkedId ->
             if(checkedId == R.id.setting_radioBtn_ko) setNewLocale(LANGUAGE_KOREAN, false)
             else if(checkedId == R.id.setting_radioBtn_en) setNewLocale(LANGUAGE_ENGLISH, false)
-        })
+        }
 
         return v
     }

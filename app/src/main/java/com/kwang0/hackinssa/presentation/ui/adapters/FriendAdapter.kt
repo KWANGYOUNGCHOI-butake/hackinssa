@@ -60,23 +60,41 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FriendAdapter.ViewHolder, position: Int) {
-        val item: Friend? = mData.get(position)
+        val item: Friend = mData.get(position)
 
-        GlideHelper.loadImg(mContext, Uri.parse(item?.friendAvatar), holder.avatar_iv)
-        holder.name_tv.text = item?.friendName
-        holder.contact_tv.text = (item?.friendPhone + "   " + item?.friendEmail).trim()
-        if(TextUtils.isEmpty(item?.friendPhone)) holder.phone_iv.visibility = GONE else holder.phone_iv.visibility = VISIBLE
-        if(TextUtils.isEmpty(item?.friendEmail)) holder.email_iv.visibility = GONE else holder.email_iv.visibility = VISIBLE
+        setAvatarImage(holder, item)
+        setNameText(holder, item)
+        setContactText(holder, item)
+        setLayoutSelect(holder, item)
+        setPhoneSelect(holder, item)
+        setEmailSelect(holder, item)
+    }
 
-        if(mContext is MainActivity) {
-            holder.layout.setOnClickListener({ v ->
+    private fun setAvatarImage(holder: ViewHolder, item: Friend) {
+        GlideHelper.loadImg(mContext, Uri.parse(item.friendAvatar), holder.avatar_iv)
+    }
+    private fun setNameText(holder: ViewHolder, item: Friend) {
+        holder.name_tv.text = item.friendName
+    }
+    private fun setContactText(holder: ViewHolder, item: Friend) {
+        holder.contact_tv.text = (item.friendPhone + "   " + item.friendEmail).trim()
+        if(TextUtils.isEmpty(item.friendPhone)) holder.phone_iv.visibility = GONE else holder.phone_iv.visibility = VISIBLE
+        if(TextUtils.isEmpty(item.friendEmail)) holder.email_iv.visibility = GONE else holder.email_iv.visibility = VISIBLE
+    }
+    private fun setLayoutSelect(holder: ViewHolder, item: Friend) {
+        holder.layout.setOnClickListener { v ->
+            if(mContext is MainActivity) {
                 val intent = Intent(mContext, FriendInfoActivity::class.java)
                 intent.putExtra("friend", item)
                 mContext.startActivity(intent)
-            })
+            }
         }
-        holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, item?.friendPhone) }
-        holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, item?.friendEmail) }
+    }
+    private fun setPhoneSelect(holder: ViewHolder, item: Friend) {
+        holder.phone_iv.setOnClickListener { v -> IntentHelper.phoneIntent(mContext, item.friendPhone) }
+    }
+    private fun setEmailSelect(holder: ViewHolder, item: Friend) {
+        holder.email_iv.setOnClickListener { v -> IntentHelper.emailIntent(mContext, item.friendEmail) }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

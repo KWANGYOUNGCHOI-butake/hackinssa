@@ -3,6 +3,7 @@ package com.kwang0.hackinssa.presentation.presenters.impl
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.kwang0.hackinssa.data.dao.impl.FriendDaoImpl
 import com.kwang0.hackinssa.data.dao.impl.TagDaoImpl
 import com.kwang0.hackinssa.data.models.Friend
@@ -21,7 +22,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class FriendInfoPresenterImpl(private val activity: Activity, private var view: FriendInfoPresenterView): FriendInfoPresenter {
+class FriendInfoPresenterImpl(private val context: Context, private var view: FriendInfoPresenterView): FriendInfoPresenter {
     private val TAG = FriendInfoPresenterImpl::class.simpleName
 
     private var friendRepository: FriendRepository
@@ -32,12 +33,16 @@ class FriendInfoPresenterImpl(private val activity: Activity, private var view: 
     var tags = Tags(ArrayList<Tag>())
 
     init {
-        friendRepository = FriendRepositoryImpl(FriendDaoImpl(activity))
-        tagRepository = TagRepositoryImpl(TagDaoImpl(activity))
+        friendRepository = FriendRepositoryImpl(FriendDaoImpl(context))
+        tagRepository = TagRepositoryImpl(TagDaoImpl(context))
     }
 
     override fun onCreate() {
-        getIntentExra(activity.intent)
+        try {
+            getIntentExra((context as? Activity)?.intent)
+        } catch (e: java.lang.Exception) {
+            Log.e(TAG, "Get Exception : " + e.message)
+        }
     }
 
     override fun onStart() {
@@ -53,26 +58,26 @@ class FriendInfoPresenterImpl(private val activity: Activity, private var view: 
     }
 
     override fun onPhoneSelect() {
-        IntentHelper.phoneIntent(activity, friend?.friendPhone)
+        IntentHelper.phoneIntent(context, friend?.friendPhone)
     }
 
     override fun onEmailSelect() {
-        IntentHelper.emailIntent(activity, friend?.friendEmail)
+        IntentHelper.emailIntent(context, friend?.friendEmail)
     }
 
     override fun onEditSelect() {
-        val intent = Intent(activity, FriendAddActivity::class.java)
+        val intent = Intent(context, FriendAddActivity::class.java)
         intent.putExtra("friend", friend)
         intent.putExtra("tags", tags)
-        activity.startActivity(intent)
+        context.startActivity(intent)
     }
 
     @Throws(Exception::class)
-    fun getIntentExra(intent: Intent?) {
+    private fun getIntentExra(intent: Intent?) {
         friend = intent?.extras?.getSerializable("friend") as? Friend
     }
 
-    fun addGetFriendFlow(friendId: String) {
+    private fun addGetFriendFlow(friendId: String) {
         mDisposable.add(friendRepository.getFriend( friendId )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -82,7 +87,7 @@ class FriendInfoPresenterImpl(private val activity: Activity, private var view: 
                         { throwable -> view.handleError(throwable) }) )
     }
 
-    fun addGetTagsFlow(friendId: String) {
+    private fun addGetTagsFlow(friendId: String) {
         mDisposable.add(tagRepository.getTagById( friendId )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

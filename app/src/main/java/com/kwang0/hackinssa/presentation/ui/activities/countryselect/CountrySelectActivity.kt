@@ -30,23 +30,23 @@ class CountrySelectActivity : BaseActivity() {
         searchTextChanges(search_et)
     }
 
-    fun searchTextChanges(et: EditText) {
+    private fun searchTextChanges(et: EditText) {
         et.textChanges()
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ chars ->
+                .subscribe { chars ->
                     val searchTerm: String = chars.trim().toString()
-                    if (chars.trim().length == 0) {
+                    if (chars.trim().isEmpty()) {
                         hideKeyboard()
                         countryView?.countryPresenter?.clear()
                     } else {
                         countryView?.countryPresenter?.search(searchTerm)
                     }
-                })
+                }
     }
 
-    fun countryViewSetUp() {
+    private fun countryViewSetUp() {
         countryView = CountryView(this)
         countryView?.bindView(this)
     }

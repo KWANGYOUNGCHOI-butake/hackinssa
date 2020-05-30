@@ -35,4 +35,6 @@
     <string name="menu_tag_name_q">Name Filter</string>
     <string name="menu_tag_create_q">Create Filter</string>
     <string name="menu_tag_delete">Delete</string>
+
+    <string name="friend_add_fail">Friend Add Failed</string>
 </resources>

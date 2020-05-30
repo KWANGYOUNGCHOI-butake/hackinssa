@@ -27,7 +27,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.concurrent.fixedRateTimer
 
-class CountryInfoPresenterImpl(private val activity: Activity, private var view: CountryInfoPresenterView): CountryInfoPresenter {
+class CountryInfoPresenterImpl(private val context: Context, private var view: CountryInfoPresenterView): CountryInfoPresenter {
     private val TAG = CountryInfoPresenterImpl::class.simpleName
 
     private var favoriteRepository: FavoriteRepository
@@ -37,12 +37,12 @@ class CountryInfoPresenterImpl(private val activity: Activity, private var view:
     private var favorite: Favorite? = null
 
     init {
-        favoriteRepository = FavoriteRepositoryImpl(FavoriteDaoImpl(activity))
+        favoriteRepository = FavoriteRepositoryImpl(FavoriteDaoImpl(context))
     }
 
     override fun onCreate() {
         try {
-            getIntentExtra(activity.intent)
+            getIntentExtra((context as? Activity)?.intent)
         } catch (e: Exception) {
             Log.e(TAG, "Get Exception : " + e.message)
         }
@@ -86,7 +86,7 @@ class CountryInfoPresenterImpl(private val activity: Activity, private var view:
     }
 
     @SuppressLint("SimpleDateFormat")
-    fun getLocaleTime(timeZone: String?) {
+    private fun getLocaleTime(timeZone: String?) {
         mDisposable.add(Flowable.timer(5000, TimeUnit.MILLISECONDS)
                 .repeat() //to perform your task every 5 seconds
                 .subscribeOn(Schedulers.io())
@@ -98,15 +98,15 @@ class CountryInfoPresenterImpl(private val activity: Activity, private var view:
                 })
     }
 
-    fun isFavorite(favoriteName: String): Flowable<Boolean> {
+    private fun isFavorite(favoriteName: String): Flowable<Boolean> {
         return favoriteRepository.getFavorite(favoriteName)
-                .map({ favorite ->
+                .map { favorite ->
                     this.favorite = favorite
                     favorite.isFavorite
-                })
+                }
     }
 
-    fun insertOrUpdateFavorite(favoriteName: String): Completable {
+    private fun insertOrUpdateFavorite(favoriteName: String): Completable {
         if(this.favorite == null) {
             return favoriteRepository.insertFavorite(Favorite(favoriteName, true))
         } else {

@@ -33,15 +33,17 @@ class ChipAddDialogView(private val context: Context, private val chipAddListene
         cancel_btn = chipAddDialogView.findViewById(R.id.chip_add_cancel_btn)
         chipAddDialogBuilder.setView(chipAddDialogView)
 
-        confirm_btn.setOnClickListener({ v ->
+        confirm_btn.setOnClickListener { v ->
             context.hideKeyboard(v)
             if(!TextUtils.isEmpty(add_et.editableText.toString().trim()) && ValidHelper.isTagValid(add_et.editableText.toString().trim())) {
                 chipAddListener.onChipAdded(add_et.editableText.toString().trim())
                 chip_add_dialog.dismiss()
-            }})
-        cancel_btn.setOnClickListener({ v ->
+            }
+        }
+        cancel_btn.setOnClickListener { v ->
             context.hideKeyboard(v)
-            chip_add_dialog.dismiss() })
+            chip_add_dialog.dismiss()
+        }
 
         chip_add_dialog = chipAddDialogBuilder.create()
         chip_add_dialog.setCancelable(false)

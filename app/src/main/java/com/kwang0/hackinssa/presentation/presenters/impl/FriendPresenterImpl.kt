@@ -45,8 +45,8 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
         val emailRequest = friendRepository.getFriendsFromEmail(query).onErrorReturn { e -> listOf<Friend>() }
 
         friendSubscription = Flowable.zip(nameRequest, phoneRequest, emailRequest,
-                Function3<List<Friend>, List<Friend>, List<Friend>, List<Friend>>
-                { name, phone, email ->
+                Function3<List<Friend>, List<Friend>, List<Friend>, List<Friend>> {
+                    name, phone, email ->
                     val allFriends = name.toMutableList().plus(phone.toMutableList()).plus(email.toMutableList())
                     return@Function3 allFriends.distinctBy { it.friendId }.toMutableList()
                 })

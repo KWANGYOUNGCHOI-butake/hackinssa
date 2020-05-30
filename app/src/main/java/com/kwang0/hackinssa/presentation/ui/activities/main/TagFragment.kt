@@ -47,19 +47,19 @@ class TagFragment : Fragment(), TagMenuListener {
         return v
     }
 
-    fun searchTextChanges(et: EditText) {
+    private fun searchTextChanges(et: EditText) {
         et.textChanges()
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ chars ->
+                .subscribe { chars ->
                     val searchTerm: String = chars.trim().toString()
-                    if (chars.trim().length == 0) {
+                    if (chars.trim().isEmpty()) {
                         hideKeyboard()
                         tagView?.tagPresenter?.clear()
                     } else {
                         tagView?.tagPresenter?.searchByTagName(searchTerm)
                     }
-                })
+                }
     }
 
     // 메뉴 생성 뷰페이저 변환시 호출 -> 메뉴 초기화
@@ -98,7 +98,7 @@ class TagFragment : Fragment(), TagMenuListener {
     }
 
     // menuChk 를 통해 현재 메뉴를 표시해 줌
-    fun changeMenu() {
+    private fun changeMenu() {
         if(menuChk) {
             hideTrashMenu()
         } else {
@@ -117,13 +117,13 @@ class TagFragment : Fragment(), TagMenuListener {
     }
 
     // 지울 태그들 set을 초기화 시킴
-    fun tagTrashSetInit() {
+    private fun tagTrashSetInit() {
         tagView?.getmAdapter()?.chkSetInit()
         tagView?.getmAdapter()?.notifyDataSetChanged()
     }
 
     // 휴지통 메뉴를 표시해 줌
-    fun showTrashMenu() {
+    private fun showTrashMenu() {
         menuChk = true
         menu?.getItem(0)?.setVisible(false)
         menu?.getItem(1)?.setVisible(false)
@@ -133,7 +133,7 @@ class TagFragment : Fragment(), TagMenuListener {
     }
 
     // 휴지통 메뉴를 숨겨 줌
-    fun hideTrashMenu() {
+    private fun hideTrashMenu() {
         menuChk = false
         menu?.getItem(0)?.setVisible(true)
         menu?.getItem(1)?.setVisible(true)
@@ -142,7 +142,7 @@ class TagFragment : Fragment(), TagMenuListener {
         search_bar.visibility = VISIBLE
     }
 
-    fun tagViewSetUp(v: View) {
+    private fun tagViewSetUp(v: View) {
         tagView = TagView(v.context, this)
         tagView?.bindView(v)
     }

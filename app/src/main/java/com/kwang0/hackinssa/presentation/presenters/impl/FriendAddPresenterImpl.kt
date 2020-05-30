@@ -7,6 +7,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
+import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.dao.impl.FriendDaoImpl
 import com.kwang0.hackinssa.data.dao.impl.TagDaoImpl
 import com.kwang0.hackinssa.data.models.Country
@@ -36,7 +37,7 @@ import java.lang.Exception
 import java.lang.NullPointerException
 import java.util.*
 
-class FriendAddPresenterImpl(private val activity: Activity, private var view: FriendAddPresenterView):
+class FriendAddPresenterImpl(private val context: Context, private var view: FriendAddPresenterView):
         FriendAddPresenter, ChipAddListener {
     private val TAG = FriendAddPresenterImpl::class.simpleName
 
@@ -53,28 +54,28 @@ class FriendAddPresenterImpl(private val activity: Activity, private var view: F
     private var countryPath: String? = null
 
     init {
-        friendRepository = FriendRepositoryImpl(FriendDaoImpl(activity))
-        tagRepository = TagRepositoryImpl(TagDaoImpl(activity))
+        friendRepository = FriendRepositoryImpl(FriendDaoImpl(context))
+        tagRepository = TagRepositoryImpl(TagDaoImpl(context))
     }
 
     override fun onCreate() {
         try {
-            getIntentExtra(activity.intent)
+            getIntentExtra((context as? Activity)?.intent)
         } catch (e: Exception) {
             Log.e(TAG, "Get Exception : " + e.message)
         }
     }
 
     override fun onAvatarSelect() {
-        IntentHelper.galleryIntent(activity)
+        IntentHelper.galleryIntent((context as? Activity))
     }
 
     override fun onCountrySelect() {
-        IntentHelper.activityResultIntent(activity, CountrySelectActivity::class.java, IntentHelper.COUNTRY_REQUEST_CODE)
+        IntentHelper.activityResultIntent((context as? Activity), CountrySelectActivity::class.java, IntentHelper.COUNTRY_REQUEST_CODE)
     }
 
     override fun onChipAddSelect() {
-        ChipAddDialogView(activity, this).openPaymentDialog()
+        ChipAddDialogView(context, this).openPaymentDialog()
     }
 
     override fun onFriendAddSelect() {
@@ -97,11 +98,11 @@ class FriendAddPresenterImpl(private val activity: Activity, private var view: F
                         friend?.friendCreated ?: System.currentTimeMillis(),
                         tagList)
             } else {
-                view.showToast("Valid Failed")
+                view.showToast(context.getString(R.string.friend_add_fail))
                 view.addBtnEnable()
             }
         } catch (e: NullPointerException) {
-            view.showToast("Valid Failed")
+            view.showToast(context.getString(R.string.friend_add_fail))
             view.addBtnEnable()
         }
     }
@@ -121,7 +122,7 @@ class FriendAddPresenterImpl(private val activity: Activity, private var view: F
     }
 
     @Throws(Exception::class)
-    fun getIntentExtra(intent: Intent?) {
+    private fun getIntentExtra(intent: Intent?) {
         country = intent?.extras?.getSerializable("country") as? Country
         friend = intent?.extras?.getSerializable("friend") as? Friend
         tags = intent?.extras?.getSerializable("tags") as? Tags
@@ -148,7 +149,7 @@ class FriendAddPresenterImpl(private val activity: Activity, private var view: F
         }
     }
 
-    fun insertOrUpdateFriend(friendId: String?,
+    private fun insertOrUpdateFriend(friendId: String?,
                                       friendAvatar: String,
                                       friendName: String,
                                       friendPhone: String?,
@@ -171,7 +172,7 @@ class FriendAddPresenterImpl(private val activity: Activity, private var view: F
         }
     }
 
-    fun insertFriend(friend: Friend) {
+    private fun insertFriend(friend: Friend) {
         friendAddSubscription = friendRepository.insertFriend(friend)
                 .andThen(tagRepository.deleteTagById(friend.friendId))
                 .andThen(tagRepository.insertTags(
@@ -187,7 +188,7 @@ class FriendAddPresenterImpl(private val activity: Activity, private var view: F
                 }, { throwable -> view.handleError(throwable) })
     }
 
-    fun updateFriend(friend: Friend) {
+    private fun updateFriend(friend: Friend) {
         friendAddSubscription = friendRepository.updateFriend(friend)
                 .andThen(tagRepository.deleteTagById(friend.friendId))
                 .andThen(tagRepository.insertTags(

@@ -17,17 +17,13 @@ class MainActivity: BaseActivity() {
     lateinit var tl: TabLayout
     lateinit var toolbar: Toolbar
 
-    fun mainActContentsInit() {
-        container = findViewById<ViewPager>(R.id.main_container)
-        tl = findViewById<TabLayout>(R.id.main_tl)
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mainActContentsInit()
+        container = findViewById<ViewPager>(R.id.main_container)
+        tl = findViewById<TabLayout>(R.id.main_tl)
+        toolbar = findViewById<Toolbar>(R.id.toolbar)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
