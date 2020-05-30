@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/fi_avatar_iv"
-        android:layout_width="108dp"
-        android:layout_height="108dp"
+        android:layout_width="@dimen/bigSquareImageHeight"
+        android:layout_height="@dimen/bigSquareImageHeight"
         android:src="@drawable/ic_place_holder"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/toolbar"
@@ -22,6 +22,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/textCenter"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/colorBlack"
         android:layout_below="@+id/fi_avatar_iv"
         android:gravity="center"
         android:layout_margin="@dimen/bigMargin"/>
@@ -37,13 +40,17 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:textSize="@dimen/textSmall"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorBlack"
+            android:gravity="center_vertical"
             android:layout_toStartOf="@+id/fi_phone_iv"
             android:layout_marginEnd="@dimen/bigMargin"
             tools:ignore="RtlCompat" />
         <ImageView
             android:id="@+id/fi_phone_iv"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/bigSquareIconHeight"
+            android:layout_height="@dimen/bigSquareIconHeight"
             android:src="@drawable/ic_phone"
             android:layout_alignParentEnd="true"
             tools:ignore="RtlCompat" />
@@ -60,13 +67,17 @@
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:textSize="@dimen/textSmall"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:textColor="@color/colorBlack"
+            android:gravity="center_vertical"
             android:layout_toStartOf="@+id/fi_email_iv"
             android:layout_marginEnd="@dimen/bigMargin"
             tools:ignore="RtlCompat"/>
         <ImageView
             android:id="@+id/fi_email_iv"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/bigSquareIconHeight"
+            android:layout_height="@dimen/bigSquareIconHeight"
             android:src="@drawable/ic_email"
             android:layout_alignParentEnd="true"
             tools:ignore="RtlCompat"/>
@@ -77,20 +88,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/fi_email_layout"
-        android:layout_margin="@dimen/bigMargin">
+        android:layout_marginTop="@dimen/maxBigMargin"
+        android:layout_marginStart="@dimen/bigMargin"
+        android:layout_marginEnd="@dimen/bigMargin"
+        android:layout_marginBottom="@dimen/bigMargin">
         <TextView
             android:id="@+id/fi_country_tv"
             android:layout_width="wrap_content"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/titleHeight"
             android:text="@string/country"
+            android:textSize="@dimen/textCenter"
+            android:textColor="@color/colorBlack"
             android:gravity="center"
             android:layout_alignParentStart="true"
             tools:ignore="RtlCompat" />
         <ImageView
             android:id="@+id/fi_country_iv"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/bigSquareIconHeight"
+            android:layout_height="@dimen/bigSquareIconHeight"
             android:src="@drawable/ic_flag"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/bigMargin"
             android:layout_toEndOf="@+id/fi_country_tv"
             tools:ignore="RtlCompat" />
@@ -101,12 +118,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fi_country_layout"
-        android:layout_margin="@dimen/bigMargin">
+        android:layout_marginStart="@dimen/bigMargin"
+        android:layout_marginEnd="@dimen/bigMargin">
         <TextView
             android:id="@+id/fi_tag_tv"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/chipHeight"
             android:text="@string/tag"
+            android:textSize="@dimen/textCenter"
+            android:textColor="@color/colorBlack"
             android:gravity="center"
             android:layout_alignParentStart="true"
             tools:ignore="RtlCompat"/>

@@ -14,11 +14,19 @@
     <dimen name="overflowHorOffset">-6dp</dimen>
     <dimen name="overflowVerOffset">-12dp</dimen>
 
+    <dimen name="titleHeight">48dp</dimen>
+    <dimen name="smallSquareIconHeight">24dp</dimen>
+    <dimen name="bigSquareIconHeight">32dp</dimen>
+    <dimen name="smallSquareImageHeight">48dp</dimen>
+    <dimen name="centerSquareImageHeight">64dp</dimen>
+    <dimen name="bigSquareImageHeight">108dp</dimen>
     <dimen name="chipHeight">48dp</dimen>
 
+    <dimen name="maxBigPadding">24dp</dimen>
     <dimen name="bigPadding">16dp</dimen>
     <dimen name="padding">8dp</dimen>
     <dimen name="smallPadding">4dp</dimen>
+    <dimen name="maxBigMargin">24dp</dimen>
     <dimen name="bigMargin">16dp</dimen>
     <dimen name="margin">8dp</dimen>
     <dimen name="smallMargin">4dp</dimen>

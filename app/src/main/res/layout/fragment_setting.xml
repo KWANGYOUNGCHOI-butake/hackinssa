@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layoutDirection="rtl"
             android:text="@string/setting_ko"
+            android:textColor="@color/colorBlack"
             android:layout_margin="@dimen/bigMargin"
             android:buttonTint="@color/colorPrimary"
             tools:ignore="UnusedAttribute" />
@@ -24,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layoutDirection="rtl"
             android:text="@string/setting_en"
+            android:textColor="@color/colorBlack"
             android:layout_margin="@dimen/bigMargin"
             android:buttonTint="@color/colorPrimary"
             tools:ignore="UnusedAttribute" />

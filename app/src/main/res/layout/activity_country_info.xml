@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/ci_iv"
-        android:layout_width="108dp"
-        android:layout_height="108dp"
+        android:layout_width="@dimen/bigSquareImageHeight"
+        android:layout_height="@dimen/bigSquareImageHeight"
         android:src="@drawable/ic_place_holder"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/toolbar"
@@ -22,6 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ci_iv"
         android:textSize="@dimen/textSuperBig"
+        android:textColor="@color/colorBlack"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:gravity="center"
         android:layout_margin="@dimen/bigMargin"/>
     <TextView
@@ -31,15 +34,21 @@
         android:text="현지시간"
         android:layout_below="@+id/ci_name_tv"
         android:textSize="@dimen/textSmall"
+        android:textColor="@color/colorBlack"
         android:gravity="center"
-        android:layout_margin="@dimen/bigMargin"/>
+        android:layout_marginTop="@dimen/maxBigMargin"
+        android:layout_marginStart="@dimen/bigMargin"
+        android:layout_marginEnd="@dimen/bigMargin"
+        android:layout_marginBottom="@dimen/bigMargin"/>
     <TextView
         android:id="@+id/ci_time_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/ci_time_des_tv"
         android:textSize="@dimen/textSmall"
+        android:textColor="@color/colorBlack"
         android:gravity="center"
-        android:layout_margin="@dimen/bigMargin"/>
+        android:layout_marginStart="@dimen/bigMargin"
+        android:layout_marginEnd="@dimen/bigMargin"/>
 
 </RelativeLayout>
