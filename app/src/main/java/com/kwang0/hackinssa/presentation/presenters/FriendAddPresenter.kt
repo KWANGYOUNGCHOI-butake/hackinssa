@@ -7,6 +7,7 @@ import io.reactivex.Completable
 
 interface FriendAddPresenter {
     fun onCreate()
+    fun onStop()
     fun onAvatarSelect()
     fun onCountrySelect()
     fun onChipAddSelect()

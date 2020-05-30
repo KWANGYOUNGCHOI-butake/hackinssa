@@ -47,19 +47,14 @@ class TagFragment : Fragment(), TagMenuListener {
         return v
     }
 
-    private fun searchTextChanges(et: EditText) {
-        et.textChanges()
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { chars ->
-                    val searchTerm: String = chars.trim().toString()
-                    if (chars.trim().isEmpty()) {
-                        hideKeyboard()
-                        tagView?.tagPresenter?.clear()
-                    } else {
-                        tagView?.tagPresenter?.searchByTagName(searchTerm)
-                    }
-                }
+    override fun onStart() {
+        super.onStart()
+        tagView?.tagPresenter?.restoreData()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        tagView?.tagPresenter?.tearDown()
     }
 
     // 메뉴 생성 뷰페이저 변환시 호출 -> 메뉴 초기화
@@ -140,6 +135,21 @@ class TagFragment : Fragment(), TagMenuListener {
         menu?.getItem(2)?.setVisible(true)
         menu?.getItem(3)?.setVisible(false)
         search_bar.visibility = VISIBLE
+    }
+
+    private fun searchTextChanges(et: EditText) {
+        et.textChanges()
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { chars ->
+                    val searchTerm: String = chars.trim().toString()
+                    if (chars.trim().isEmpty()) {
+                        hideKeyboard()
+                        tagView?.tagPresenter?.clear()
+                    } else {
+                        tagView?.tagPresenter?.searchByTagName(searchTerm)
+                    }
+                }
     }
 
     private fun tagViewSetUp(v: View) {

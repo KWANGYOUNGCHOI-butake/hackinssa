@@ -7,6 +7,8 @@ import android.net.Uri
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
+import com.google.i18n.phonenumbers.NumberParseException
+import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.dao.impl.FriendDaoImpl
 import com.kwang0.hackinssa.data.dao.impl.TagDaoImpl
@@ -65,6 +67,11 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
         }
     }
 
+    override fun onStop() {
+        if(friendAddSubscription?.isDisposed() ?: false)
+            friendAddSubscription?.dispose()
+    }
+
     override fun onAvatarSelect() {
         IntentHelper.galleryIntent((context as? Activity))
     }
@@ -84,6 +91,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
 
         view.addBtnDisable()
 
+        val phoneutil = PhoneNumberUtil.getInstance()
         try {
             if(!TextUtils.isEmpty(friendName) &&
                     ((!TextUtils.isEmpty(friendPhone) && ValidHelper.isPhoneValid(friendPhone, countryPath)) ||
@@ -91,7 +99,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
                 insertOrUpdateFriend(friend?.friendId,
                         avatarPath!!,
                         friendName,
-                        friendPhone,
+                        phoneutil.format(phoneutil.parse(friendPhone, countryPath), PhoneNumberUtil.PhoneNumberFormat.NATIONAL),
                         friendEmail,
                         countryPath!!,
                         friend?.friendCreated ?: System.currentTimeMillis(),
@@ -108,6 +116,9 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
             view.addBtnEnable()
         } catch (e: EmailException) {
             Toast.makeText(context, context.getString(R.string.exception_email), Toast.LENGTH_LONG).show()
+            view.addBtnEnable()
+        } catch (e: NumberParseException) {
+            Toast.makeText(context, context.getString(R.string.exception_number), Toast.LENGTH_LONG).show()
             view.addBtnEnable()
         }
     }
@@ -170,6 +181,8 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
                 friendCountry = friendCountry,
                 friendCreated = friendCreated)
 
+        if(friendAddSubscription?.isDisposed() ?: false)
+            friendAddSubscription?.dispose()
         if(friendId == null) {
             insertFriend(friend)
         } else {

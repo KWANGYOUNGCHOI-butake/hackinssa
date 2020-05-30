@@ -5,5 +5,6 @@ interface FriendPresenter {
     fun search()
     fun search(query: String)
     fun searchByTag(tagName: String)
-    fun clear()
+    fun tearDown()
+    fun restoreData()
 }

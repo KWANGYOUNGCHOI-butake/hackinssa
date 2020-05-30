@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionBarPopupTheme">@style/AppTheme.PopupOverlay</item>
         <item name="android:windowSoftInputMode">stateHidden</item>
+        <item name="android:statusBarColor" tools:targetApi="lollipop">@color/colorBlack</item>
     </style>
 
     <style name="CustomTabLayout" parent="Widget.Design.TabLayout">

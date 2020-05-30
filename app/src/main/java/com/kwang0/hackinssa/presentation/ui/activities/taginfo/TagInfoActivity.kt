@@ -35,6 +35,16 @@ class TagInfoActivity : BaseActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        friendView?.friendPresenter?.restoreData()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        friendView?.friendPresenter?.tearDown()
+    }
+
     fun getIntentExtra(intent: Intent) {
         val tag = intent.extras?.getString("tag")
 

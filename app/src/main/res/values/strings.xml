@@ -40,6 +40,7 @@
 
     <string name="exception_out_of_bounds">Error occur when loading list</string>
     <string name="exception_npe">Error occur when loading object</string>
+    <string name="exception_number">Error occur when parsing number</string>
     <string name="exception_phone">Please confirm phone number is correct</string>
     <string name="exception_email">Please confirm email is correct</string>
 </resources>

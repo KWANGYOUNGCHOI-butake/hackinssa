@@ -15,6 +15,10 @@ class PhoneUnitTest {
         if(region != null) {
             try {
                 val phoneNumber = phoneutil.parse(phone, region)
+                System.out.println(phoneutil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.INTERNATIONAL))
+                System.out.println(phoneutil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.NATIONAL))
+                System.out.println(phoneutil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.E164))
+                System.out.println(phoneutil.format(phoneNumber, PhoneNumberUtil.PhoneNumberFormat.RFC3966))
                 return phoneutil.isValidNumber(phoneNumber)
             } catch (e: NumberParseException) {
                 return false

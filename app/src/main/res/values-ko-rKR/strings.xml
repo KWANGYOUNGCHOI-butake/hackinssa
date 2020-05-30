@@ -39,8 +39,9 @@
     <string name="friend_add_fail">친구추가 실패 : 빈칸을 채워주세요</string>
     <string name="tag_add_fail">태그추가 실패 : 대소문자,숫자와 언더바를 사용하실 수 있습니다</string>
 
-    <string name="exception_out_of_bounds">리스트를 불러오는중에 문제가 발생했습니다</string>
+    <string name="exception_out_of_bounds">리스트를 불러오는 중에 문제가 발생했습니다</string>
     <string name="exception_npe">아직 작성되지 않은 부분이 있습니다</string>
+    <string name="exception_number">숫자를 변환하는 중에 문제가 발생했습니다</string>
     <string name="exception_phone">핸드폰 번호를 확인해 주세요</string>
     <string name="exception_email">이메일을 확인해 주세요</string>
 </resources>

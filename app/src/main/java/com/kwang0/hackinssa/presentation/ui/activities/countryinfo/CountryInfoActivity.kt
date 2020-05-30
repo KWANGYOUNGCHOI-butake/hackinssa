@@ -34,8 +34,6 @@ import kotlin.concurrent.fixedRateTimer
 class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     val TAG = CountryInfoActivity::class.simpleName
 
-    var country: Country? = null
-
     private var countryInfoPresenter: CountryInfoPresenter? = null
 
     private var menu: Menu? = null
@@ -76,9 +74,7 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_country_info, menu)
         this.menu = menu
-        country?.getName()?.let {
-            countryInfoPresenter?.onCreateStarMenu(it)
-        }
+        countryInfoPresenter?.onCreateStarMenu()
         return true
     }
 
@@ -86,12 +82,10 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         val id: Int = item.getItemId()
         return if (id == R.id.menu_ci_star) {
             this.star_item = item
-            country?.getName()?.let {
-                countryInfoPresenter?.onFavoriteChange(it)
-            }
+            countryInfoPresenter?.onFavoriteChange()
             true
         } else if(id == R.id.menu_ci_add_friend) {
-            countryInfoPresenter?.onFriendAddSelect(country)
+            countryInfoPresenter?.onFriendAddSelect()
             true
         } else super.onOptionsItemSelected(item)
     }

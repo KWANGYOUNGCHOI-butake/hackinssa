@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.dao.impl.FavoriteDaoImpl
 import com.kwang0.hackinssa.data.models.Country
@@ -48,29 +49,31 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
         }
     }
 
-    override fun onCreateStarMenu(countryName: String) {
-        mDisposable.add(isFavorite( countryName )
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ b ->
-                    view.notifyFavoriteChange(b)
-                }, { throwable -> Log.e(TAG, "Unable to get favorite", throwable) }))
+    override fun onCreateStarMenu() {
+        country?.getName()?.let {
+            mDisposable.add(isFavorite( it )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ b -> view.notifyFavoriteChange(b) },
+                            { throwable -> Log.e(TAG, "Unable to get favorite", throwable) }))
+        }
     }
 
     override fun onStop() {
         mDisposable.clear()
     }
 
-    override fun onFavoriteChange(countryName: String) {
+    override fun onFavoriteChange() {
         view.starBtnDisable()
-        mDisposable.add(insertOrUpdateFavorite( countryName )
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ view.starBtnEnable() },
-                        { throwable -> Log.e(TAG, "Unable to insert or update favorite", throwable) }))
+        country?.getName()?.let {
+            mDisposable.add(insertOrUpdateFavorite( it )
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ view.starBtnEnable() },
+                            { throwable -> Log.e(TAG, "Unable to insert or update favorite", throwable) })) }
     }
 
-    override fun onFriendAddSelect(country: Country?) {
+    override fun onFriendAddSelect() {
         view.startFriendAddAct(country)
     }
 
@@ -81,14 +84,17 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
         country?.let {
             view.setCountryFlag(it.getAlpha2Code())
             view.setNameText(it.getNativeName())
-            getLocaleTime(it.getTimezones().get(0))
+            try {
+                getLocaleTime(it.getTimezones().get(0))
+            } catch (e: IndexOutOfBoundsException) {
+                Toast.makeText(context, context.getString(R.string.exception_out_of_bounds), Toast.LENGTH_LONG).show()
+            }
         }
     }
 
     @SuppressLint("SimpleDateFormat")
     private fun getLocaleTime(timeZone: String?) {
-        mDisposable.add(Flowable.timer(5000, TimeUnit.MILLISECONDS)
-                .repeat() //to perform your task every 5 seconds
+        mDisposable.add(Flowable.interval(0, 1000, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {

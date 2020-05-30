@@ -82,10 +82,6 @@ class FriendView(private var mContext: Context): FriendPresenterView {
         mAdapter.addManyToList(friends)
     }
 
-    override fun handleEmpty() {
-        mAdapter.clearList()
-    }
-
     override fun handleError(throwable: Throwable?) {
         Log.d(TAG, "Throwable : " + throwable?.message)
     }

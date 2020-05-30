@@ -30,6 +30,16 @@ class CountrySelectActivity : BaseActivity() {
         searchTextChanges(search_et)
     }
 
+    override fun onStart() {
+        super.onStart()
+        countryView?.countryPresenter?.restoreData()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        countryView?.countryPresenter?.tearDown()
+    }
+
     private fun searchTextChanges(et: EditText) {
         et.textChanges()
                 .debounce(200, TimeUnit.MILLISECONDS)

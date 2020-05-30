@@ -44,12 +44,6 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
         }
     }
 
-    fun clearList() {
-        with(this.mData) {
-            this.clear()
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendAdapter.ViewHolder {
         val rootView: View
         rootView = LayoutInflater.from(mContext).inflate(R.layout.reuse_friend_rv_con, parent, false)

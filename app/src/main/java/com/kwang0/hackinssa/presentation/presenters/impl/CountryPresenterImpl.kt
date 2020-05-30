@@ -17,10 +17,12 @@ import java9.util.stream.StreamSupport
 
 class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPresenter {
     private val TAG = CountryPresenterImpl::class.simpleName
+    private val OPERATION_QUERY = 0
 
     private var countryRepository: CountryRepository
     private var countrySubscription: Disposable? = null
 
+    private var currentOperation: Int? = null
     private var query: String = ""
 
     init {
@@ -29,6 +31,9 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
 
     override fun search(query: String) {
         this.query = query
+        this.currentOperation = OPERATION_QUERY
+
+        tearDown()
 
         val langRequest = countryRepository.getByLang(query).onErrorReturn { e -> listOf<Country>() }
         val nameRequest = countryRepository.getByName(query).onErrorReturn { e -> listOf<Country>() }
@@ -45,11 +50,17 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
                 .subscribe({ countries -> view.addResultsToList(countries) }, { throwable -> view.handleError(throwable) })
     }
 
+    override fun tearDown() {
+        if(countrySubscription?.isDisposed() ?: false)
+            countrySubscription?.dispose()
+    }
+
     override fun clear() {
         view.handleEmpty()
     }
 
     override fun restoreData() {
+        if(currentOperation == null) return
         search(query)
     }
 }

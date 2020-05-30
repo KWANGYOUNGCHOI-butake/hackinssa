@@ -13,34 +13,50 @@ import io.reactivex.schedulers.Schedulers
 
 class TagPresenterImpl(context: Context, private var view: TagPresenterView): TagPresenter {
     private val TAG = TagPresenterImpl::class.simpleName
+    private val OPERATION_QUERY = 0
+    private val OPERATION_DELETE = 1
 
     private var tagRepository: TagRepository
     private var tagSubscription: Disposable? = null
-    private var mDisposable = CompositeDisposable()
 
+    private var currentOperation: Int? = null
     private var tagName: String = ""
+    private var tagNames: List<String> = listOf()
 
     init {
         tagRepository = TagRepositoryImpl(TagDaoImpl(context))
     }
 
     override fun searchByTagName(tagName: String) {
+        this.currentOperation = OPERATION_QUERY
         this.tagName = tagName
 
-        mDisposable.add(tagRepository.getTagByName(tagName)
+        tearDown()
+
+        tagSubscription = tagRepository.getTagByName(tagName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ tags ->
                     view.addResultsToList(tags.toMutableList().sortedBy { it.tagCreated }
                             .distinctBy { it.tagName }
-                            .toMutableList()) }, { throwable -> view.handleError(throwable) }))
+                            .toMutableList()) }, { throwable -> view.handleError(throwable) })
     }
 
     override fun deleteByTagNames(tagNames: List<String>) {
+        this.currentOperation = OPERATION_DELETE
+        this.tagNames = tagNames
+
+        tearDown()
+
         tagSubscription = tagRepository.deleteTagByNames(tagNames)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ view.finishDelete() }, { throwable -> view.handleError(throwable) })
+    }
+
+    override fun tearDown() {
+        if (tagSubscription?.isDisposed() ?: false)
+            tagSubscription?.dispose()
     }
 
 
@@ -49,6 +65,11 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
     }
 
     override fun restoreData() {
-        searchByTagName(tagName)
+        if(currentOperation == null) return
+        when (currentOperation) {
+            OPERATION_QUERY -> searchByTagName(tagName)
+            OPERATION_DELETE -> deleteByTagNames(tagNames)
+            else -> searchByTagName(tagName)
+        }
     }
 }
