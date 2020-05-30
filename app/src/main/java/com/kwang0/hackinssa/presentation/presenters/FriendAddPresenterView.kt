@@ -9,7 +9,6 @@ interface FriendAddPresenterView {
     fun removeChip(text:String, tagList: MutableList<Tag>): MutableList<Tag>
     fun addBtnEnable()
     fun addBtnDisable()
-    fun showToast(text: String)
     fun handleError(throwable: Throwable?)
     fun getNameText(): String
     fun getPhoneText(): String

@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
@@ -62,18 +63,22 @@ class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuLis
     }
 
     override fun onBindViewHolder(holder: TagAdapter.ViewHolder, position: Int) {
-        val item: Tag = mData.get(position)
-        val isChk = this.menuListener?.menuChk ?: false
+        try {
+            val item: Tag = mData.get(position)
+            val isChk = this.menuListener?.menuChk ?: false
 
-        setNameText(holder, item)
-        if(isChk) {
-            setChkBoxIsChk(holder, item)
-            setLayoutSelectIsChk(holder, item, position)
-            setLayoutLongSelectIsChk(holder, item)
-        } else {
-            setChkBoxIsNotChk(holder, item)
-            setLayoutSelectIsNotChk(holder, item)
-            setLayoutLongSelectIsNotChk(holder, item)
+            setNameText(holder, item)
+            if(isChk) {
+                setChkBoxIsChk(holder, item)
+                setLayoutSelectIsChk(holder, item, position)
+                setLayoutLongSelectIsChk(holder, item)
+            } else {
+                setChkBoxIsNotChk(holder, item)
+                setLayoutSelectIsNotChk(holder, item)
+                setLayoutLongSelectIsNotChk(holder, item)
+            }
+        } catch (e: IndexOutOfBoundsException) {
+            Toast.makeText(mContext, mContext.getString(R.string.exception_out_of_bounds), Toast.LENGTH_LONG).show()
         }
     }
 

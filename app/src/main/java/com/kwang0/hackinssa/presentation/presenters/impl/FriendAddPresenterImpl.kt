@@ -18,10 +18,7 @@ import com.kwang0.hackinssa.data.repository.FriendRepository
 import com.kwang0.hackinssa.data.repository.TagRepository
 import com.kwang0.hackinssa.data.repository.impl.FriendRepositoryImpl
 import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
-import com.kwang0.hackinssa.helper.GlideHelper
-import com.kwang0.hackinssa.helper.IntentHelper
-import com.kwang0.hackinssa.helper.ValidHelper
-import com.kwang0.hackinssa.helper.toEditable
+import com.kwang0.hackinssa.helper.*
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
@@ -98,11 +95,11 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
                         friend?.friendCreated ?: System.currentTimeMillis(),
                         tagList)
             } else {
-                view.showToast(context.getString(R.string.friend_add_fail))
+                Toast.makeText(context, context.getString(R.string.friend_add_fail), Toast.LENGTH_LONG).show()
                 view.addBtnEnable()
             }
         } catch (e: NullPointerException) {
-            view.showToast(context.getString(R.string.friend_add_fail))
+            Toast.makeText(context, context.getString(R.string.exception_npe), Toast.LENGTH_LONG).show()
             view.addBtnEnable()
         }
     }

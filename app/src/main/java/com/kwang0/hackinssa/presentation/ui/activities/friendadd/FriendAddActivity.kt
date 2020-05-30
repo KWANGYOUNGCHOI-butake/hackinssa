@@ -133,10 +133,6 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
         add_item?.isEnabled = false
     }
 
-    override fun showToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_LONG).show()
-    }
-
     override fun handleError(throwable: Throwable?) {
         addBtnEnable()
         Log.d(TAG, "Throwable : " + throwable?.message)

@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
@@ -60,14 +61,18 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: FriendAdapter.ViewHolder, position: Int) {
-        val item: Friend = mData.get(position)
+        try {
+            val item: Friend = mData.get(position)
 
-        setAvatarImage(holder, item)
-        setNameText(holder, item)
-        setContactText(holder, item)
-        setLayoutSelect(holder, item)
-        setPhoneSelect(holder, item)
-        setEmailSelect(holder, item)
+            setAvatarImage(holder, item)
+            setNameText(holder, item)
+            setContactText(holder, item)
+            setLayoutSelect(holder, item)
+            setPhoneSelect(holder, item)
+            setEmailSelect(holder, item)
+        } catch (e: IndexOutOfBoundsException) {
+            Toast.makeText(mContext, mContext.getString(R.string.exception_out_of_bounds), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setAvatarImage(holder: ViewHolder, item: Friend) {

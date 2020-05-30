@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.App
 import com.kwang0.hackinssa.R
@@ -46,11 +47,15 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item: Country = mData.get(position)
+        try {
+            val item: Country = mData.get(position)
 
-        setCountryFlag(holder, item.getAlpha2Code())
-        setCountryText(holder, item)
-        setLayoutSelect(holder, item)
+            setCountryFlag(holder, item.getAlpha2Code())
+            setCountryText(holder, item)
+            setLayoutSelect(holder, item)
+        } catch (e: IndexOutOfBoundsException) {
+            Toast.makeText(mContext, mContext.getString(R.string.exception_out_of_bounds), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setCountryFlag(holder: ViewHolder, code: String) {
