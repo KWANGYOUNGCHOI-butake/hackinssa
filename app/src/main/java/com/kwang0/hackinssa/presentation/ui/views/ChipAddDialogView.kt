@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -12,6 +13,7 @@ import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.helper.ValidHelper
 import com.kwang0.hackinssa.helper.exception.TagException
 import com.kwang0.hackinssa.helper.hideKeyboard
+import com.kwang0.hackinssa.helper.showKeyboard
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
 
 
@@ -54,6 +56,10 @@ class ChipAddDialogView(private val context: Context, private val chipAddListene
 
         chip_add_dialog = chipAddDialogBuilder.create()
         chip_add_dialog.setCancelable(false)
+
+        add_et.requestFocus()
+        chip_add_dialog.getWindow()?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
+
         chip_add_dialog.show()
     }
 }
