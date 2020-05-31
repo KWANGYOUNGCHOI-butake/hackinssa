@@ -74,7 +74,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
     }
 
     override fun tearDown() {
-        if (friendSubscription?.isDisposed() ?: false)
+        if (friendSubscription?.isDisposed?.not() == true)
             friendSubscription?.dispose()
     }
 

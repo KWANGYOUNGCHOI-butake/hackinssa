@@ -51,7 +51,7 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
     }
 
     override fun tearDown() {
-        if(countrySubscription?.isDisposed() ?: false)
+        if(countrySubscription?.isDisposed?.not() == true)
             countrySubscription?.dispose()
     }
 

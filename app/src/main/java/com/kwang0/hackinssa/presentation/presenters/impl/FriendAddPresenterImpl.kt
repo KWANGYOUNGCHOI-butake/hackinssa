@@ -67,7 +67,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
     }
 
     override fun onStop() {
-        if(friendAddSubscription?.isDisposed() ?: false)
+        if(friendAddSubscription?.isDisposed?.not() == true)
             friendAddSubscription?.dispose()
     }
 
@@ -95,6 +95,8 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
             if(!TextUtils.isEmpty(friendName) &&
                     ((!TextUtils.isEmpty(friendPhone) && ValidHelper.isPhoneValid(friendPhone, countryPath)) ||
                             (!TextUtils.isEmpty(friendEmail) && ValidHelper.isEmailValid(friendEmail)))) {
+                ValidHelper.isPhoneValid(friendPhone, countryPath)
+                ValidHelper.isEmailValid(friendEmail)
                 ValidHelper.isTagsValid(tagList)
                 insertOrUpdateFriend(friend?.friendId,
                         avatarPath!!,

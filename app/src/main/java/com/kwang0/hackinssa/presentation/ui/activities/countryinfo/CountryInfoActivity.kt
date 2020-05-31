@@ -74,7 +74,7 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_country_info, menu)
         this.menu = menu
-        countryInfoPresenter?.onCreateStarMenu()
+        countryInfoPresenter?.onStart()
         return true
     }
 

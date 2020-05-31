@@ -55,7 +55,7 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
     }
 
     override fun tearDown() {
-        if (tagSubscription?.isDisposed() ?: false)
+        if (tagSubscription?.isDisposed?.not() == true)
             tagSubscription?.dispose()
     }
 

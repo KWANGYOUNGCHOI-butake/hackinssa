@@ -49,9 +49,14 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
         }
     }
 
-    override fun onCreateStarMenu() {
-        country?.getName()?.let {
-            mDisposable.add(isFavorite( it )
+    override fun onStart() {
+        country?.let {
+            try {
+                getLocaleTime(it.getTimezones().get(0))
+            } catch (e: IndexOutOfBoundsException) {
+                Toast.makeText(context, context.getString(R.string.exception_out_of_bounds), Toast.LENGTH_LONG).show()
+            }
+            mDisposable.add(isFavorite( it.getName() )
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ b -> view.notifyFavoriteChange(b) },
@@ -65,8 +70,8 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
 
     override fun onFavoriteChange() {
         view.starBtnDisable()
-        country?.getName()?.let {
-            mDisposable.add(insertOrUpdateFavorite( it )
+        country?.let {
+            mDisposable.add(insertOrUpdateFavorite( it.getName() )
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ view.starBtnEnable() },
@@ -83,11 +88,6 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
         country?.let {
             view.setCountryFlag(it.getAlpha2Code())
             view.setNameText(it.getNativeName())
-            try {
-                getLocaleTime(it.getTimezones().get(0))
-            } catch (e: IndexOutOfBoundsException) {
-                Toast.makeText(context, context.getString(R.string.exception_out_of_bounds), Toast.LENGTH_LONG).show()
-            }
         }
     }
 

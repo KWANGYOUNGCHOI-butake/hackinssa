@@ -5,8 +5,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity.CENTER
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
@@ -99,7 +102,9 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
 
     override fun addChipToChipGroup(chipStr: String) {
         val chip = Chip(tag_cg.context)
-        chip.minWidth = resources.getDimensionPixelSize(R.dimen.chipMinWidth)
+        chip.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.textSmall))
+        chip.textStartPadding = resources.getDimension(R.dimen.bigPadding)
+        chip.textEndPadding = resources.getDimension(R.dimen.bigPadding)
         chip.text = chipStr
 
         chip.isClickable = false
@@ -109,7 +114,6 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
             friendAddPresenter?.onChipItemRemove(chip.text as String)
             tag_cg.removeView(v)
         }
-
         tag_cg.addView(chip, tag_cg.size - 1)
     }
 

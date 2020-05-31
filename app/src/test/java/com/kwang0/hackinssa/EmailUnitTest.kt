@@ -1,6 +1,7 @@
 package com.kwang0.hackinssa
 
 import com.kwang0.hackinssa.helper.PatternHelper
+import com.kwang0.hackinssa.helper.ValidHelper
 import com.kwang0.hackinssa.helper.exception.EmailException
 import com.kwang0.hackinssa.helper.exception.ExceptionMessage
 import org.junit.Assert
@@ -26,5 +27,25 @@ class EmailUnitTest {
     @Test
     fun email_dot_isValid() {
         Assert.assertEquals(true, isEmailValid("abs.oijoi@geooe.com"))
+    }
+    @Test
+    fun email_first_only_isValid() {
+        Assert.assertEquals(true, ValidHelper.isEmailValid("cc"))
+    }
+    @Test
+    fun email_first_only_isValid1() {
+        Assert.assertEquals(true, isEmailValid("abs.oijo@"))
+    }
+    @Test
+    fun email_last_only_isValid() {
+        Assert.assertEquals(true, isEmailValid("@gmail.com"))
+    }
+    @Test
+    fun email_last_only_isValid1() {
+        Assert.assertEquals(true, isEmailValid("@gmail."))
+    }
+    @Test
+    fun email_last_only_isValid2() {
+        Assert.assertEquals(true, isEmailValid("@gmail"))
     }
 }

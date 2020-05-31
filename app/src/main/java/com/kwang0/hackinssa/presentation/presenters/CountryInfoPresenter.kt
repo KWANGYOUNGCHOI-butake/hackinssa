@@ -6,7 +6,7 @@ import io.reactivex.Flowable
 
 interface CountryInfoPresenter {
     fun onCreate()
-    fun onCreateStarMenu()
+    fun onStart()
     fun onStop()
     fun onFavoriteChange()
     fun onFriendAddSelect()

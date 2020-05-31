@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
@@ -109,7 +113,9 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     override fun addTagResultsToList(tagList: List<Tag>) {
         tagList.forEach { tag ->
             val chip = Chip(tag_cg.context)
-            chip.minWidth = resources.getDimensionPixelSize(R.dimen.chipMinWidth)
+            chip.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.textSmall))
+            chip.textStartPadding = resources.getDimension(R.dimen.bigPadding)
+            chip.textEndPadding = resources.getDimension(R.dimen.bigPadding)
             chip.text = tag.tagName
 
             chip.isClickable = false
@@ -120,7 +126,6 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
                 intent.putExtra("tag", chip.text.toString())
                 startActivity(intent)
             }
-
             tag_cg.addView(chip)
         }
     }
