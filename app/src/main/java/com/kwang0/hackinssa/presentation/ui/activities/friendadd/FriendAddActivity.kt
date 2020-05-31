@@ -2,6 +2,7 @@ package com.kwang0.hackinssa.presentation.ui.activities.friendadd
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -21,6 +22,7 @@ import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.helper.*
 import com.kwang0.hackinssa.helper.IntentHelper.COUNTRY_REQUEST_CODE
 import com.kwang0.hackinssa.helper.IntentHelper.IMG_REQUEST_CODE
+import com.kwang0.hackinssa.helper.PermissionHelper.READ_STORAGE_REQUEST_CODE
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendAddPresenterImpl
@@ -64,7 +66,11 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
         friendAddPresenter = FriendAddPresenterImpl(this, this)
         friendAddPresenter?.onCreate()
 
-        avatar_iv.setOnClickListener { v -> friendAddPresenter?.onAvatarSelect() }
+        avatar_iv.setOnClickListener { v ->
+            if(PermissionHelper.readStoragePermissionCheck(this))
+                friendAddPresenter?.onAvatarSelect()
+            else PermissionHelper.showReadStorageRequest(this)
+        }
         country_iv.setOnClickListener { v -> friendAddPresenter?.onCountrySelect() }
         tag_add_iv.setOnClickListener { v -> friendAddPresenter?.onChipAddSelect() }
     }
@@ -82,6 +88,20 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
         }
         if(requestCode == COUNTRY_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             friendAddPresenter?.countryRequestResult(data?.getStringExtra("country"))
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            READ_STORAGE_REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    friendAddPresenter?.onAvatarSelect()
+                }
+                return
+            }
+            else -> {
+                // 다른 요청들 무시
+            }
         }
     }
 

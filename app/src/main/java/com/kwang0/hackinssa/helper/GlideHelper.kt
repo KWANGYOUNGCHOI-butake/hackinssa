@@ -16,7 +16,7 @@ import java.util.*
 
 
 object GlideHelper {
-    val BASE_IMG_URL_250_PX = "https://github.com/hjnilsson/country-flags/blob/master/png250px/"
+    const val BASE_IMG_URL_250_PX = "https://github.com/hjnilsson/country-flags/blob/master/png250px/"
 
     fun loadImg(context: Context, path: String?, target: ImageView) {
         Glide.with(context)
