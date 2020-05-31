@@ -23,6 +23,7 @@ abstract class InssaDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: InssaDatabase? = null
 
+        @Synchronized
         fun getInstance(context: Context): InssaDatabase =
                 INSTANCE ?: synchronized(this) {
                     INSTANCE ?: buildDatabase(context).also { INSTANCE = it }

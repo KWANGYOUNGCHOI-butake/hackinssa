@@ -21,5 +21,4 @@ interface CountryRepositoryRemote {
     @GET("callingcode/{callingcode}")
     fun getByCalling( @Path("callingcode") calling: Int? ): Flowable<List<Country>>
 
-    companion object { const val BASE_URL = "https://restcountries.eu/rest/v2/" }
 }
