@@ -120,20 +120,20 @@ class TagFragment : Fragment(), TagMenuListener {
     // 휴지통 메뉴를 표시해 줌
     private fun showTrashMenu() {
         menuChk = true
-        menu?.getItem(0)?.setVisible(false)
-        menu?.getItem(1)?.setVisible(false)
-        menu?.getItem(2)?.setVisible(false)
-        menu?.getItem(3)?.setVisible(true)
+        menu?.findItem(R.id.menu_tag_edit)?.setVisible(false)
+        menu?.findItem(R.id.menu_tag_name_q)?.setVisible(false)
+        menu?.findItem(R.id.menu_tag_create_q)?.setVisible(false)
+        menu?.findItem(R.id.menu_tag_delete)?.setVisible(true)
         search_bar.visibility = GONE
     }
 
     // 휴지통 메뉴를 숨겨 줌
     private fun hideTrashMenu() {
         menuChk = false
-        menu?.getItem(0)?.setVisible(true)
-        menu?.getItem(1)?.setVisible(true)
-        menu?.getItem(2)?.setVisible(true)
-        menu?.getItem(3)?.setVisible(false)
+        menu?.findItem(R.id.menu_tag_edit)?.setVisible(true)
+        menu?.findItem(R.id.menu_tag_name_q)?.setVisible(true)
+        menu?.findItem(R.id.menu_tag_create_q)?.setVisible(true)
+        menu?.findItem(R.id.menu_tag_delete)?.setVisible(false)
         search_bar.visibility = VISIBLE
     }
 

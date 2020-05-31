@@ -20,6 +20,7 @@ import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_NAME
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
 import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
+import java.lang.NullPointerException
 
 
 class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuListener: TagMenuListener?)
@@ -77,6 +78,8 @@ class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuLis
                 setLayoutSelectIsNotChk(holder, item)
                 setLayoutLongSelectIsNotChk(holder, item)
             }
+        } catch (e: NullPointerException) {
+            Toast.makeText(mContext, mContext.getString(R.string.exception_npe), Toast.LENGTH_LONG).show()
         } catch (e: IndexOutOfBoundsException) {
             Toast.makeText(mContext, mContext.getString(R.string.exception_out_of_bounds), Toast.LENGTH_LONG).show()
         }
@@ -94,7 +97,9 @@ class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuLis
     }
     private fun setLayoutSelectIsChk(holder: ViewHolder, item: Tag, position: Int) {
         holder.layout.setOnClickListener { v ->
-            chkSet.add(item.tagName)
+            if(!chkSet.contains(item.tagName)) chkSet.add(item.tagName)
+            else chkSet.remove(item.tagName)
+            chkSet.forEach { s -> println("Click : " + s) }
             notifyItemChanged(position)
         }
     }
@@ -116,6 +121,7 @@ class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuLis
             menuListener?.menuChanged()
             chkSetInit()
             chkSet.add(item.tagName)
+            chkSet.forEach { s -> println("Long Click : " + s) }
             true
         }
     }

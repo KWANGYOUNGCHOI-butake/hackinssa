@@ -37,7 +37,7 @@ object IntentHelper {
     fun emailIntent(context: Context?, recipient: String?) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.data = Uri.parse("mailto:")
-        intent.type = "text/plain"
+        intent.type = "plain/Text"
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
 
         try {

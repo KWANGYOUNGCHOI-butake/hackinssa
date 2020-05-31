@@ -43,7 +43,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
 
     private var friendRepository: FriendRepository
     private var tagRepository: TagRepository
-    private var friendAddSubscription: Disposable? = null
+    private var friendAddDisposable: Disposable? = null
 
     private var country: Country? = null
     private var friend: Friend? = null
@@ -67,8 +67,8 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
     }
 
     override fun onStop() {
-        if(friendAddSubscription?.isDisposed?.not() == true)
-            friendAddSubscription?.dispose()
+        if(friendAddDisposable?.isDisposed?.not() == true)
+            friendAddDisposable?.dispose()
     }
 
     // 아바타 버튼 선택시 작동 (갤러리 로 이동)
@@ -99,8 +99,8 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
             if(!TextUtils.isEmpty(friendName) &&
                     ((!TextUtils.isEmpty(friendPhone) && ValidHelper.isPhoneValid(friendPhone, countryPath)) ||
                             (!TextUtils.isEmpty(friendEmail) && ValidHelper.isEmailValid(friendEmail)))) {
-                ValidHelper.isPhoneValid(friendPhone, countryPath)
-                ValidHelper.isEmailValid(friendEmail)
+                if(!TextUtils.isEmpty(friendPhone)) ValidHelper.isPhoneValid(friendPhone, countryPath)
+                if(!TextUtils.isEmpty(friendEmail)) ValidHelper.isEmailValid(friendEmail)
                 ValidHelper.isTagsValid(tagList)
                 insertOrUpdateFriend(friend?.friendId,
                         avatarPath!!,
@@ -200,8 +200,8 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
                 friendCountry = friendCountry,
                 friendCreated = friendCreated)
 
-        if(friendAddSubscription?.isDisposed() ?: false)
-            friendAddSubscription?.dispose()
+        if(friendAddDisposable?.isDisposed() ?: false)
+            friendAddDisposable?.dispose()
         if(friendId == null) {
             insertFriend(friend)
         } else {
@@ -210,7 +210,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
     }
 
     private fun insertFriend(friend: Friend) {
-        friendAddSubscription = friendRepository.insertFriend(friend)
+        friendAddDisposable = friendRepository.insertFriend(friend)
                 .andThen(tagRepository.deleteTagById(friend.friendId))
                 .andThen(tagRepository.insertTags(
                         StreamSupport
@@ -226,7 +226,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
     }
 
     private fun updateFriend(friend: Friend) {
-        friendAddSubscription = friendRepository.updateFriend(friend)
+        friendAddDisposable = friendRepository.updateFriend(friend)
                 .andThen(tagRepository.deleteTagById(friend.friendId))
                 .andThen(tagRepository.insertTags(
                         StreamSupport

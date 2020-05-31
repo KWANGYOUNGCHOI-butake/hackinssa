@@ -81,6 +81,7 @@ class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPre
 
     override fun finishDelete() {
         menuListener?.menuChanged()
+        tagPresenter.restoreData()
     }
 
     override fun handleEmpty() {
@@ -107,4 +108,5 @@ class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPre
     fun setmAdapter(mAdapter: TagAdapter) {
         this.mAdapter = mAdapter
     }
+
 }

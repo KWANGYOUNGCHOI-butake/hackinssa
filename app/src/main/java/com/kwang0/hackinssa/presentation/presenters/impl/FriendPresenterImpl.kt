@@ -20,7 +20,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
     private val OPERATION_TAG = 2
 
     private var friendRepository: FriendRepository
-    private var friendSubscription: Disposable? = null
+    private var friendDisposable: Disposable? = null
 
     private var currentOperation: Int? = null
     private var query: String = ""
@@ -33,7 +33,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
     // 입력값이 없을 때 친구 정보 검색
     override fun search() {
         this.currentOperation = OPERATION_ALL
-        friendSubscription = friendRepository.getFriends()
+        friendDisposable = friendRepository.getFriends()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ friends ->
@@ -51,7 +51,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
         val phoneRequest = friendRepository.getFriendsFromPhone(query).onErrorReturn { e -> listOf<Friend>() }
         val emailRequest = friendRepository.getFriendsFromEmail(query).onErrorReturn { e -> listOf<Friend>() }
 
-        friendSubscription = Flowable.zip(nameRequest, phoneRequest, emailRequest,
+        friendDisposable = Flowable.zip(nameRequest, phoneRequest, emailRequest,
                 Function3<List<Friend>, List<Friend>, List<Friend>, List<Friend>> {
                     name, phone, email ->
                     val allFriends = name.toMutableList().plus(phone.toMutableList()).plus(email.toMutableList())
@@ -69,7 +69,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
 
         tearDown()
 
-        friendSubscription = friendRepository.getFriendsFromTagName(tagName)
+        friendDisposable = friendRepository.getFriendsFromTagName(tagName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ friends ->
@@ -78,8 +78,8 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
 
     // 해체 작업
     override fun tearDown() {
-        if (friendSubscription?.isDisposed?.not() == true)
-            friendSubscription?.dispose()
+        if (friendDisposable?.isDisposed?.not() == true)
+            friendDisposable?.dispose()
     }
 
     // 데이터 복구

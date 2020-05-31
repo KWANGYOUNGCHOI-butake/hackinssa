@@ -13,15 +13,15 @@ import io.reactivex.schedulers.Schedulers
 
 class TagPresenterImpl(context: Context, private var view: TagPresenterView): TagPresenter {
     private val TAG = TagPresenterImpl::class.simpleName
-    private val OPERATION_QUERY = 0
-    private val OPERATION_DELETE = 1
+    private val OPERATION_CLEAR = 0
+    private val OPERATION_QUERY = 1
 
     private var tagRepository: TagRepository
-    private var tagSubscription: Disposable? = null
+    private var tagDisposable: Disposable? = null
+    private var tagDeleteDisposable: Disposable? = null
 
     private var currentOperation: Int? = null
     private var tagName: String = ""
-    private var tagNames: List<String> = listOf()
 
     init {
         tagRepository = TagRepositoryImpl(TagDaoImpl(context))
@@ -34,7 +34,7 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
 
         tearDown()
 
-        tagSubscription = tagRepository.getTagByName(tagName)
+        tagDisposable = tagRepository.getTagByName(tagName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ tags ->
@@ -44,12 +44,7 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
     }
 
     override fun deleteByTagNames(tagNames: List<String>) {
-        this.currentOperation = OPERATION_DELETE
-        this.tagNames = tagNames
-
-        tearDown()
-
-        tagSubscription = tagRepository.deleteTagByNames(tagNames)
+        tagDeleteDisposable = tagRepository.deleteTagByNames(tagNames)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ view.finishDelete() }, { throwable -> view.handleError(throwable) })
@@ -57,12 +52,14 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
 
     // 해체 작업
     override fun tearDown() {
-        if (tagSubscription?.isDisposed?.not() == true)
-            tagSubscription?.dispose()
+        if (tagDisposable?.isDisposed?.not() == true)
+            tagDisposable?.dispose()
     }
 
     // 비어있는 페이지 호출
     override fun clear() {
+        this.currentOperation = OPERATION_CLEAR
+        tagName = ""
         view.handleEmpty()
     }
 
@@ -70,9 +67,9 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
     override fun restoreData() {
         if(currentOperation == null) return
         when (currentOperation) {
+            OPERATION_CLEAR -> clear()
             OPERATION_QUERY -> searchByTagName(tagName)
-            OPERATION_DELETE -> deleteByTagNames(tagNames)
-            else -> searchByTagName(tagName)
+            else -> clear()
         }
     }
 }

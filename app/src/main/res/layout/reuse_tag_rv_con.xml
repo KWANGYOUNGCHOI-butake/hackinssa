@@ -24,6 +24,8 @@
         android:layout_centerVertical="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="@dimen/bigMargin"
+        android:focusable="false"
+        android:clickable="false"
         android:visibility="gone"
         tools:ignore="RtlCompat" />
 

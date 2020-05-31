@@ -17,10 +17,11 @@ import java9.util.stream.StreamSupport
 
 class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPresenter {
     private val TAG = CountryPresenterImpl::class.simpleName
-    private val OPERATION_QUERY = 0
+    private val OPERATION_CLEAR = 0
+    private val OPERATION_QUERY = 1
 
     private var countryRepository: CountryRepository
-    private var countrySubscription: Disposable? = null
+    private var countryDisposable: Disposable? = null
 
     private var currentOperation: Int? = null
     private var query: String = ""
@@ -40,7 +41,7 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
         val nameRequest = countryRepository.getByName(query).onErrorReturn { e -> listOf<Country>() }
         val callingRequest = countryRepository.getByCalling(query.toIntOrNull() ?: - 1).onErrorReturn { e -> listOf<Country>() }
 
-        countrySubscription = Flowable.zip(langRequest, nameRequest, callingRequest,
+        countryDisposable = Flowable.zip(langRequest, nameRequest, callingRequest,
                 Function3<List<Country>, List<Country>, List<Country>, List<Country>> {
                     lang, name, calling ->
                     val allCountries = lang.toMutableList().plus(name.toMutableList()).plus(calling.toMutableList())
@@ -53,18 +54,25 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
 
     // 해제 작업
     override fun tearDown() {
-        if(countrySubscription?.isDisposed?.not() == true)
-            countrySubscription?.dispose()
+        if(countryDisposable?.isDisposed?.not() == true)
+            countryDisposable?.dispose()
     }
 
     // 비어있는 페이지 호출
     override fun clear() {
+        this.currentOperation = OPERATION_CLEAR
+        query = ""
         view.handleEmpty()
     }
 
     // 데이터 복구
     override fun restoreData() {
         if(currentOperation == null) return
-        search(query)
+        when (currentOperation) {
+            OPERATION_CLEAR -> clear()
+            OPERATION_QUERY -> search(query)
+            else -> clear()
+        }
+
     }
 }
