@@ -137,6 +137,7 @@ class TagFragment : Fragment(), TagMenuListener {
         search_bar.visibility = VISIBLE
     }
 
+    // 입력 값 변화를 observing 해줌
     private fun searchTextChanges(et: EditText) {
         et.textChanges()
                 .subscribeOn(AndroidSchedulers.mainThread())

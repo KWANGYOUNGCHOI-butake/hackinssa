@@ -57,14 +57,17 @@ class FriendInfoPresenterImpl(private val context: Context, private var view: Fr
         mDisposable.clear()
     }
 
+    // 전화기 버튼 선택시 호출 (전화다이얼로 이동)
     override fun onPhoneSelect() {
         IntentHelper.phoneIntent(context, friend?.friendPhone)
     }
 
+    // 이메일 버튼 선택시 호출 (이메일 앱으로 이동)
     override fun onEmailSelect() {
         IntentHelper.emailIntent(context, friend?.friendEmail)
     }
 
+    // 수정 버튼 선택시 호출 (FriendAddActivity 로 이동 friend, tags(tagList)를 전달시킴)
     override fun onEditSelect() {
         val intent = Intent(context, FriendAddActivity::class.java)
         intent.putExtra("friend", friend)
@@ -72,10 +75,12 @@ class FriendInfoPresenterImpl(private val context: Context, private var view: Fr
         context.startActivity(intent)
     }
 
+    // 액티비티 시작시 호출
     private fun getIntentExra(intent: Intent?) {
         friend = intent?.extras?.getSerializable("friend") as? Friend
     }
 
+    // 친구의 기본 정보를 가지고 옴
     private fun addGetFriendFlow(friendId: String) {
         mDisposable.add(friendRepository.getFriend( friendId )
                 .subscribeOn(Schedulers.io())
@@ -86,6 +91,7 @@ class FriendInfoPresenterImpl(private val context: Context, private var view: Fr
                         { throwable -> view.handleError(throwable) }) )
     }
 
+    // 친구의 태그 정보를 가지고 옴
     private fun addGetTagsFlow(friendId: String) {
         mDisposable.add(tagRepository.getTagById( friendId )
                 .subscribeOn(Schedulers.io())

@@ -13,7 +13,6 @@ import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.helper.ValidHelper
 import com.kwang0.hackinssa.helper.exception.TagException
 import com.kwang0.hackinssa.helper.hideKeyboard
-import com.kwang0.hackinssa.helper.showKeyboard
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
 
 

@@ -63,6 +63,7 @@ class FriendFragment : Fragment() {
         } else super.onOptionsItemSelected(item)
     }
 
+    // 입력 값 변화를 observing 해줌
     private fun searchTextChanges(et: EditText) {
         et.textChanges()
                 .subscribeOn(AndroidSchedulers.mainThread())

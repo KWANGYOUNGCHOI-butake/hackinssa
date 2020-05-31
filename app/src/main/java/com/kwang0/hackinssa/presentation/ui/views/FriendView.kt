@@ -52,22 +52,6 @@ class FriendView(private var mContext: Context): FriendPresenterView {
         rv.adapter = mAdapter
     }
 
-    fun getmList(): MutableList<Friend> {
-        return mList
-    }
-
-    fun setmList(mList: MutableList<Friend>) {
-        this.mList = mList
-    }
-
-    fun getmAdapter(): FriendAdapter {
-        return mAdapter
-    }
-
-    fun setmAdapter(mAdapter: FriendAdapter) {
-        this.mAdapter = mAdapter
-    }
-
     fun sortNameResults() {
         mAdapter.currentSort = FlagHelper.FLAG_SORT_NAME
         mAdapter.addManyToList(mAdapter.mData)
@@ -84,5 +68,21 @@ class FriendView(private var mContext: Context): FriendPresenterView {
 
     override fun handleError(throwable: Throwable?) {
         Log.e(TAG, "Throwable : " + throwable?.message)
+    }
+
+    fun getmList(): MutableList<Friend> {
+        return mList
+    }
+
+    fun setmList(mList: MutableList<Friend>) {
+        this.mList = mList
+    }
+
+    fun getmAdapter(): FriendAdapter {
+        return mAdapter
+    }
+
+    fun setmAdapter(mAdapter: FriendAdapter) {
+        this.mAdapter = mAdapter
     }
 }

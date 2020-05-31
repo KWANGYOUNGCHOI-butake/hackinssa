@@ -11,6 +11,7 @@ import com.kwang0.hackinssa.data.models.Favorite
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
 
+// database singleton
 @Database(entities = [Friend::class, Tag::class, Favorite::class], version = 1)
 abstract class InssaDatabase : RoomDatabase() {
     abstract fun friendDao(): FriendDao

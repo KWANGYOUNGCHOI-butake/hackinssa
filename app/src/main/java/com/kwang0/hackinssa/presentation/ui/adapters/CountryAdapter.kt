@@ -97,7 +97,4 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
         }
     }
 
-    companion object {
-        const val BASE_IMG_URL_250_PX = "https://github.com/hjnilsson/country-flags/blob/master/png250px/"
-    }
 }

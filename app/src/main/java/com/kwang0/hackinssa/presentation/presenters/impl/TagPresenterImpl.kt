@@ -27,6 +27,7 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
         tagRepository = TagRepositoryImpl(TagDaoImpl(context))
     }
 
+    // 입력값을 기반으로 국가 정보 검색 (태그)
     override fun searchByTagName(tagName: String) {
         this.currentOperation = OPERATION_QUERY
         this.tagName = tagName
@@ -54,16 +55,18 @@ class TagPresenterImpl(context: Context, private var view: TagPresenterView): Ta
                 .subscribe({ view.finishDelete() }, { throwable -> view.handleError(throwable) })
     }
 
+    // 해체 작업
     override fun tearDown() {
         if (tagSubscription?.isDisposed?.not() == true)
             tagSubscription?.dispose()
     }
 
-
+    // 비어있는 페이지 호출
     override fun clear() {
         view.handleEmpty()
     }
 
+    // 데이터 복구
     override fun restoreData() {
         if(currentOperation == null) return
         when (currentOperation) {

@@ -129,6 +129,7 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
         time_tv.text = time
     }
 
+    // 액티비티 start 시 메뉴를 초기화 시켜주기 위함
     private fun menuInit() {
         invalidateOptionsMenu()
     }

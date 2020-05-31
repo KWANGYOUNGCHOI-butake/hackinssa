@@ -16,6 +16,7 @@ import java.util.*
 
 
 object GlideHelper {
+    val BASE_IMG_URL_250_PX = "https://github.com/hjnilsson/country-flags/blob/master/png250px/"
 
     fun loadImg(context: Context, path: String?, target: ImageView) {
         Glide.with(context)
@@ -42,37 +43,8 @@ object GlideHelper {
                 .into(target)
     }
 
+    // get Country Flag from BASE_IMG_URL_250_PX
     fun countryFlag(code: String): String {
-        return (CountryAdapter.BASE_IMG_URL_250_PX + code.toLowerCase(Locale.ROOT) + ".png?raw=true")
+        return (BASE_IMG_URL_250_PX + code.toLowerCase(Locale.ROOT) + ".png?raw=true")
     }
-
-    val THUMBNAIL_SIZE = 48
-
-    @Throws(FileNotFoundException::class, IOException::class)
-    fun getThumbnail(context: Context, uri: Uri): Bitmap? {
-        var input: InputStream? = context.getContentResolver()?.openInputStream(uri)
-        val onlyBoundsOptions = BitmapFactory.Options()
-        onlyBoundsOptions.inJustDecodeBounds = true
-        onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888
-        BitmapFactory.decodeStream(input, null, onlyBoundsOptions)
-        input?.close()
-        if (onlyBoundsOptions.outWidth == -1 || onlyBoundsOptions.outHeight == -1) {
-            return null
-        }
-        val originalSize = if (onlyBoundsOptions.outHeight > onlyBoundsOptions.outWidth) onlyBoundsOptions.outHeight else onlyBoundsOptions.outWidth
-        val ratio = if (originalSize > THUMBNAIL_SIZE) originalSize.toDouble() / THUMBNAIL_SIZE else 1.0
-        val bitmapOptions = BitmapFactory.Options()
-        bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio)
-        bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888
-        input = context.getContentResolver()?.openInputStream(uri)
-        val bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions)
-        input?.close()
-        return bitmap
-    }
-
-    private fun getPowerOfTwoForSampleRatio(ratio: Double): Int {
-        val k = Integer.highestOneBit(Math.floor(ratio).toInt())
-        return if (k == 0) 1 else k
-    }
-
 }

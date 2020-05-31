@@ -40,6 +40,7 @@ class CountrySelectActivity : BaseActivity() {
         countryView?.countryPresenter?.tearDown()
     }
 
+    // 입력 값 변화를 observing 해줌 (debounce 로 200ms 동안 기다렸다가 API를 호출)
     private fun searchTextChanges(et: EditText) {
         et.textChanges()
                 .debounce(200, TimeUnit.MILLISECONDS)

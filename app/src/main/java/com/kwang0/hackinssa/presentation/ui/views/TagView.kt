@@ -107,5 +107,4 @@ class TagView(var mContext: Context, var menuListener: TagMenuListener?): TagPre
     fun setmAdapter(mAdapter: TagAdapter) {
         this.mAdapter = mAdapter
     }
-
 }

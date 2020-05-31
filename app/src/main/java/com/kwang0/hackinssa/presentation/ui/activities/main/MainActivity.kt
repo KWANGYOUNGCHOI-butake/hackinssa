@@ -38,6 +38,7 @@ class MainActivity: BaseActivity() {
         tl.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
     }
 
+    // 기본페이지 이외의 페이지에서 back button 을 누르면 기본페이지로 이동하도록 만들어 줌
     override fun onBackPressed() {
         if (container.currentItem == 0) {
             super.onBackPressed()

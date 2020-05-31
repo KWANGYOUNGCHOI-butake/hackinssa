@@ -27,21 +27,25 @@ object ValidHelper {
         throw EmailException(ExceptionMessage.EMAIL_VALID_EXCEPTION)
     }
 
+    // 태그이름이 유효한지 확인
     fun isTagValid(tagName: String): Boolean {
         if(PatternHelper.TAG_PATTERN.matcher(tagName).matches()) return true
         throw TagException(ExceptionMessage.TAG_VALID_EXCEPTION)
     }
 
+    // 태그에 같은 이름이 없는지 확인
     fun isTagSameValid(tags: List<Tag>): Boolean {
         if(tags.map { tag -> tag.tagName }.groupingBy { it }.eachCount().filterValues { it > 1 }.isEmpty()) return true
         throw TagSameException(ExceptionMessage.TAG_SAME_VALID_EXCEPTION)
     }
 
+    // 태그크기가 유효한지 확인 (5 이하)
     fun isTagSizeValid(tags: List<Tag>): Boolean {
         if(tags.size <= 5) return true
         throw TagSizeException(ExceptionMessage.TAG_SIZE_VALID_EXCEPTION)
     }
 
+    // 태그 유효성 검사
     fun isTagsValid(tags: List<Tag>) {
         tags.forEach { tag -> isTagValid(tag.tagName) }
         isTagSameValid(tags)

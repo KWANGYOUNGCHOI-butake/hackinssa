@@ -68,6 +68,8 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
         mDisposable.clear()
     }
 
+    // star 버튼을 누르면 작동함
+    // 이전 페이지에서 받아온 국가 정보를 가지고 favorite 체크를 해줌
     override fun onFavoriteChange() {
         view.starBtnDisable()
         country?.let {
@@ -78,10 +80,12 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
                             { throwable -> view.handleError(throwable) })) }
     }
 
+    // 친구추가 버튼 선택시 작동
     override fun onFriendAddSelect() {
         view.startFriendAddAct(country)
     }
 
+    // 액티비티 시작시 호출
     fun getIntentExtra(intent: Intent?) {
         country = intent?.extras?.getSerializable("country") as? Country
 
@@ -91,6 +95,9 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
         }
     }
 
+    // 현재시간을 기반으로 1초 마다 새로운 시간을 textview 에 반영시켜 줌
+    // 네트워크로 시간을 받아서 반영 시켜 줄려고 했으나, 현재 기기 시간과 화면에 보여주는 시간에 오차가 있을 때
+    // 유저에게 불편함을 야기 수 있다고 생각되어 로컬시간을 기반으로 포맨에 맞는 시간을 출력 시킴
     @SuppressLint("SimpleDateFormat")
     private fun getLocaleTime(timeZone: String?) {
         mDisposable.add(Flowable.interval(0, 1000, TimeUnit.MILLISECONDS)
@@ -103,6 +110,7 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
                 })
     }
 
+    // string 값으로 받아온 favorite 데이터의 isFavorite 값을 return
     private fun isFavorite(favoriteName: String): Flowable<Boolean> {
         return favoriteRepository.getFavorite(favoriteName)
                 .map { favorite ->

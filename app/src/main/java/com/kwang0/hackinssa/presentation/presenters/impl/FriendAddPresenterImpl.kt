@@ -71,18 +71,22 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
             friendAddSubscription?.dispose()
     }
 
+    // 아바타 버튼 선택시 작동 (갤러리 로 이동)
     override fun onAvatarSelect() {
         IntentHelper.galleryIntent((context as? Activity))
     }
 
+    // 국가 버튼 선택시 작동 (CountrySelectActivity 로 이동)
     override fun onCountrySelect() {
         IntentHelper.activityResultIntent((context as? Activity), CountrySelectActivity::class.java, IntentHelper.COUNTRY_REQUEST_CODE)
     }
 
+    // 태그 추가 버튼 선택시 작동 (ChipAddDialogView 로 이동)
     override fun onChipAddSelect() {
         ChipAddDialogView(context, this).openPaymentDialog()
     }
 
+    // 친구추가 버튼 선택시 작동 (데이터베이스에 친구 정보를 추가하기 전에 예외처리 작업을 해줌)
     override fun onFriendAddSelect() {
         val friendName = view.getNameText()
         val friendPhone = view.getPhoneText()
@@ -134,20 +138,24 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
         }
     }
 
+    // 갤러리에서 사진선택시 호출
     override fun imageRequestResult(data: String?) {
         avatarPath = data
         avatarPath?.let { view.setAvatar(it) }
     }
 
+    // CountrySelectActivity 에서 국가 선택시 호출
     override fun countryRequestResult(data: String?) {
         countryPath = data
         countryPath?.let { view.setCountryFlag(it) }
     }
 
+    // 태그 지우기 버튼 선택시 호출
     override fun onChipItemRemove(text:String) {
         tagList = view.removeChip(text, tagList)
     }
 
+    // 액티비티 시작시 호출
     private fun getIntentExtra(intent: Intent?) {
         country = intent?.extras?.getSerializable("country") as? Country
         friend = intent?.extras?.getSerializable("friend") as? Friend
@@ -175,6 +183,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
         }
     }
 
+    // FriendId 가 있다면 update 작업을 그렇지 않다면 insert 작업을 진행해 줌
     private fun insertOrUpdateFriend(friendId: String?,
                                       friendAvatar: String,
                                       friendName: String,
@@ -232,18 +241,21 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
                 }, { throwable -> view.handleError(throwable) })
     }
 
+    // 태그 초기화 작업할 때 호출
     override fun onChipAddedFromExtra(tag: Tag) {
         if(!canAddChip(tag.tagName)) return
         tagList.add(tag)
         view.addChipToChipGroup(tag.tagName)
     }
 
+    // 태그 추가 작업시 호출
     override fun onChipAdded(chipStr: String) {
         if(!canAddChip(chipStr)) return
         tagList.add(Tag("", chipStr, System.currentTimeMillis()))
         view.addChipToChipGroup(chipStr)
     }
 
+    // 태그를 추가할 수 있는지 없는지 판단하기 위해 사용
     fun canAddChip(tagName: String): Boolean {
         if(tagList.filter { it.tagName == tagName }.isNotEmpty()) {
             Toast.makeText(context, context.getString(R.string.tag_add_same_fail), Toast.LENGTH_LONG).show()

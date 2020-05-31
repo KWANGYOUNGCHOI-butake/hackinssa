@@ -29,6 +29,7 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
         countryRepository = CountryRepositoryImpl(CountryRepositoryRemoteImpl())
     }
 
+    // 입력값을 기반으로 국가 정보 검색 (영어 이름, 국가 코드, 국가 번호)
     override fun search(query: String) {
         this.query = query
         this.currentOperation = OPERATION_QUERY
@@ -50,15 +51,18 @@ class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPres
                 .subscribe({ countries -> view.addResultsToList(countries) }, { throwable -> view.handleError(throwable) })
     }
 
+    // 해제 작업
     override fun tearDown() {
         if(countrySubscription?.isDisposed?.not() == true)
             countrySubscription?.dispose()
     }
 
+    // 비어있는 페이지 호출
     override fun clear() {
         view.handleEmpty()
     }
 
+    // 데이터 복구
     override fun restoreData() {
         if(currentOperation == null) return
         search(query)

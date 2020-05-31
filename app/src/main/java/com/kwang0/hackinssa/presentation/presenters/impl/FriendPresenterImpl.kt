@@ -30,6 +30,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
         friendRepository = FriendRepositoryImpl(FriendDaoImpl(context))
     }
 
+    // 입력값이 없을 때 친구 정보 검색
     override fun search() {
         this.currentOperation = OPERATION_ALL
         friendSubscription = friendRepository.getFriends()
@@ -39,6 +40,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
                     view.addResultsToList(friends.toMutableList()) }, { throwable -> view.handleError(throwable) })
     }
 
+    // 입력값을 기반으로 국가 정보 검색 (이름, 번호, 이메일)
     override fun search(query: String) {
         this.currentOperation = OPERATION_QUERY
         this.query = query
@@ -60,6 +62,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
                 .subscribe({ friends -> view.addResultsToList(friends.toMutableList()) }, { throwable -> view.handleError(throwable) })
     }
 
+    // 입력값을 기반으로 국가 정보 검색 (태그)
     override fun searchByTag(tagName: String) {
         this.currentOperation = OPERATION_TAG
         this.tagName = tagName
@@ -73,11 +76,13 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
                     view.addResultsToList(friends.toMutableList()) }, { throwable -> view.handleError(throwable) })
     }
 
+    // 해체 작업
     override fun tearDown() {
         if (friendSubscription?.isDisposed?.not() == true)
             friendSubscription?.dispose()
     }
 
+    // 데이터 복구
     override fun restoreData() {
         if(currentOperation == null) return
         when (currentOperation) {

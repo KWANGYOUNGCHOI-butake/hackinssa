@@ -29,6 +29,7 @@ abstract class BaseActivity: AppCompatActivity() {
         super.onResume()
     }
 
+    // EditText 이외의 공간을 누를 경우 clearFocus 시켜주고 키보드 없애 줌
     override fun dispatchTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
             val v: View? = currentFocus
@@ -37,7 +38,7 @@ abstract class BaseActivity: AppCompatActivity() {
                 v.getGlobalVisibleRect(outRect)
                 if (!outRect.contains(event.rawX.toInt(), event.rawY.toInt())) {
                     v.clearFocus()
-                    this.hideKeyboard(v)
+                    hideKeyboard(v)
                 }
             }
         }

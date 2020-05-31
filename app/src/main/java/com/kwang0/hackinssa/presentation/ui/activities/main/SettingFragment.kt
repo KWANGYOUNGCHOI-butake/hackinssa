@@ -36,6 +36,7 @@ class SettingFragment : Fragment() {
     }
 
 
+    // 새로운 언어로 설정을 변경시켜 줌 ( 영어 - en , 한국 - ko )
     private fun setNewLocale(language: String, restartProcess: Boolean): Boolean {
         App.localeHelper?.setNewLocale(context, language)
         IntentHelper.activityClearIntent(context, MainActivity::class.java)
