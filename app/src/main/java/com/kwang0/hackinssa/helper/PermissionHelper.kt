@@ -15,9 +15,6 @@ object PermissionHelper {
         if (ContextCompat.checkSelfPermission(activity,
                         Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                return false
-            }
         }
         return true
     }
