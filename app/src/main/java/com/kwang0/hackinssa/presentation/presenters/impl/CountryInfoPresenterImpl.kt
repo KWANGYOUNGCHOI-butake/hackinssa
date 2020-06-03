@@ -44,6 +44,7 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
     override fun onCreate() {
         try {
             getIntentExtra((context as? Activity)?.intent)
+            Log.d(TAG, "Country : " + country?.getName())
         } catch (e: Exception) {
             Log.e(TAG, "Get Exception : " + e.message)
         }

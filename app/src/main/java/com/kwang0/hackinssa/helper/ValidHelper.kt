@@ -9,6 +9,7 @@ import com.kwang0.hackinssa.helper.exception.*
 object ValidHelper {
     private val TAG = ValidHelper::class.simpleName
 
+    @Throws(PhoneException::class)
     fun isPhoneValid(phone: String, region: String?): Boolean {
         val phoneutil = PhoneNumberUtil.getInstance()
         if(region != null) {
@@ -22,30 +23,35 @@ object ValidHelper {
         throw PhoneException(ExceptionMessage.PHONE_VALID_EXCEPTION)
     }
 
+    @Throws(EmailException::class)
     fun isEmailValid(email: String): Boolean {
         if(PatternHelper.EMAIL_ADDRESS_PATTERN.matcher(email).matches()) return true
         throw EmailException(ExceptionMessage.EMAIL_VALID_EXCEPTION)
     }
 
     // 태그이름이 유효한지 확인
+    @Throws(TagException::class)
     fun isTagValid(tagName: String): Boolean {
         if(PatternHelper.TAG_PATTERN.matcher(tagName).matches()) return true
         throw TagException(ExceptionMessage.TAG_VALID_EXCEPTION)
     }
 
     // 태그에 같은 이름이 없는지 확인
+    @Throws(TagSameException::class)
     fun isTagSameValid(tags: List<Tag>): Boolean {
         if(tags.map { tag -> tag.tagName }.groupingBy { it }.eachCount().filterValues { it > 1 }.isEmpty()) return true
         throw TagSameException(ExceptionMessage.TAG_SAME_VALID_EXCEPTION)
     }
 
     // 태그크기가 유효한지 확인 (5 이하)
+    @Throws(TagSizeException::class)
     fun isTagSizeValid(tags: List<Tag>): Boolean {
         if(tags.size <= 5) return true
         throw TagSizeException(ExceptionMessage.TAG_SIZE_VALID_EXCEPTION)
     }
 
     // 태그 유효성 검사
+    @Throws(TagException::class, TagSameException::class, TagSizeException::class)
     fun isTagsValid(tags: List<Tag>) {
         tags.forEach { tag -> isTagValid(tag.tagName) }
         isTagSameValid(tags)
