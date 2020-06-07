@@ -10,7 +10,6 @@ import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subscribers.TestSubscriber
-import java9.util.stream.Stream
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertFalse
 import org.junit.After

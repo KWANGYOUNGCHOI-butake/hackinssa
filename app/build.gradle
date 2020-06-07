@@ -73,6 +73,10 @@ dependencies {
     // Apache Commons library (없애도 됨)
     implementation 'commons-net:commons-net:3.6'
 
+    // StreamSupport for api_version < 24
+    implementation 'net.sourceforge.streamsupport:streamsupport:1.7.2'
+    implementation 'net.sourceforge.streamsupport:android-retrostreams:1.7.2'
+
     // room
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
