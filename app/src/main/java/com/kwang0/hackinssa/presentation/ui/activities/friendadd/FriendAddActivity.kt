@@ -27,8 +27,6 @@ import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendAddPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
-import java9.util.stream.Collectors
-import java9.util.stream.StreamSupport
 
 
 class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
@@ -138,7 +136,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
     }
 
     override fun removeChip(text: String, tagList: MutableList<Tag>): MutableList<Tag> {
-        return StreamSupport.stream(tagList).filter({ it.tagName != text }).collect(Collectors.toList())
+        return tagList.filter({ it.tagName != text }).toMutableList()
     }
 
     override fun finishActivity() {

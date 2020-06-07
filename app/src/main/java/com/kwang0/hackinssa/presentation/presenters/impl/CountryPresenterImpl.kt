@@ -12,8 +12,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
-import java9.util.stream.Stream
-import java9.util.stream.StreamSupport
 
 class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPresenter {
     private val TAG = CountryPresenterImpl::class.simpleName

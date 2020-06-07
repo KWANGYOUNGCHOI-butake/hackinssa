@@ -4,6 +4,5 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
-    app:layout_scrollFlags="scroll|enterAlways"
     android:theme="?attr/actionBarPopupTheme"
     xmlns:app="http://schemas.android.com/apk/res-auto"/>

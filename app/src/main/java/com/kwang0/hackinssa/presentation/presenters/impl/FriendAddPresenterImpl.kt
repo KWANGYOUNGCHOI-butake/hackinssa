@@ -30,9 +30,6 @@ import com.kwang0.hackinssa.presentation.ui.views.ChipAddDialogView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import java9.util.stream.Collector
-import java9.util.stream.Collectors
-import java9.util.stream.StreamSupport
 import java.lang.Exception
 import java.lang.NullPointerException
 import java.util.*
@@ -213,10 +210,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
         friendAddDisposable = friendRepository.insertFriend(friend)
                 .andThen(tagRepository.deleteTagById(friend.friendId))
                 .andThen(tagRepository.insertTags(
-                        StreamSupport
-                                .stream(tagList)
-                                .map { tag -> Tag(friend.friendId, tag.tagName, tag.tagCreated) }
-                                .collect(Collectors.toList())))
+                        tagList.map { tag -> Tag(friend.friendId, tag.tagName, tag.tagCreated) }.toList().toList()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -229,10 +223,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
         friendAddDisposable = friendRepository.updateFriend(friend)
                 .andThen(tagRepository.deleteTagById(friend.friendId))
                 .andThen(tagRepository.insertTags(
-                        StreamSupport
-                                .stream(tagList)
-                                .map { tag -> Tag(friend.friendId, tag.tagName, tag.tagCreated) }
-                                .collect(Collectors.toList())))
+                        tagList.map { tag -> Tag(friend.friendId, tag.tagName, tag.tagCreated) }.toList()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
