@@ -77,7 +77,17 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
         holder.name_tv.text = item.friendName
     }
     private fun setContactText(holder: ViewHolder, item: Friend) {
-        holder.contact_tv.text = Stream.of(item.friendPhone, item.friendEmail).collect(Collectors.joining(", "))
+        var contactStr = ""
+        when {
+            !TextUtils.isEmpty(item.friendPhone) && !TextUtils.isEmpty(item.friendEmail) ->
+                contactStr = item.friendPhone + ", " + item.friendEmail ?: ""
+            !TextUtils.isEmpty(item.friendPhone) ->
+                contactStr = item.friendPhone ?: ""
+            !TextUtils.isEmpty(item.friendEmail) ->
+                contactStr = item.friendEmail ?: ""
+            else -> contactStr = ""
+        }
+        holder.contact_tv.text = contactStr
         if(TextUtils.isEmpty(item.friendPhone)) holder.phone_iv.visibility = GONE else holder.phone_iv.visibility = VISIBLE
         if(TextUtils.isEmpty(item.friendEmail)) holder.email_iv.visibility = GONE else holder.email_iv.visibility = VISIBLE
     }

@@ -93,6 +93,7 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
 
         val phoneutil = PhoneNumberUtil.getInstance()
         try {
+            Log.d(TAG, "work0??")
             if(!TextUtils.isEmpty(friendName) &&
                     ((!TextUtils.isEmpty(friendPhone) && ValidHelper.isPhoneValid(friendPhone, countryPath)) ||
                             (!TextUtils.isEmpty(friendEmail) && ValidHelper.isEmailValid(friendEmail)))) {
@@ -102,7 +103,10 @@ class FriendAddPresenterImpl(private val context: Context, private var view: Fri
                 insertOrUpdateFriend(friend?.friendId,
                         avatarPath!!,
                         friendName,
-                        phoneutil.format(phoneutil.parse(friendPhone, countryPath), PhoneNumberUtil.PhoneNumberFormat.NATIONAL),
+                        if(!TextUtils.isEmpty(friendPhone))
+                            phoneutil.format(phoneutil.parse(friendPhone, countryPath), PhoneNumberUtil.PhoneNumberFormat.NATIONAL)
+                        else
+                            null,
                         friendEmail,
                         countryPath!!,
                         friend?.friendCreated ?: System.currentTimeMillis(),
