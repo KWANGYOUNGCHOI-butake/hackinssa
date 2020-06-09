@@ -46,4 +46,6 @@
     <string name="exception_phone">Please check phone number is correct</string>
     <string name="exception_email">Please check email is correct</string>
     <string name="exception_tag">Please check if there are 5 or fewer tags</string>
+
+    <string name="ci_time_des">current time</string>
 </resources>

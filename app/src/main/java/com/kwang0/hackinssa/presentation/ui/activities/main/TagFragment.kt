@@ -5,8 +5,8 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.EditText
-import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding4.widget.textChanges
 
@@ -25,7 +25,7 @@ class TagFragment : Fragment(), TagMenuListener {
     var menu: Menu? = null
     override var menuChk = false
 
-    lateinit var search_bar: RelativeLayout
+    lateinit var search_bar: ConstraintLayout
     lateinit var search_et: EditText
     lateinit var empty_tv: TextView
 
@@ -35,7 +35,7 @@ class TagFragment : Fragment(), TagMenuListener {
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_tag, container, false)
 
-        search_bar = v.findViewById<RelativeLayout>(R.id.searchbar)
+        search_bar = v.findViewById<ConstraintLayout>(R.id.searchbar)
         search_et = v.findViewById<EditText>(R.id.searchbar_et)
         empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
         empty_tv.visibility = GONE

@@ -11,9 +11,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
@@ -108,14 +108,14 @@ class FriendAdapter(var mContext: Context, var mData: MutableList<Friend>) : Rec
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var layout: RelativeLayout
+        var layout: ConstraintLayout
         var avatar_iv: ImageView
         var name_tv: TextView
         var contact_tv: TextView
         var phone_iv: ImageView
         var email_iv: ImageView
         init {
-            layout = itemView.findViewById<RelativeLayout>(R.id.friend_rv_layout)
+            layout = itemView.findViewById<ConstraintLayout>(R.id.friend_rv_layout)
             avatar_iv = itemView.findViewById<ImageView>(R.id.friend_rv_avatar_iv)
             name_tv = itemView.findViewById<TextView>(R.id.friend_rv_name_tv)
             contact_tv = itemView.findViewById<TextView>(R.id.friend_rv_contact_tv)

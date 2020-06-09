@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,8 +13,9 @@
         android:layout_width="@dimen/bigSquareImageHeight"
         android:layout_height="@dimen/bigSquareImageHeight"
         android:src="@drawable/ic_place_holder"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/bigMargin"/>
 
     <TextView
@@ -25,26 +26,28 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:textColor="@color/colorBlack"
-        android:layout_below="@+id/fi_avatar_iv"
+        app:layout_constraintTop_toBottomOf="@+id/fi_avatar_iv"
         android:gravity="center"
         android:layout_margin="@dimen/bigMargin"/>
     
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fi_phone_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fi_name_tv"
+        app:layout_constraintTop_toBottomOf="@+id/fi_name_tv"
         android:layout_margin="@dimen/bigMargin">
         <TextView
             android:id="@+id/fi_phone_tv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="32dp"
             android:textSize="@dimen/textSmall"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/colorBlack"
             android:gravity="center_vertical"
-            android:layout_toStartOf="@+id/fi_phone_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/fi_phone_iv"
             android:layout_marginEnd="@dimen/bigMargin"
             tools:ignore="RtlCompat" />
         <ImageView
@@ -52,26 +55,29 @@
             android:layout_width="@dimen/bigSquareIconHeight"
             android:layout_height="@dimen/bigSquareIconHeight"
             android:src="@drawable/ic_phone"
-            android:layout_alignParentEnd="true"
+            app:layout_constraintTop_toTopOf="@+id/fi_phone_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="RtlCompat" />
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fi_email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fi_phone_layout"
+        app:layout_constraintTop_toBottomOf="@+id/fi_phone_layout"
         android:layout_margin="@dimen/bigMargin">
         <TextView
             android:id="@+id/fi_email_tv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="32dp"
             android:textSize="@dimen/textSmall"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/colorBlack"
             android:gravity="center_vertical"
-            android:layout_toStartOf="@+id/fi_email_iv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/fi_email_iv"
             android:layout_marginEnd="@dimen/bigMargin"
             tools:ignore="RtlCompat"/>
         <ImageView
@@ -79,15 +85,16 @@
             android:layout_width="@dimen/bigSquareIconHeight"
             android:layout_height="@dimen/bigSquareIconHeight"
             android:src="@drawable/ic_email"
-            android:layout_alignParentEnd="true"
+            app:layout_constraintTop_toTopOf="@+id/fi_email_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:ignore="RtlCompat"/>
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fi_country_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fi_email_layout"
+        app:layout_constraintTop_toBottomOf="@+id/fi_email_layout"
         android:layout_marginTop="@dimen/maxBigMargin"
         android:layout_marginStart="@dimen/bigMargin"
         android:layout_marginEnd="@dimen/bigMargin"
@@ -100,24 +107,26 @@
             android:textSize="@dimen/textCenter"
             android:textColor="@color/colorBlack"
             android:gravity="center"
-            android:layout_alignParentStart="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             tools:ignore="RtlCompat" />
         <ImageView
             android:id="@+id/fi_country_iv"
             android:layout_width="@dimen/bigSquareIconHeight"
             android:layout_height="@dimen/bigSquareIconHeight"
             android:src="@drawable/ic_flag"
-            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/bigMargin"
-            android:layout_toEndOf="@+id/fi_country_tv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fi_country_tv"
             tools:ignore="RtlCompat" />
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/fi_tag_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fi_country_layout"
+        app:layout_constraintTop_toBottomOf="@+id/fi_country_layout"
         android:layout_marginStart="@dimen/bigMargin"
         android:layout_marginEnd="@dimen/bigMargin">
         <TextView
@@ -128,17 +137,21 @@
             android:textSize="@dimen/textCenter"
             android:textColor="@color/colorBlack"
             android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_alignParentStart="true"
             tools:ignore="RtlCompat"/>
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/fi_tag_cg"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/fi_tag_tv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fi_tag_tv"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginStart="@dimen/bigMargin"
             android:theme="@style/Theme.MaterialComponents.Light"
             tools:ignore="RtlCompat" />
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

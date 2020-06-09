@@ -8,9 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.App
 import com.kwang0.hackinssa.R
@@ -87,11 +87,11 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var layout: RelativeLayout
+        var layout: ConstraintLayout
         var iv: ImageView
         var tv: TextView
         init {
-            layout = itemView.findViewById<RelativeLayout>(R.id.country_rv_layout)
+            layout = itemView.findViewById<ConstraintLayout>(R.id.country_rv_layout)
             iv = itemView.findViewById<ImageView>(R.id.country_rv_iv)
             tv = itemView.findViewById<TextView>(R.id.country_rv_tv)
         }

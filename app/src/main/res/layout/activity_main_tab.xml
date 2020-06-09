@@ -4,7 +4,7 @@
     android:id="@+id/main_tl"
     android:layout_width="match_parent"
     android:layout_height="@dimen/tabHeight"
-    android:layout_alignParentBottom="true"
+    app:layout_constraintBottom_toBottomOf="parent"
     style="@style/CustomTabLayout">
     <com.google.android.material.tabs.TabItem
         android:id="@+id/main_ti_address"

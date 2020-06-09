@@ -46,4 +46,6 @@
     <string name="exception_phone">핸드폰 번호를 확인해 주세요</string>
     <string name="exception_email">이메일을 확인해 주세요</string>
     <string name="exception_tag">태그가 5개 이하인지 확인해 주세요</string>
+
+    <string name="ci_time_des">현지 시간</string>
 </resources>

@@ -8,9 +8,9 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
@@ -128,11 +128,11 @@ class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuLis
 
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var layout: RelativeLayout
+        var layout: ConstraintLayout
         var tv: TextView
         var chkBox: CheckBox
         init {
-            layout = itemView.findViewById<RelativeLayout>(R.id.tag_rv_layout)
+            layout = itemView.findViewById<ConstraintLayout>(R.id.tag_rv_layout)
             tv = itemView.findViewById<TextView>(R.id.tag_rv_tv)
             chkBox = itemView.findViewById<CheckBox>(R.id.tag_rv_chkBox)
         }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/friend_rv_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,13 +11,16 @@
         android:id="@+id/friend_rv_avatar_iv"
         android:layout_width="@dimen/smallSquareImageHeight"
         android:layout_height="@dimen/smallSquareImageHeight"
-        android:src="@drawable/ic_place_holder"/>
+        android:src="@drawable/ic_place_holder"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@+id/friend_rv_avatar_iv"
-        android:layout_toStartOf="@+id/friend_rv_contact_layout"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/friend_rv_avatar_iv"
+        app:layout_constraintEnd_toStartOf="@+id/friend_rv_contact_layout"
         android:layout_marginStart="@dimen/bigMargin"
         android:layout_marginEnd="@dimen/margin"
         tools:ignore="RtlCompat" >
@@ -25,6 +28,9 @@
             android:id="@+id/friend_rv_name_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:maxLines="1"
             android:ellipsize="end"
             android:textColor="@color/colorBlack"
@@ -35,16 +41,18 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorMinDarkGray"
             android:textSize="@dimen/textSmall"
-            android:layout_below="@+id/friend_rv_name_tv"/>
-    </RelativeLayout>
+            app:layout_constraintTop_toBottomOf="@+id/friend_rv_name_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/friend_rv_contact_layout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_alignTop="@+id/friend_rv_avatar_iv"
-        android:layout_alignBottom="@id/friend_rv_avatar_iv"
-        android:layout_alignParentEnd="true"
+        app:layout_constraintTop_toTopOf="@id/friend_rv_avatar_iv"
+        app:layout_constraintBottom_toBottomOf="@+id/friend_rv_avatar_iv"
+        app:layout_constraintEnd_toEndOf="parent"
         android:orientation="horizontal"
         tools:ignore="RtlCompat">
         <ImageView
@@ -63,4 +71,4 @@
             android:layout_marginStart="@dimen/bigMargin"/>
     </LinearLayout>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

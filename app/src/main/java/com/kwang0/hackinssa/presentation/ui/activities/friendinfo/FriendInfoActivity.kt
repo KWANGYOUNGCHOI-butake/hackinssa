@@ -15,9 +15,9 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
@@ -42,10 +42,10 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     lateinit var toolbar: Toolbar
     lateinit var avatar_iv: ImageView
     lateinit var name_tv: TextView
-    lateinit var phone_layout: RelativeLayout
+    lateinit var phone_layout: ConstraintLayout
     lateinit var phone_tv: TextView
     lateinit var phone_iv: ImageView
-    lateinit var email_layout: RelativeLayout
+    lateinit var email_layout: ConstraintLayout
     lateinit var email_tv: TextView
     lateinit var email_iv: ImageView
     lateinit var country_iv: ImageView
@@ -58,10 +58,10 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         avatar_iv = findViewById<ImageView>(R.id.fi_avatar_iv)
         name_tv = findViewById<TextView>(R.id.fi_name_tv)
-        phone_layout = findViewById<RelativeLayout>(R.id.fi_phone_layout)
+        phone_layout = findViewById<ConstraintLayout>(R.id.fi_phone_layout)
         phone_tv = findViewById<TextView>(R.id.fi_phone_tv)
         phone_iv = findViewById<ImageView>(R.id.fi_phone_iv)
-        email_layout = findViewById<RelativeLayout>(R.id.fi_email_layout)
+        email_layout = findViewById<ConstraintLayout>(R.id.fi_email_layout)
         email_tv =findViewById<TextView>(R.id.fi_email_tv)
         email_iv = findViewById<ImageView>(R.id.fi_email_iv)
         country_iv = findViewById<ImageView>(R.id.fi_country_iv)
