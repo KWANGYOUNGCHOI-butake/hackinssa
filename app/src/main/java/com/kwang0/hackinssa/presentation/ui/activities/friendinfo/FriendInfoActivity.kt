@@ -7,13 +7,10 @@ import android.text.TextUtils
 import android.util.Base64
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar

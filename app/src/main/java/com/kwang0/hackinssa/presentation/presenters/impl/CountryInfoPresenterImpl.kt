@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import com.kwang0.hackinssa.App
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.dao.impl.FavoriteDaoImpl
 import com.kwang0.hackinssa.data.models.Country
@@ -13,6 +15,7 @@ import com.kwang0.hackinssa.data.models.Favorite
 import com.kwang0.hackinssa.data.repository.FavoriteRepository
 import com.kwang0.hackinssa.data.repository.impl.FavoriteRepositoryImpl
 import com.kwang0.hackinssa.helper.GlideHelper
+import com.kwang0.hackinssa.helper.LocaleHelper
 import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenter
 import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenterView
 import io.reactivex.Completable
@@ -92,7 +95,14 @@ class CountryInfoPresenterImpl(private val context: Context, private var view: C
 
         country?.let {
             view.setCountryFlag(it.getAlpha2Code())
-            view.setNameText(it.getNativeName())
+            view.setNameText(if(App.localeHelper?.getLanguage() == LocaleHelper.LANGUAGE_KOREAN) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    val countryRegion: Locale = Locale.Builder().setRegion(it.getAlpha2Code()).build()
+                    val langKorean: Locale = Locale.Builder().setLanguage("ko").build()
+                    it.setNativeName(countryRegion.getDisplayCountry(langKorean))
+                }
+                it.getNativeName()
+            } else it.getName())
         }
     }
 

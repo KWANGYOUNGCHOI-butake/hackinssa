@@ -21,6 +21,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:textColor="@color/colorBlack"
+        android:gravity="center_vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/country_rv_iv"
