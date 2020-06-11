@@ -16,7 +16,8 @@
 
     <include layout="@layout/reuse_country_rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/searchbar"/>
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/searchbar"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
