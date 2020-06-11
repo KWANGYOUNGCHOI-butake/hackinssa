@@ -9,21 +9,16 @@ import com.google.android.material.tabs.TabLayout
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.MainPagerAdapter
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main_tab.*
+import kotlinx.android.synthetic.main.reuse_toolbar.*
 
 
 class MainActivity: BaseActivity() {
 
-    lateinit var container: ViewPager
-    lateinit var tl: TabLayout
-    lateinit var toolbar: Toolbar
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        container = findViewById<ViewPager>(R.id.main_container)
-        tl = findViewById<TabLayout>(R.id.main_tl)
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -31,19 +26,19 @@ class MainActivity: BaseActivity() {
         val pagerAdapter = MainPagerAdapter(supportFragmentManager)
         val limit = if (pagerAdapter.getCount() > 1) pagerAdapter.getCount() - 1 else 1
 
-        container.adapter = pagerAdapter
-        container.offscreenPageLimit = limit
+        main_container.adapter = pagerAdapter
+        main_container.offscreenPageLimit = limit
 
-        container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tl))
-        tl.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(container))
+        main_container.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(main_tl))
+        main_tl.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(main_container))
     }
 
     // 기본페이지 이외의 페이지에서 back button 을 누르면 기본페이지로 이동하도록 만들어 줌
     override fun onBackPressed() {
-        if (container.currentItem == 0) {
+        if (main_container.currentItem == 0) {
             super.onBackPressed()
         } else {
-            container.currentItem = 0
+            main_container.currentItem = 0
         }
     }
 }

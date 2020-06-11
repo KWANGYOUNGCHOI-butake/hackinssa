@@ -28,6 +28,8 @@ import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendAddPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
+import kotlinx.android.synthetic.main.activity_friend_add.*
+import kotlinx.android.synthetic.main.reuse_toolbar.*
 
 
 class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
@@ -35,29 +37,11 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
 
     private var friendAddPresenter: FriendAddPresenter? = null
 
-    lateinit var toolbar: Toolbar
-    lateinit var avatar_iv: ImageView
-    lateinit var name_et: EditText
-    lateinit var phone_et: EditText
-    lateinit var email_et: EditText
-    lateinit var country_iv: ImageView
-    lateinit var tag_cg: ChipGroup
-    lateinit var tag_add_iv: ImageView
-
     private var add_item: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend_add)
-
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
-        avatar_iv = findViewById<ImageView>(R.id.fa_avatar_iv)
-        name_et = findViewById<EditText>(R.id.fa_name_et)
-        phone_et = findViewById<EditText>(R.id.fa_phone_et)
-        email_et = findViewById<EditText>(R.id.fa_email_et)
-        country_iv = findViewById<ImageView>(R.id.fa_country_iv)
-        tag_cg = findViewById<ChipGroup>(R.id.fa_tag_cg)
-        tag_add_iv = findViewById<ImageView>(R.id.fa_tag_add_iv)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -65,13 +49,13 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
         friendAddPresenter = FriendAddPresenterImpl(this, this)
         friendAddPresenter?.onCreate()
 
-        avatar_iv.setOnClickListener { v ->
+        fa_avatar_iv.setOnClickListener { v ->
             if(PermissionHelper.readStoragePermissionCheck(this))
                 friendAddPresenter?.onAvatarSelect()
             else PermissionHelper.showReadStorageRequest(this)
         }
-        country_iv.setOnClickListener { v -> friendAddPresenter?.onCountrySelect() }
-        tag_add_iv.setOnClickListener { v -> friendAddPresenter?.onChipAddSelect() }
+        fa_country_iv.setOnClickListener { v -> friendAddPresenter?.onCountrySelect() }
+        fa_tag_add_iv.setOnClickListener { v -> friendAddPresenter?.onChipAddSelect() }
     }
 
     override fun onStop() {
@@ -120,7 +104,7 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
 
 
     override fun addChipToChipGroup(chipStr: String) {
-        val chip = Chip(tag_cg.context)
+        val chip = Chip(fa_tag_cg.context)
         chip.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.textSmall))
         chip.textStartPadding = resources.getDimension(R.dimen.bigPadding)
         chip.textEndPadding = resources.getDimension(R.dimen.bigPadding)
@@ -131,9 +115,9 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
         chip.isCloseIconVisible = true
         chip.setOnCloseIconClickListener { v ->
             friendAddPresenter?.onChipItemRemove(chip.text as String)
-            tag_cg.removeView(v)
+            fa_tag_cg.removeView(v)
         }
-        tag_cg.addView(chip, tag_cg.size - 1)
+        fa_tag_cg.addView(chip, fa_tag_cg.size - 1)
     }
 
     override fun removeChip(text: String, tagList: MutableList<Tag>): MutableList<Tag> {
@@ -158,35 +142,35 @@ class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
     }
 
     override fun getNameText(): String {
-        return name_et.editableText.toString().trim()
+        return fa_name_et.editableText.toString().trim()
     }
 
     override fun getPhoneText(): String {
-        return phone_et.editableText.toString().trim()
+        return fa_phone_et.editableText.toString().trim()
     }
 
     override fun getEmailText(): String {
-        return email_et.editableText.toString().trim()
+        return fa_email_et.editableText.toString().trim()
     }
 
     override fun setAvatar(path: String) {
-        GlideHelper.loadImg(this, Uri.parse(path), avatar_iv)
+        GlideHelper.loadImg(this, Uri.parse(path), fa_avatar_iv)
     }
 
     override fun setNameText(name: String) {
-        name_et.text = name.toEditable()
+        fa_name_et.text = name.toEditable()
     }
 
     override fun setPhoneText(phone: String?) {
-        phone_et.text = phone?.toEditable()
+        fa_phone_et.text = phone?.toEditable()
     }
 
     override fun setEmailText(email: String?) {
-        email_et.text = email?.toEditable()
+        fa_email_et.text = email?.toEditable()
     }
 
     override fun setCountryFlag(code: String) {
-        GlideHelper.loadImg(this, GlideHelper.countryFlag(code), country_iv)
+        GlideHelper.loadImg(this, GlideHelper.countryFlag(code), fa_country_iv)
     }
 
 

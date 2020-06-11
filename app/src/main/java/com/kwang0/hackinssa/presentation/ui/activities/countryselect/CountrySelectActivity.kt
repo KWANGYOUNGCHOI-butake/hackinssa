@@ -9,13 +9,12 @@ import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.views.CountryView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.reuse_searchbar.*
 import java.util.concurrent.TimeUnit
 
 
 class CountrySelectActivity : BaseActivity() {
     val TAG = CountrySelectActivity::class.simpleName
-
-    lateinit var search_et: EditText
 
     private var countryView: CountryView? = null
 
@@ -23,11 +22,9 @@ class CountrySelectActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_select)
 
-        search_et = findViewById<EditText>(R.id.searchbar_et)
-
         countryViewSetUp()
 
-        searchTextChanges(search_et)
+        searchTextChanges(searchbar_et)
     }
 
     override fun onStart() {

@@ -12,11 +12,9 @@ import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import com.kwang0.hackinssa.presentation.ui.views.FriendView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.reuse_searchbar.view.*
 
 class FriendFragment : Fragment() {
-
-    lateinit var search_et: EditText
 
     private var friendView: FriendView? = null
     
@@ -24,11 +22,9 @@ class FriendFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_friend, container, false)
 
-        search_et = v.findViewById<EditText>(R.id.searchbar_et)
-
         friendViewSetUp(v)
 
-        searchTextChanges(search_et)
+        searchTextChanges(v.searchbar_et)
         
         return v
     }

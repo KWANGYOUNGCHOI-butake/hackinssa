@@ -13,11 +13,10 @@ import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenter
 import com.kwang0.hackinssa.presentation.presenters.TagPresenterView
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.views.FriendView
+import kotlinx.android.synthetic.main.reuse_toolbar.*
 
 class TagInfoActivity : BaseActivity() {
     var TAG = TagInfoActivity::class.simpleName
-
-    lateinit var toolbar: Toolbar
 
     private var friendView: FriendView? = null
 
@@ -25,7 +24,6 @@ class TagInfoActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tag_info)
 
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = ""
 

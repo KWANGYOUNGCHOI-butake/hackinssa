@@ -30,39 +30,17 @@ import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendInfoPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
+import kotlinx.android.synthetic.main.activity_friend_info.*
+import kotlinx.android.synthetic.main.reuse_toolbar.*
 
 class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     private val TAG = FriendInfoActivity::class.simpleName
 
     private var friendInfoPresenter: FriendInfoPresenter? = null
 
-    lateinit var toolbar: Toolbar
-    lateinit var avatar_iv: ImageView
-    lateinit var name_tv: TextView
-    lateinit var phone_layout: ConstraintLayout
-    lateinit var phone_tv: TextView
-    lateinit var phone_iv: ImageView
-    lateinit var email_layout: ConstraintLayout
-    lateinit var email_tv: TextView
-    lateinit var email_iv: ImageView
-    lateinit var country_iv: ImageView
-    lateinit var tag_cg: ChipGroup
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friend_info)
-
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
-        avatar_iv = findViewById<ImageView>(R.id.fi_avatar_iv)
-        name_tv = findViewById<TextView>(R.id.fi_name_tv)
-        phone_layout = findViewById<ConstraintLayout>(R.id.fi_phone_layout)
-        phone_tv = findViewById<TextView>(R.id.fi_phone_tv)
-        phone_iv = findViewById<ImageView>(R.id.fi_phone_iv)
-        email_layout = findViewById<ConstraintLayout>(R.id.fi_email_layout)
-        email_tv =findViewById<TextView>(R.id.fi_email_tv)
-        email_iv = findViewById<ImageView>(R.id.fi_email_iv)
-        country_iv = findViewById<ImageView>(R.id.fi_country_iv)
-        tag_cg = findViewById<ChipGroup>(R.id.fi_tag_cg)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -70,8 +48,8 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
         friendInfoPresenter = FriendInfoPresenterImpl(this, this)
         friendInfoPresenter?.onCreate()
 
-        phone_iv.setOnClickListener { v -> friendInfoPresenter?.onPhoneSelect() }
-        email_iv.setOnClickListener { v -> friendInfoPresenter?.onEmailSelect() }
+        fi_phone_iv.setOnClickListener { v -> friendInfoPresenter?.onPhoneSelect() }
+        fi_email_iv.setOnClickListener { v -> friendInfoPresenter?.onEmailSelect() }
 
     }
 
@@ -109,7 +87,7 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
 
     override fun addTagResultsToList(tagList: List<Tag>) {
         tagList.forEach { tag ->
-            val chip = Chip(tag_cg.context)
+            val chip = Chip(fi_tag_cg.context)
             chip.setTextSize(TypedValue.COMPLEX_UNIT_PX, resources.getDimension(R.dimen.textSmall))
             chip.textStartPadding = resources.getDimension(R.dimen.bigPadding)
             chip.textEndPadding = resources.getDimension(R.dimen.bigPadding)
@@ -123,12 +101,12 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
                 intent.putExtra("tag", chip.text.toString())
                 startActivity(intent)
             }
-            tag_cg.addView(chip)
+            fi_tag_cg.addView(chip)
         }
     }
 
     override fun clearTags() {
-        tag_cg.removeAllViews()
+        fi_tag_cg.removeAllViews()
     }
 
     override fun handleError(throwable: Throwable?) {
@@ -136,24 +114,24 @@ class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
     }
 
     override fun setAvatar(path: String) {
-        GlideHelper.loadImg(this, Uri.parse(path), avatar_iv)
+        GlideHelper.loadImg(this, Uri.parse(path), fi_avatar_iv)
     }
 
     override fun setNameText(name: String) {
-        name_tv.text = name
+        fi_name_tv.text = name
     }
 
     override fun setPhoneText(phone: String?) {
-        phone_tv.text = phone
-        if(TextUtils.isEmpty(phone)) phone_layout.visibility = GONE else phone_layout.visibility = VISIBLE
+        fi_phone_tv.text = phone
+        if(TextUtils.isEmpty(phone)) fi_phone_layout.visibility = GONE else fi_phone_layout.visibility = VISIBLE
     }
 
     override fun setEmailText(email: String?) {
-        email_tv.text = email
-        if(TextUtils.isEmpty(email)) email_layout.visibility = GONE else email_layout.visibility = VISIBLE
+        fi_email_tv.text = email
+        if(TextUtils.isEmpty(email)) fi_email_layout.visibility = GONE else fi_email_layout.visibility = VISIBLE
     }
 
     override fun setCountryFlag(code: String) {
-        GlideHelper.loadImg(this, GlideHelper.countryFlag(code), country_iv)
+        GlideHelper.loadImg(this, GlideHelper.countryFlag(code), fi_country_iv)
     }
 }

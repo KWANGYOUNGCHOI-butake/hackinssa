@@ -25,6 +25,8 @@ import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_country_info.*
+import kotlinx.android.synthetic.main.reuse_toolbar.*
 import java.lang.Exception
 import java.lang.NullPointerException
 import java.text.SimpleDateFormat
@@ -39,19 +41,9 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     private var menu: Menu? = null
     private var star_item: MenuItem? = null
 
-    lateinit var toolbar: Toolbar
-    lateinit var iv: ImageView
-    lateinit var name_tv: TextView
-    lateinit var time_tv: TextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_country_info)
-
-        toolbar = findViewById<Toolbar>(R.id.toolbar)
-        iv = findViewById<ImageView>(R.id.ci_iv)
-        name_tv = findViewById<TextView>(R.id.ci_name_tv)
-        time_tv = findViewById<TextView>(R.id.ci_time_tv)
 
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
@@ -118,15 +110,15 @@ class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
     }
 
     override fun setCountryFlag(code: String) {
-        GlideHelper.loadImg(this, GlideHelper.countryFlag(code), iv)
+        GlideHelper.loadImg(this, GlideHelper.countryFlag(code), ci_iv)
     }
 
     override fun setNameText(name: String) {
-        name_tv.text = name
+        ci_name_tv.text = name
     }
 
     override fun setTimeText(time: String) {
-        time_tv.text = time
+        ci_time_tv.text = time
     }
 
     // 액티비티 start 시 메뉴를 초기화 시켜주기 위함

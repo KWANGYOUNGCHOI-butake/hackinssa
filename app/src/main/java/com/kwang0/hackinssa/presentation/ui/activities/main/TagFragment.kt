@@ -18,16 +18,13 @@ import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
 import com.kwang0.hackinssa.presentation.ui.views.TagView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import java.util.concurrent.TimeUnit
+import kotlinx.android.synthetic.main.reuse_empty_tv.view.*
+import kotlinx.android.synthetic.main.reuse_searchbar.view.*
 
 class TagFragment : Fragment(), TagMenuListener {
 
     var menu: Menu? = null
     override var menuChk = false
-
-    lateinit var search_bar: ConstraintLayout
-    lateinit var search_et: EditText
-    lateinit var empty_tv: TextView
 
     private var tagView: TagView? = null
 
@@ -35,14 +32,11 @@ class TagFragment : Fragment(), TagMenuListener {
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_tag, container, false)
 
-        search_bar = v.findViewById<ConstraintLayout>(R.id.searchbar)
-        search_et = v.findViewById<EditText>(R.id.searchbar_et)
-        empty_tv = v.findViewById<TextView>(R.id.reuse_empty_tv)
-        empty_tv.visibility = GONE
+        v.reuse_empty_tv.visibility = GONE
 
         tagViewSetUp(v)
 
-        searchTextChanges(search_et)
+        searchTextChanges(v.searchbar_et)
 
         return v
     }
@@ -61,7 +55,7 @@ class TagFragment : Fragment(), TagMenuListener {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_tag, menu)
         this.menu = menu
-        search_bar.visibility = VISIBLE
+        view?.searchbar?.visibility = VISIBLE
 
         super.onCreateOptionsMenu(menu, inflater)
     }
@@ -124,7 +118,7 @@ class TagFragment : Fragment(), TagMenuListener {
         menu?.findItem(R.id.menu_tag_name_q)?.setVisible(false)
         menu?.findItem(R.id.menu_tag_create_q)?.setVisible(false)
         menu?.findItem(R.id.menu_tag_delete)?.setVisible(true)
-        search_bar.visibility = GONE
+        view?.searchbar?.visibility = GONE
     }
 
     // 휴지통 메뉴를 숨겨 줌
@@ -134,7 +128,7 @@ class TagFragment : Fragment(), TagMenuListener {
         menu?.findItem(R.id.menu_tag_name_q)?.setVisible(true)
         menu?.findItem(R.id.menu_tag_create_q)?.setVisible(true)
         menu?.findItem(R.id.menu_tag_delete)?.setVisible(false)
-        search_bar.visibility = VISIBLE
+        view?.searchbar?.visibility = VISIBLE
     }
 
     // 입력 값 변화를 observing 해줌

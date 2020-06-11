@@ -12,20 +12,17 @@ import com.kwang0.hackinssa.helper.LocaleHelper.Companion.LANGUAGE_ENGLISH
 import com.kwang0.hackinssa.helper.LocaleHelper.Companion.LANGUAGE_KOREAN
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.helper.IntentHelper
+import kotlinx.android.synthetic.main.fragment_setting.view.*
 
 
 class SettingFragment : Fragment() {
-
-    lateinit var radioGrp: RadioGroup
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_setting, container, false)
 
-        radioGrp = v.findViewById<RadioGroup>(R.id.setting_radioGrp)
-
-        if(App.localeHelper?.getLanguage().equals(LANGUAGE_KOREAN)) radioGrp.check(R.id.setting_radioBtn_ko)
-        else radioGrp.check(R.id.setting_radioBtn_en)
+        if(App.localeHelper?.getLanguage().equals(LANGUAGE_KOREAN)) v.setting_radioGrp.check(R.id.setting_radioBtn_ko)
+        else v.setting_radioGrp.check(R.id.setting_radioBtn_en)
 
         v.findViewById<RadioGroup>(R.id.setting_radioGrp).setOnCheckedChangeListener { group, checkedId ->
             if(checkedId == R.id.setting_radioBtn_ko) setNewLocale(LANGUAGE_KOREAN, false)

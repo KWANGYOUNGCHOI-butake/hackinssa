@@ -12,21 +12,15 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding4.widget.textChanges
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Country
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
-import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
-import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.views.CountryView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.android.synthetic.main.reuse_searchbar.view.*
 import java.util.concurrent.TimeUnit
 
 
 class CountryFragment : Fragment() {
     val TAG = CountryFragment::class.java.simpleName
-
-    lateinit var search_et: EditText
 
     private var countryView: CountryView? = null
 
@@ -34,11 +28,9 @@ class CountryFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fragment_country, container, false)
 
-        search_et = v.findViewById<EditText>(R.id.searchbar_et)
-
         countryViewSetUp(v)
 
-        searchTextChanges(search_et)
+        searchTextChanges(v.searchbar_et)
 
         return v
     }
