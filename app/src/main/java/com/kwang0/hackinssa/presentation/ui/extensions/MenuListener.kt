@@ -1,6 +1,6 @@
 package com.kwang0.hackinssa.presentation.ui.extensions
 
-interface TagMenuListener {
+interface MenuListener {
     var menuChk: Boolean
     fun menuChanged()
 }

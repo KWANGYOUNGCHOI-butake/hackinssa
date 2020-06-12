@@ -5,23 +5,18 @@ import android.view.*
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.EditText
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.jakewharton.rxbinding4.widget.textChanges
 
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_CREATED
-import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_NAME
 import com.kwang0.hackinssa.helper.hideKeyboard
-import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
-import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
+import com.kwang0.hackinssa.presentation.ui.extensions.MenuListener
 import com.kwang0.hackinssa.presentation.ui.views.TagView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.reuse_empty_tv.view.*
 import kotlinx.android.synthetic.main.reuse_searchbar.view.*
 
-class TagFragment : Fragment(), TagMenuListener {
+class TagFragment : Fragment(), MenuListener {
 
     var menu: Menu? = null
     override var menuChk = false

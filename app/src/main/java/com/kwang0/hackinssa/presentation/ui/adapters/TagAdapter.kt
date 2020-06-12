@@ -13,17 +13,15 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_CREATED
 import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_NAME
-import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
-import com.kwang0.hackinssa.presentation.ui.extensions.TagMenuListener
+import com.kwang0.hackinssa.presentation.ui.extensions.MenuListener
 import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
 import java.lang.NullPointerException
 
 
-class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuListener: TagMenuListener?)
+class TagAdapter(var mContext: Context, var mData: MutableList<Tag>, var menuListener: MenuListener?)
     : RecyclerView.Adapter<TagAdapter.ViewHolder>() {
 
     var currentSort = FLAG_SORT_NAME

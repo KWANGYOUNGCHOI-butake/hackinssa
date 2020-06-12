@@ -27,6 +27,9 @@ interface FriendDao {
     @Query("SELECT * FROM friends WHERE friendID IN (SELECT friendId FROM tags WHERE tagName = :tagName)")
     fun getFriendsFromTagName(tagName: String): Flowable<List<Friend>>
 
+    @Query("DELETE FROM friends WHERE friendID = :friendId")
+    fun deleteFriend(friendId: String): Completable
+
     @Update
     fun updateFriend(friend: Friend): Completable
 

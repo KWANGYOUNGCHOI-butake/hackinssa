@@ -4,23 +4,19 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import android.view.View
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
-import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.helper.FlagHelper
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendPresenter
 import com.kwang0.hackinssa.presentation.presenters.FriendPresenterView
-import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendPresenterImpl
-import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.presentation.ui.adapters.FriendAdapter
+import com.kwang0.hackinssa.presentation.ui.extensions.MenuListener
 import java.util.ArrayList
 
-class FriendView(private var mContext: Context): FriendPresenterView {
+class FriendView(private var mContext: Context, var menuListener: MenuListener? = null): FriendPresenterView {
     private val TAG = FriendView::class.simpleName
 
     private lateinit var rv: RecyclerView
@@ -64,6 +60,11 @@ class FriendView(private var mContext: Context): FriendPresenterView {
 
     override fun addResultsToList(friends: MutableList<Friend>) {
         mAdapter.addManyToList(friends)
+    }
+
+    override fun finishDelete() {
+        menuListener?.menuChanged()
+        friendPresenter.restoreData()
     }
 
     override fun handleError(throwable: Throwable?) {

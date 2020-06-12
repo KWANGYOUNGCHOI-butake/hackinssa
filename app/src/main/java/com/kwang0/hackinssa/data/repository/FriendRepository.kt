@@ -11,6 +11,7 @@ interface FriendRepository {
     fun getFriendsFromPhone(friendPhone: String): Flowable<List<Friend>>
     fun getFriendsFromEmail(friendEmail: String): Flowable<List<Friend>>
     fun getFriendsFromTagName(tagName: String): Flowable<List<Friend>>
+    fun deleteFriend(friendId: String): Completable
     fun insertFriend(friend: Friend): Completable
     fun updateFriend(friend: Friend): Completable
 }

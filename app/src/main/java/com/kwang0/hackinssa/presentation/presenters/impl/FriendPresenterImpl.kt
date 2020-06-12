@@ -21,6 +21,7 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
 
     private var friendRepository: FriendRepository
     private var friendDisposable: Disposable? = null
+    private var friendDeleteDisposable: Disposable? = null
 
     private var currentOperation: Int? = null
     private var query: String = ""
@@ -74,6 +75,13 @@ class FriendPresenterImpl(context: Context, private var view: FriendPresenterVie
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ friends ->
                     view.addResultsToList(friends.toMutableList()) }, { throwable -> view.handleError(throwable) })
+    }
+
+    override fun deleteFriend(friendId: String) {
+        friendDeleteDisposable = friendRepository.deleteFriend(friendId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ view.finishDelete() }, { throwable -> view.handleError(throwable) })
     }
 
     // 해체 작업

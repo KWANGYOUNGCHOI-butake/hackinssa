@@ -40,6 +40,10 @@ class FriendDaoImpl(private val context: Context): FriendDao {
         return friendDao.getFriendsFromTagName(tagName)
     }
 
+    override fun deleteFriend(friendId: String): Completable {
+        return friendDao.deleteFriend(friendId)
+    }
+
     override fun updateFriend(friend: Friend): Completable {
         return friendDao.updateFriend(friend)
     }

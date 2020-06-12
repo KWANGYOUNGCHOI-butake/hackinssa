@@ -10,11 +10,15 @@ import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.helper.IntentHelper
 import com.kwang0.hackinssa.helper.hideKeyboard
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
+import com.kwang0.hackinssa.presentation.ui.extensions.MenuListener
 import com.kwang0.hackinssa.presentation.ui.views.FriendView
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.reuse_searchbar.view.*
 
-class FriendFragment : Fragment() {
+class FriendFragment : Fragment(), MenuListener {
+
+    var menu: Menu? = null
+    override var menuChk = false
 
     private var friendView: FriendView? = null
     
@@ -76,7 +80,11 @@ class FriendFragment : Fragment() {
     }
 
     private fun friendViewSetUp(v: View) {
-        friendView = FriendView(v.context)
+        friendView = FriendView(v.context, this)
         friendView?.bindView(v)
+    }
+
+    override fun menuChanged() {
+        TODO("Not yet implemented")
     }
 }

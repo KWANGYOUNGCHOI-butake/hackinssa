@@ -31,6 +31,10 @@ class FriendRepositoryImpl(private val friendDao: FriendDao) : FriendRepository 
         return friendDao.getFriendsFromTagName(tagName)
     }
 
+    override fun deleteFriend(friendId: String): Completable {
+        return friendDao.deleteFriend(friendId)
+    }
+
     override fun insertFriend(friend: Friend): Completable {
         return friendDao.insertFriend(friend)
     }
