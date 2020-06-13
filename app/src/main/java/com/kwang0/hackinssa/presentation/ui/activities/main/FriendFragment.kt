@@ -16,6 +16,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.reuse_searchbar.view.*
 
 class FriendFragment : Fragment(), MenuListener {
+    private val TAG = FriendFragment::class.simpleName
 
     var menu: Menu? = null
     override var menuChk = false
