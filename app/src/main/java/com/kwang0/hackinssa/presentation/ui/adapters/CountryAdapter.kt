@@ -21,6 +21,8 @@ import com.kwang0.hackinssa.helper.LocaleHelper
 import com.kwang0.hackinssa.presentation.ui.activities.countryinfo.CountryInfoActivity
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.reuse_country_rv_con.*
 import java.util.*
 
 
@@ -51,29 +53,14 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
         try {
             val item: Country = mData.get(position)
 
-            setCountryFlag(holder, item.getAlpha2Code())
-            setCountryText(holder, item)
+            holder.bindView(item)
             setLayoutSelect(holder, item)
         } catch (e: IndexOutOfBoundsException) {
             Toast.makeText(mContext, mContext.getString(R.string.exception_out_of_bounds), Toast.LENGTH_LONG).show()
         }
     }
-
-    private fun setCountryFlag(holder: ViewHolder, code: String) {
-        GlideHelper.loadImg(mContext, GlideHelper.countryFlag(code), holder.iv)
-    }
-    private fun setCountryText(holder: ViewHolder, item: Country) {
-        holder.tv.text = if(App.localeHelper?.getLanguage() == LocaleHelper.LANGUAGE_KOREAN) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val countryRegion: Locale = Locale.Builder().setRegion(item.getAlpha2Code()).build()
-                val langKorean: Locale = Locale.Builder().setLanguage("ko").build()
-                item.setNativeName(countryRegion.getDisplayCountry(langKorean))
-            }
-            item.getNativeName()
-        } else item.getName()
-    }
     private fun setLayoutSelect(holder: ViewHolder, item: Country) {
-        holder.layout.setOnClickListener {v ->
+        holder.country_rv_layout.setOnClickListener {v ->
             if(mContext is MainActivity) {
                 val intent = Intent(mContext, CountryInfoActivity::class.java)
                 intent.putExtra("country", item)
@@ -87,14 +74,20 @@ class CountryAdapter(val mContext: Context, var mData: MutableList<Country>) : R
         }
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var layout: ConstraintLayout
-        var iv: ImageView
-        var tv: TextView
-        init {
-            layout = itemView.findViewById<ConstraintLayout>(R.id.country_rv_layout)
-            iv = itemView.findViewById<ImageView>(R.id.country_rv_iv)
-            tv = itemView.findViewById<TextView>(R.id.country_rv_tv)
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), LayoutContainer {
+        override val containerView: View?
+            get() = itemView
+
+        fun bindView(item: Country) {
+            GlideHelper.loadImg(itemView.context, GlideHelper.countryFlag(item.getAlpha2Code()), country_rv_iv)
+            country_rv_tv.text = if(App.localeHelper?.getLanguage() == LocaleHelper.LANGUAGE_KOREAN) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    val countryRegion: Locale = Locale.Builder().setRegion(item.getAlpha2Code()).build()
+                    val langKorean: Locale = Locale.Builder().setLanguage("ko").build()
+                    item.setNativeName(countryRegion.getDisplayCountry(langKorean))
+                }
+                item.getNativeName()
+            } else item.getName()
         }
     }
 
