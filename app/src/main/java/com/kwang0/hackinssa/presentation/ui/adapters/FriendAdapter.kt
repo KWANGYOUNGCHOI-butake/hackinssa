@@ -26,10 +26,7 @@ import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_NAME
 import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.presentation.ui.activities.friendinfo.FriendInfoActivity
 import com.kwang0.hackinssa.helper.IntentHelper
-import com.kwang0.hackinssa.helper.LocaleHelper
 import com.kwang0.hackinssa.presentation.ui.activities.main.MainActivity
-import java9.util.stream.Collectors
-import java9.util.stream.Stream
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.reuse_country_rv_con.*
 import kotlinx.android.synthetic.main.reuse_friend_rv_con.*
