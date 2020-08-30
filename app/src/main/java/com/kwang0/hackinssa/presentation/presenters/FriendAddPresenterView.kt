@@ -1,6 +1,5 @@
 package com.kwang0.hackinssa.presentation.presenters
 
-import android.view.View
 import com.kwang0.hackinssa.data.models.Tag
 
 interface FriendAddPresenterView {

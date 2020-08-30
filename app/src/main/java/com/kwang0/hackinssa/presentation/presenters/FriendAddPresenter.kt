@@ -1,10 +1,5 @@
 package com.kwang0.hackinssa.presentation.presenters
 
-import android.content.Intent
-import com.kwang0.hackinssa.data.models.Friend
-import com.kwang0.hackinssa.data.models.Tag
-import io.reactivex.Completable
-
 interface FriendAddPresenter {
     fun onCreate()
     fun onStop()
