@@ -11,20 +11,19 @@ import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_CREATED
 import com.kwang0.hackinssa.helper.FlagHelper.FLAG_SORT_NAME
-import com.kwang0.hackinssa.presentation.presenters.TagPresenter
-import com.kwang0.hackinssa.presentation.presenters.TagPresenterView
+import com.kwang0.hackinssa.presentation.presenters.TagContract
 import com.kwang0.hackinssa.presentation.presenters.impl.TagPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.extensions.MenuListener
 import com.kwang0.hackinssa.presentation.ui.adapters.TagAdapter
 import java.util.ArrayList
 
-class TagView(var mContext: Context, var menuListener: MenuListener?): TagPresenterView {
+class TagView(var mContext: Context, var menuListener: MenuListener?): TagContract.View {
     private val TAG = TagView::class.simpleName
 
     private lateinit var rv: RecyclerView
     private lateinit var empty_tv: TextView
 
-    var tagPresenter: TagPresenter
+    var tagPresenter: TagContract.Presenter
     private var mList: MutableList<Tag> = ArrayList<Tag>()
     private var mAdapter: TagAdapter
 

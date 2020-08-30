@@ -3,7 +3,6 @@ package com.kwang0.hackinssa.presentation.presenters.impl
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
@@ -22,8 +21,7 @@ import com.kwang0.hackinssa.data.repository.impl.FriendRepositoryImpl
 import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
 import com.kwang0.hackinssa.helper.*
 import com.kwang0.hackinssa.helper.exception.*
-import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
-import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
+import com.kwang0.hackinssa.presentation.presenters.FriendAddContract
 import com.kwang0.hackinssa.presentation.ui.activities.countryselect.CountrySelectActivity
 import com.kwang0.hackinssa.presentation.ui.extensions.ChipAddListener
 import com.kwang0.hackinssa.presentation.ui.views.ChipAddDialogView
@@ -34,8 +32,8 @@ import java.lang.Exception
 import java.lang.NullPointerException
 import java.util.*
 
-class FriendAddPresenterImpl(private val context: Context, private var view: FriendAddPresenterView):
-        FriendAddPresenter, ChipAddListener {
+class FriendAddPresenterImpl(private val context: Context, private var view: FriendAddContract.View)
+    : FriendAddContract.Presenter, ChipAddListener {
     private val TAG = FriendAddPresenterImpl::class.simpleName
 
     private var friendRepository: FriendRepository

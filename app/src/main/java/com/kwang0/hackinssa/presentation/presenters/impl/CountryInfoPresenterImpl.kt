@@ -14,24 +14,20 @@ import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.models.Favorite
 import com.kwang0.hackinssa.data.repository.FavoriteRepository
 import com.kwang0.hackinssa.data.repository.impl.FavoriteRepositoryImpl
-import com.kwang0.hackinssa.helper.GlideHelper
 import com.kwang0.hackinssa.helper.LocaleHelper
-import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenter
-import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenterView
+import com.kwang0.hackinssa.presentation.presenters.CountryInfoContract
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import java.lang.Exception
-import java.lang.NullPointerException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.concurrent.fixedRateTimer
 
-class CountryInfoPresenterImpl(private val context: Context, private var view: CountryInfoPresenterView): CountryInfoPresenter {
+class CountryInfoPresenterImpl(private val context: Context, private var view: CountryInfoContract.View)
+    : CountryInfoContract.Presenter {
     private val TAG = CountryInfoPresenterImpl::class.simpleName
 
     private var favoriteRepository: FavoriteRepository

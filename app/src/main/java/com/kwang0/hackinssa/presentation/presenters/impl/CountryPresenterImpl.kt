@@ -1,19 +1,17 @@
 package com.kwang0.hackinssa.presentation.presenters.impl
 
-import android.util.Log
 import com.kwang0.hackinssa.data.models.Country
 import com.kwang0.hackinssa.data.remote.impl.CountryRepositoryRemoteImpl
 import com.kwang0.hackinssa.data.repository.CountryRepository
 import com.kwang0.hackinssa.data.repository.impl.CountryRepositoryImpl
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
+import com.kwang0.hackinssa.presentation.presenters.CountryContract
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 
-class CountryPresenterImpl(private var view: CountryPresenterView) : CountryPresenter {
+class CountryPresenterImpl(private var view: CountryContract.View) : CountryContract.Presenter {
     private val TAG = CountryPresenterImpl::class.simpleName
     private val OPERATION_CLEAR = 0
     private val OPERATION_QUERY = 1

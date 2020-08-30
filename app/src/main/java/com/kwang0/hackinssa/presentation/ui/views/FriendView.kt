@@ -9,19 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.helper.FlagHelper
-import com.kwang0.hackinssa.presentation.presenters.FriendPresenter
-import com.kwang0.hackinssa.presentation.presenters.FriendPresenterView
+import com.kwang0.hackinssa.presentation.presenters.FriendContract
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.adapters.FriendAdapter
 import com.kwang0.hackinssa.presentation.ui.extensions.MenuListener
 import java.util.ArrayList
 
-class FriendView(private var mContext: Context, var menuListener: MenuListener? = null): FriendPresenterView {
+class FriendView(private var mContext: Context, var menuListener: MenuListener? = null): FriendContract.View {
     private val TAG = FriendView::class.simpleName
 
     private lateinit var rv: RecyclerView
 
-    var friendPresenter: FriendPresenter
+    var friendPresenter: FriendContract.Presenter
     private var mList: MutableList<Friend> = ArrayList<Friend>()
     private var mAdapter: FriendAdapter
 

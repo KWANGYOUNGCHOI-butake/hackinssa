@@ -4,39 +4,28 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Base64
 import android.util.Log
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.models.Tag
-import com.kwang0.hackinssa.data.models.Tags
 import com.kwang0.hackinssa.helper.GlideHelper
+import com.kwang0.hackinssa.presentation.presenters.FriendInfoContract
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
-import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
-import com.kwang0.hackinssa.helper.IntentHelper
-import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenter
-import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenterView
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendInfoPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.taginfo.TagInfoActivity
-import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import kotlinx.android.synthetic.main.activity_friend_info.*
 import kotlinx.android.synthetic.main.reuse_toolbar.*
 
-class FriendInfoActivity : BaseActivity(), FriendInfoPresenterView {
+class FriendInfoActivity : BaseActivity(), FriendInfoContract.View {
     private val TAG = FriendInfoActivity::class.simpleName
 
-    private var friendInfoPresenter: FriendInfoPresenter? = null
+    private var friendInfoPresenter: FriendInfoContract.Presenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

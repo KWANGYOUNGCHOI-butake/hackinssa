@@ -1,42 +1,24 @@
 package com.kwang0.hackinssa.presentation.ui.activities.countryinfo
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.os.TransactionTooLargeException
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.Toolbar
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
-import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.helper.GlideHelper
-import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenter
-import com.kwang0.hackinssa.presentation.presenters.CountryInfoPresenterView
+import com.kwang0.hackinssa.presentation.presenters.CountryInfoContract
 import com.kwang0.hackinssa.presentation.presenters.impl.CountryInfoPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
-import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_country_info.*
 import kotlinx.android.synthetic.main.reuse_toolbar.*
-import java.lang.Exception
-import java.lang.NullPointerException
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.concurrent.fixedRateTimer
 
-class CountryInfoActivity : BaseActivity(), CountryInfoPresenterView {
+class CountryInfoActivity : BaseActivity(), CountryInfoContract.View {
     val TAG = CountryInfoActivity::class.simpleName
 
-    private var countryInfoPresenter: CountryInfoPresenter? = null
+    private var countryInfoPresenter: CountryInfoContract.Presenter? = null
 
     private var menu: Menu? = null
     private var star_item: MenuItem? = null
