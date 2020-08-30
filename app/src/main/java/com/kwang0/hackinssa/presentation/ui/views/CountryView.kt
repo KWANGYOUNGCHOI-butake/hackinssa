@@ -10,19 +10,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kwang0.hackinssa.presentation.ui.adapters.CountryAdapter
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Country
-import com.kwang0.hackinssa.data.models.Friend
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenter
-import com.kwang0.hackinssa.presentation.presenters.CountryPresenterView
+import com.kwang0.hackinssa.presentation.presenters.CountryContract
 import com.kwang0.hackinssa.presentation.presenters.impl.CountryPresenterImpl
 import java.util.*
 
-class CountryView(private var mContext: Context): CountryPresenterView {
+class CountryView(private var mContext: Context): CountryContract.View {
     var TAG = CountryView::class.simpleName
 
     private lateinit var rv: RecyclerView
     private lateinit var empty_tv: TextView
 
-    var countryPresenter: CountryPresenter
+    var countryPresenter: CountryContract.Presenter
     private var mList: MutableList<Country> = ArrayList<Country>()
     private var mAdapter: CountryAdapter
 

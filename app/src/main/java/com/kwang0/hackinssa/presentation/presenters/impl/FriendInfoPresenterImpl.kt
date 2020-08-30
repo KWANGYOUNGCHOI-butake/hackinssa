@@ -14,15 +14,14 @@ import com.kwang0.hackinssa.data.repository.TagRepository
 import com.kwang0.hackinssa.data.repository.impl.FriendRepositoryImpl
 import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
 import com.kwang0.hackinssa.helper.IntentHelper
-import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenter
-import com.kwang0.hackinssa.presentation.presenters.FriendInfoPresenterView
+import com.kwang0.hackinssa.presentation.presenters.FriendInfoContract
 import com.kwang0.hackinssa.presentation.ui.activities.friendadd.FriendAddActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class FriendInfoPresenterImpl(private val context: Context, private var view: FriendInfoPresenterView): FriendInfoPresenter {
+class FriendInfoPresenterImpl(private val context: Context, private var view: FriendInfoContract.View)
+    : FriendInfoContract.Presenter {
     private val TAG = FriendInfoPresenterImpl::class.simpleName
 
     private var friendRepository: FriendRepository

@@ -4,14 +4,13 @@ import android.content.Context
 import com.kwang0.hackinssa.data.dao.impl.TagDaoImpl
 import com.kwang0.hackinssa.data.repository.TagRepository
 import com.kwang0.hackinssa.data.repository.impl.TagRepositoryImpl
-import com.kwang0.hackinssa.presentation.presenters.TagPresenter
-import com.kwang0.hackinssa.presentation.presenters.TagPresenterView
+import com.kwang0.hackinssa.presentation.presenters.TagContract
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 
-class TagPresenterImpl(context: Context, private var view: TagPresenterView): TagPresenter {
+class TagPresenterImpl(context: Context, private var view: TagContract.View)
+    : TagContract.Presenter {
     private val TAG = TagPresenterImpl::class.simpleName
     private val OPERATION_CLEAR = 0
     private val OPERATION_QUERY = 1

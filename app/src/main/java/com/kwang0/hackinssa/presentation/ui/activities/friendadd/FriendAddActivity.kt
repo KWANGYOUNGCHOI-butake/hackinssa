@@ -5,37 +5,28 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity.CENTER
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.size
 import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
 import com.kwang0.hackinssa.R
 import com.kwang0.hackinssa.data.models.Tag
 import com.kwang0.hackinssa.helper.*
 import com.kwang0.hackinssa.helper.IntentHelper.COUNTRY_REQUEST_CODE
 import com.kwang0.hackinssa.helper.IntentHelper.IMG_REQUEST_CODE
 import com.kwang0.hackinssa.helper.PermissionHelper.READ_STORAGE_REQUEST_CODE
-import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenter
-import com.kwang0.hackinssa.presentation.presenters.FriendAddPresenterView
+import com.kwang0.hackinssa.presentation.presenters.FriendAddContract
 import com.kwang0.hackinssa.presentation.presenters.impl.FriendAddPresenterImpl
 import com.kwang0.hackinssa.presentation.ui.activities.BaseActivity
 import kotlinx.android.synthetic.main.activity_friend_add.*
 import kotlinx.android.synthetic.main.reuse_toolbar.*
 
-
-class FriendAddActivity : BaseActivity(), FriendAddPresenterView {
+class FriendAddActivity : BaseActivity(), FriendAddContract.View {
     private val TAG = FriendAddActivity::class.simpleName
 
-    private var friendAddPresenter: FriendAddPresenter? = null
+    private var friendAddPresenter: FriendAddContract.Presenter? = null
 
     private var add_item: MenuItem? = null
 

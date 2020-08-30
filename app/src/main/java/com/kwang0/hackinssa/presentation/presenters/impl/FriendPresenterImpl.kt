@@ -5,15 +5,15 @@ import com.kwang0.hackinssa.data.dao.impl.FriendDaoImpl
 import com.kwang0.hackinssa.data.models.Friend
 import com.kwang0.hackinssa.data.repository.FriendRepository
 import com.kwang0.hackinssa.data.repository.impl.FriendRepositoryImpl
-import com.kwang0.hackinssa.presentation.presenters.FriendPresenter
-import com.kwang0.hackinssa.presentation.presenters.FriendPresenterView
+import com.kwang0.hackinssa.presentation.presenters.FriendContract
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Function3
 import io.reactivex.schedulers.Schedulers
 
-class FriendPresenterImpl(context: Context, private var view: FriendPresenterView) : FriendPresenter {
+class FriendPresenterImpl(context: Context, private var view: FriendContract.View)
+    : FriendContract.Presenter {
     private val TAG = FriendPresenterImpl::class.simpleName
     private val OPERATION_ALL = 0
     private val OPERATION_QUERY = 1
